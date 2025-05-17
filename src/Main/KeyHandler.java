@@ -33,18 +33,13 @@ public class KeyHandler implements KeyListener{
 		int code = e.getKeyCode();
 		switch (code) {
 			case KeyEvent.VK_W:
-				yChange=0;
-				break;
 			case KeyEvent.VK_S:
 				yChange=0;
 				break;
 			case KeyEvent.VK_A:
-				xChange=0;
-				break;
 			case KeyEvent.VK_D:
 				xChange=0;
 				break;
-		
 			default:
 				break;
 		}

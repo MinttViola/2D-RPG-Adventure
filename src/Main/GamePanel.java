@@ -11,13 +11,13 @@ import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
-	public final int originalTitleSize = 32; //16x16 tile standart
-	final int scale = 2;//comon scale 
-	public final int tileSize = originalTitleSize*scale;//48*48 size
+	public final int originalTitleSize = 32; 
+	final int scale = 3;
+	public final int tileSize = originalTitleSize*scale;
 	final int maxScreenCol=10;
 	final int maxScreenRow=8;
-	final int screenWidth=tileSize*maxScreenCol;//768 pixels
-	final int screenHeight=tileSize*maxScreenRow;//576 pixels
+	final int screenWidth=tileSize*maxScreenCol;
+	final int screenHeight=tileSize*maxScreenRow;
 
 	public int FPS = 60;
 
@@ -65,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
 				drawCount ++;
 			}
 			if(timer>=1000000000){
-				System.out.println("Fps: "+drawCount);
 				timer = 0;
 				drawCount = 0;
 			}

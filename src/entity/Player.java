@@ -1,84 +1,79 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import Util.Direction;
 
 public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyH;
-	DirectionAnomator dirAnim;
+	DirectionAnimator walkAnim;
+	DirectionAnimator idleAnim;
 	Direction lastDir;
 	BufferedImage mainImage;
+
+	public final int screenY;
+	public final int screenX;
 
 	public Player(GamePanel gp,KeyHandler keyH){
 		this.keyH=keyH;
 		this.gp=gp;
-		getMainImage();
-		dirAnim = new DirectionAnomator(gp,this,mainImage,6);
+		screenX = gp.screenWidth/2- (gp.tileSize/2);
+		screenY = gp.screenHeight/2- (gp.tileSize/2);
+		int saSize = gp.tileSize/gp.colDivisior*solidAreaMultiplier;//solid area size
+		solidArea = new Rectangle(gp.tileSize/gp.colDivisior,gp.tileSize/gp.colDivisior*2,saSize,saSize);
+		walkAnim = new DirectionAnimator(gp,this,"Walk",6);
+		idleAnim = new DirectionAnimator(gp,this,"Idle",6);
 		setDefaultValues();
 	}
 
 	
-	public void getMainImage(){
-		try{
-			mainImage= ImageIO.read(getClass().getResourceAsStream("/Assets/Player/Player.png"));} catch(IOException e){
-				e.printStackTrace();
-			}
-	}
 
 	public void setDefaultValues(){
-		x=4;
-		y=4;
-		speed = 1;
+		worldX=(gp.maxScreenCol/2)*gp.tileSize;
+		worldY=(gp.maxScreenRow/2)*gp.tileSize;
+		speed = 4;
 	}
 
 	public void update(){
 		switch (keyH.yChange) {
 			case 1:
-				dirAnim.still=false;
-				y +=speed;
-				dirAnim.dir =Direction.down;
+				worldY +=speed;
+				dir =Direction.down;
 				break;
 			case -1:
-				dirAnim.still=false;
-				y -=speed;
-				dirAnim.dir =Direction.up;
-				break;
-			case 0:
-			if(keyH.xChange ==0)
-				dirAnim.still=true;
+				worldY -=speed;
+				dir =Direction.up;
 				break;
 			default:
 				break;
 		}		switch (keyH.xChange) {
 			case 1:
-				dirAnim.still=false;
-				x +=speed;
-				dirAnim.dir =Direction.right;
+				worldX +=speed;
+				dir =Direction.right;
 				break;
 			case -1:
-				dirAnim.still=false;
-				x -=speed;
-				dirAnim.dir =Direction.left;
+				worldX -=speed;
+				dir =Direction.left;
 				break;			
-			case 0:
-			if(keyH.yChange ==0)
-				dirAnim.still=true;
-				break;
 			default:
 				break;
 		}
 
+		collisionOn = false;
+		gp.cCheck.checkTiles(this);
+
 	}
 
 	public void draw(Graphics2D g2){
-		dirAnim.draw(g2);
+		if (keyH.xChange==0&&keyH.yChange ==0) {
+			idleAnim.draw(g2,screenX,screenY);
+		}else{
+		walkAnim.draw(g2,screenX,screenY);}
 	}
 
 }

@@ -25,7 +25,7 @@ public class Player extends Entity {
 		screenX = gp.screenWidth/2- (gp.tileSize/2);
 		screenY = gp.screenHeight/2- (gp.tileSize/2);
 		int saSize = gp.tileSize/gp.colDivisior*solidAreaMultiplier;//solid area size
-		solidArea = new Rectangle(gp.tileSize/gp.colDivisior,gp.tileSize/gp.colDivisior*2,saSize,saSize);
+		solidArea = new Rectangle(gp.tileSize/gp.colDivisior,gp.tileSize/gp.colDivisior*2,saSize,saSize+7);
 		walkAnim = new DirectionAnimator(gp,this,"Walk",6);
 		idleAnim = new DirectionAnimator(gp,this,"Idle",6);
 		setDefaultValues();
@@ -42,30 +42,43 @@ public class Player extends Entity {
 	public void update(){
 		switch (keyH.yChange) {
 			case 1:
-				worldY +=speed;
 				dir =Direction.down;
 				break;
 			case -1:
-				worldY -=speed;
 				dir =Direction.up;
 				break;
 			default:
 				break;
 		}		switch (keyH.xChange) {
 			case 1:
-				worldX +=speed;
 				dir =Direction.right;
 				break;
 			case -1:
-				worldX -=speed;
 				dir =Direction.left;
 				break;			
 			default:
 				break;
 		}
 
-		collisionOn = false;
+		collisionOn = true;
 		gp.cCheck.checkTiles(this);
+		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
+		switch (dir) {
+			case down:
+				worldY +=speed;
+				break;
+			case right:
+				worldX +=speed;
+				break;
+			case left:
+				worldX -=speed;
+				break;
+			case up:
+				worldY -=speed;
+				break;
+			default:
+				break;}}
+		
 
 	}
 

@@ -13,10 +13,10 @@ import Main.GamePanel;
 public class TileManager {
 
 	GamePanel gp;
-	Tile[] tile;
+	public Tile[] tile;
 	int countTileTypes;
 	int tileSize;
-	int[][] map;
+	public int[][] map;
 
 	public TileManager(GamePanel gp, int countTileTypes){
 		this.gp = gp;

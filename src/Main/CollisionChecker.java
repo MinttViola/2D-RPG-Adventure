@@ -1,7 +1,6 @@
 package Main;
 
 import Util.Coordinate;
-import Util.Direction;
 import entity.Entity;
 
 public class CollisionChecker {

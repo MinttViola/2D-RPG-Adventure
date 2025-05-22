@@ -2,11 +2,9 @@ package Tile;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 
@@ -50,19 +48,28 @@ public class TileManager {
 		}catch(Exception e){}
 	}
 
+	public void TestMap(int[][] map){
+		for(int i = 0; i<=gp.maxWorldCol-1;i++){
+			for(int j = 0; j<=gp.maxWorldRow-1;j++){
+				System.out.print(map[i][j]);
+			}System.out.println();}
+	}
+
+
 	public void getTileImage(int id,String name,boolean coll){
 		tile[id] = new Tile(id, name, coll);
 	}
 
 	public void draw(Graphics2D g2){
 			for(int i = 0; i<=gp.maxWorldRow-1;i++){
+				int screenX = (i*gp.tileSize)-gp.player.worldX+gp.player.screenX;
 				for(int j = 0; j<=gp.maxWorldCol-1;j++){
-					int screenX = (i*gp.tileSize)-gp.player.worldX+gp.player.screenX;
 					int screenY = (j*gp.tileSize)-gp.player.worldY+gp.player.screenY;
 					if(((i+2)*gp.tileSize)>gp.player.worldX - gp.player.screenX&&((i-2)*gp.tileSize)<gp.player.worldX+gp.player.screenX&&((j+2)*gp.tileSize)>gp.player.worldY - gp.player.screenY&&((j-2)*gp.tileSize)<gp.player.worldY+gp.player.screenY){
 					int tileID = map[i][j];
 					g2.drawImage(tile[tileID].img, screenX, screenY,tileSize,tileSize, null);}
 				}
+				
 			}
 	}
 

@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
-import Util.Direction;
 
 public class DirectionAnimator {
 	Entity character;

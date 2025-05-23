@@ -7,13 +7,15 @@ import javax.imageio.ImageIO;
 
 import Main.GamePanel;
 
-public class Tile {
+public class TileCopy {
+	public GamePanel gp;
+
 	public int id;
 	public String name;
 	public BufferedImage img;
-	public boolean collision = false;
-	public Tile(int id, String name, boolean col){
-		collision = col;
+	public boolean[][] collision = new boolean[4][4];
+	public TileCopy(int id, String name, boolean col, GamePanel gp){
+		this.gp = gp;
 		this.id = id;
 		this.name = name;
 		getImage();

@@ -11,4 +11,5 @@ public class Entity {
 	public boolean collisionOn = false;
 	public int solidAreaMultiplier = 4;
 	public Direction dir = Direction.down;
+	public boolean isPlayer = false;
 }

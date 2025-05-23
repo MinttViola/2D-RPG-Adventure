@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import InteractableObj.SuperObject;
+import InteractableObj.ObjPlasment;
 import Tile.TileManager;
-import Util.TemporaryObjPlasment;
 import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -27,7 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int maxWorldRow = 100;
 	public final int worldWidth=tileSize*maxWorldCol;
 	public final int worldHeight=tileSize*maxWorldRow;
-	public final int colDivisior = 6;
+	public final int colDivisiorforNPC = 6;
+	public final int colDivisiorforTiles = 6;
 
 	public int FPS = 60;
 
@@ -37,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public KeyHandler keyH = new KeyHandler();
 	public Player player = new Player(this,keyH);
 	public SuperObject obj[] = new SuperObject[10];
-	TemporaryObjPlasment objPlase = new TemporaryObjPlasment(this);
+	ObjPlasment objPlase = new ObjPlasment(this);
 
 
 	public GamePanel(){

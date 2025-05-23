@@ -4,14 +4,13 @@ import Main.GamePanel;
 import Util.Animator;
 import Util.TypesOfSuperObj;
 
-public class Key extends SuperObject{
+public class Crystal extends SuperObject{
 
-	public Key(GamePanel gp, int id, int xStartPos, int yStartPos){
-		type = TypesOfSuperObj.KEY;
+	public Crystal(GamePanel gp, int xStartPos, int yStartPos){
+		type = TypesOfSuperObj.CRYSTAL;
 		name = type.getName();
-		this.id = id;
 		start(gp, xStartPos, yStartPos);
-		path = "/Assets/Props_Items_(animated)/"+name+"_anim.png";
+		findPath();
 		anim = new Animator(gp, path, frameRate);
 	}
 }

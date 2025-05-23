@@ -17,11 +17,11 @@ public class Animator {
 	BufferedImage[][] frames;
 	double frameRate;
 	int frameCount;
-	int x,y,curFrame,curStatus;
-	double curTime;
-	double lastTime;
-	double timer;
-	int statusCount;
+	public int curFrame;
+	int curStatus=0;
+	double curTime,lastTime,timer;
+	int[][] statusCount;
+
 
 	/*public Animator(GamePanel gp, BufferedImage[][] frames,double frameRate){
 		this.gp = gp;
@@ -37,25 +37,18 @@ public class Animator {
 		this.gp = gp;
 		this.frameRate = frameRate;
 		frames = getListFrames(path);
-		
+		loopFind(2);
 		lastTime = System.nanoTime();
 		curFrame = 0;
 		timer = 0;
 	}
 
-	public void draw(Graphics2D g2, int x, int y){
-		this.x = x;
-		this.y = y;
-		curTime = System.nanoTime();
-		timer += (curTime-lastTime)/1000000000;
-		lastTime=curTime;
-		if (timer > frameRate)
-			{
-			curFrame = (curFrame + 1) % frameCount;
-			timer -= frameRate;
-			}
-			g2.drawImage(frames[curFrame][curStatus],x,y,gp.tileSize,gp.tileSize,null);
+	public void nextStatus(){
+		if(curStatus+1<=statusCount.length){
+			curStatus+=1;
+		}
 	}
+
 
 	public void Res()
 	{
@@ -76,16 +69,41 @@ public class Animator {
 	public BufferedImage[][] getListFrames(String path){
 		getMainImage(path);
 		int size = gp.originalTitleSize;
-		frameCount = originalSpriteSheet.getWidth()/size;
-		statusCount = originalSpriteSheet.getHeight()/size;
-		BufferedImage[][] sprites = new BufferedImage[frameCount][statusCount];
-		for(int i = 0;i<=frameCount-1;i++){
-			for(int j = 0;j<=statusCount-1;j++){
-			BufferedImage sprite = originalSpriteSheet.getSubimage(i*size, j*size, size, size);
-			sprites[i][j] = sprite;
+		statusCount = new int[originalSpriteSheet.getHeight()/size][2];
+		statusCount[0][0] = originalSpriteSheet.getWidth()/size;
+		BufferedImage[][] sprites = new BufferedImage[statusCount.length][statusCount[0][0]];
+		for(int i = 0;i<=statusCount.length-1;i++){
+			for(int j = 0;j<=statusCount[0][0]-1;j++){
+			BufferedImage sprite = originalSpriteSheet.getSubimage(j*size, i*size, size, size);
+			if(!zeroSprite(sprite, size)){
+			sprites[i][j] = sprite;}
+			else{
+				statusCount[i][0]=j;
+				break;}
 			}
 	}
 	return sprites;
+	}
+
+	public void loopFind(int num){
+		for(int i=0;i<statusCount.length;i++){
+			if(i==num-1)
+				statusCount[i][1] = 1;
+			else
+				statusCount[i][1] = 0;
+		}
+	}
+
+	public boolean zeroSprite(BufferedImage img,int size){
+		for(int i = 0;i<=size-1;i++){
+			for(int j = 0;j<=size-1;j++){
+				int pixel = img.getRGB(j, i);
+				int alpha = (pixel >> 24) & 0xff;
+				if (alpha != 0) {
+						return false;
+				}	
+			}}
+		return true;
 	}
 	
 	public void getMainImage(String path){
@@ -93,6 +111,29 @@ public class Animator {
 			originalSpriteSheet= ImageIO.read(getClass().getResourceAsStream(path));} catch(IOException e){
 				e.printStackTrace();
 			}
+	}
+	
+	public void draw(Graphics2D g2, int x, int y){
+		frameCount = statusCount[curStatus][0];
+		if(frameCount==1){
+			g2.drawImage(frames[0][curStatus],x,y,gp.tileSize,gp.tileSize,null);
+		}
+		if(timer>(frameRate*2)){
+			timer =0;
+		}
+		curTime = System.nanoTime();
+		timer += (curTime-lastTime)/1000000000;
+		lastTime=curTime;
+
+		g2.drawImage(frames[curStatus][curFrame],x,y,gp.tileSize,gp.tileSize,null);
+
+		if (timer > frameRate)
+		{
+		curFrame = (curFrame + 1) % frameCount;
+		timer -= frameRate;
+		}
+		if (statusCount[curStatus][1]==1&&curFrame==0)
+			nextStatus();
 	}
 
 }

@@ -9,8 +9,7 @@ import Util.TypesOfSuperObj;
 
 public class SuperObject {
 	public Animator anim;
-	public String name;
-	public String path;
+	public String name,path;
 	public int worldX,worldY;
 	public boolean collision=false;
 	public GamePanel gp;
@@ -27,20 +26,18 @@ public class SuperObject {
 	}
 
 	public void findPath(){
-		path = "/Assets/Props_Items_(animated)/"+name+"_item_anim_strip.png";
+		path = "/Assets/Props_Items_(animated)/"+name+"_anim.png";
 	}
 
 	public void interaction(){
 		switch (type) {
 			case CHEST:
-				anim.nextStatus();
 				disapear();
 				break;
 			case CRYSTAL:
 				disapear();
 				break;
 			case KEY:
-				anim.nextStatus();
 				disapear();
 				break;
 			default:
@@ -50,8 +47,9 @@ public class SuperObject {
 	}
 
 	public void disapear(){
-				solidArea.height=0;
-				solidArea.width=0;
+			anim.nextStatus();
+			solidArea.height=0;
+			solidArea.width=0;
 	}
 
 	public void draw(Graphics2D g2){				

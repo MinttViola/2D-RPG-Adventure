@@ -18,7 +18,7 @@ public class Animator {
 	double frameRate;
 	int frameCount;
 	public int curFrame;
-	int curStatus=0;
+	public int curStatus=0;
 	double curTime,lastTime,timer;
 	int[][] statusCount;
 
@@ -34,6 +34,7 @@ public class Animator {
 	}*/
 	
 	public Animator(GamePanel gp, String path,double frameRate){
+		frameCount =100;
 		this.gp = gp;
 		this.frameRate = frameRate;
 		frames = getListFrames(path);
@@ -44,11 +45,12 @@ public class Animator {
 	}
 
 	public void nextStatus(){
-		if(curStatus+1<=statusCount.length){
+		if(curStatus+1<statusCount.length){
 			curStatus+=1;
+		}else{
+			curStatus = (-1);
 		}
 	}
-
 
 	public void Res()
 	{
@@ -75,11 +77,16 @@ public class Animator {
 		for(int i = 0;i<=statusCount.length-1;i++){
 			for(int j = 0;j<=statusCount[0][0]-1;j++){
 			BufferedImage sprite = originalSpriteSheet.getSubimage(j*size, i*size, size, size);
+			
 			if(!zeroSprite(sprite, size)){
 			sprites[i][j] = sprite;}
 			else{
+				frameCount =j;
 				statusCount[i][0]=j;
 				break;}
+			if(j==statusCount[0][0]-1){
+				statusCount[i][0]=j;
+			}
 			}
 	}
 	return sprites;
@@ -114,10 +121,15 @@ public class Animator {
 	}
 	
 	public void draw(Graphics2D g2, int x, int y){
+		if(curStatus == -1){
+			return;
+		}
 		frameCount = statusCount[curStatus][0];
 		if(frameCount==1){
 			g2.drawImage(frames[0][curStatus],x,y,gp.tileSize,gp.tileSize,null);
 		}
+		if (statusCount[curStatus][1]==1)
+			frameRate=0.3;
 		if(timer>(frameRate*2)){
 			timer =0;
 		}

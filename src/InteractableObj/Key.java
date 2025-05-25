@@ -11,7 +11,7 @@ public class Key extends SuperObject{
 		name = type.getName();
 		this.id = id;
 		start(gp, xStartPos, yStartPos);
-		path = "/Assets/Props_Items_(animated)/"+name+"_anim.png";
+		findPath();
 		anim = new Animator(gp, path, frameRate);
 	}
 }

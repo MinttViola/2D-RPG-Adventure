@@ -12,7 +12,7 @@ public class Chest extends SuperObject{
 		name = type.getName();
 		collision = true;
 		start(gp, xStartPos, yStartPos);
-		path = "/Assets/Props_Items_(animated)/"+name+"_anim.png";
+		findPath();
 		anim = new Animator(gp, path, frameRate);
 	}
 

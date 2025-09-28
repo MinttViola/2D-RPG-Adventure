@@ -2,6 +2,7 @@ package Main;
 
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
+import Service.SoundService;
 import Tile.TileManager;
 import entity.Player;
 import java.awt.Color;
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int maxWorldRow = 100;
 	public final int worldWidth=tileSize*maxWorldCol;
 	public final int worldHeight=tileSize*maxWorldRow;
+	
 	public final int colDivisiorforNPC = 6;
 	public final int colDivisiorforTiles = 6;
 
@@ -34,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cCheck = new CollisionChecker(this);
 	public KeyHandler keyH = new KeyHandler();
+	SoundService sound = new SoundService();
 	public Player player = new Player(this,keyH);
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
@@ -45,9 +48,9 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		sound.playBackgroundMusic(0);
 		startGameThread();
 	}
-
 
 	public void startGameThread(){
 		gameThread = new Thread(this);
@@ -98,4 +101,10 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.dispose();
 	}
 
+	public void stopMusic(){
+		sound.stop();
+	}
+	public void playDisapearSE(String name){
+		sound.playSE(name);
+	}
 }

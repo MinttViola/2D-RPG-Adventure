@@ -100,6 +100,7 @@ public class Player extends Entity {
 				}
 				break;
 			case CRYSTAL:
+				speed += 2;
 				obj.interaction();
 				break;
 			case KEY:
@@ -107,12 +108,10 @@ public class Player extends Entity {
 				obj.interaction();
 				System.out.println("Найден ключ "+obj.id);
 				break;
-		
 			default:
 				break;
 		}
 	}
-
 	public void draw(Graphics2D g2){
 		if (keyH.xChange==0&&keyH.yChange ==0) {
 			idleAnim.draw(g2,screenX,screenY);

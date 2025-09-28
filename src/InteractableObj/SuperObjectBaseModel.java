@@ -42,10 +42,10 @@ public class SuperObjectBaseModel {
 			default:
 				break;
 		}
-
 	}
 
 	public void disapear(){
+			gp.playDisapearSE(name+" disapear");
 			anim.nextStatus();
 			solidArea.height=0;
 			solidArea.width=0;

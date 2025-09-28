@@ -9,6 +9,13 @@
 			"name": "main",
 			"request": "launch",
 			"mainClass": "Main.main",
+			"projectName": "2D-RPG-Adventure_bcb74e91"
+		},
+		{
+			"type": "java",
+			"name": "main",
+			"request": "launch",
+			"mainClass": "Main.main",
 			"projectName": "2DGame_623709b6"
 		},
 		{

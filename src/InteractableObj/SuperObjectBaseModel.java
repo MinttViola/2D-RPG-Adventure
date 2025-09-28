@@ -1,6 +1,7 @@
 package InteractableObj;
 
 import Main.GamePanel;
+import Service.SoundService;
 import Util.Animator;
 import Util.TypesOfSuperObjEnum;
 import java.awt.Graphics2D;
@@ -16,6 +17,7 @@ public class SuperObjectBaseModel {
 	public float frameRate = 0.16f;
 	public Rectangle solidArea;
 	public TypesOfSuperObjEnum type;
+	private SoundService sound = new SoundService();
 
 	public void start(GamePanel gp, int xStartPos, int yStartPos){
 		this.gp = gp;
@@ -45,7 +47,7 @@ public class SuperObjectBaseModel {
 	}
 
 	public void disapear(){
-			gp.playDisapearSE(name+" disapear");
+			sound.playSE(name+" disapear");
 			anim.nextStatus();
 			solidArea.height=0;
 			solidArea.width=0;

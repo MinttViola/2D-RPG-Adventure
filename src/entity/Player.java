@@ -93,20 +93,21 @@ public class Player extends Entity {
 					if(obj.id==backpack.get(i).id){
 					obj.interaction();
 					backpack.remove(i);
-					System.out.println("Открыт сундук "+obj.id);
+					gp.ui.showMassage("Открыт сундук "+obj.id);
 					break;
 					}
-				System.out.println("Найди другой ключ "+obj.id);
+				gp.ui.showMassage("Найди другой ключ "+obj.id);
 				}
 				break;
 			case CRYSTAL:
 				speed += 2;
+				gp.ui.showMassage("Ускорение");
 				obj.interaction();
 				break;
 			case KEY:
 				backpack.add(obj);
 				obj.interaction();
-				System.out.println("Найден ключ "+obj.id);
+				gp.ui.showMassage("Найден ключ "+obj.id);
 				break;
 			default:
 				break;

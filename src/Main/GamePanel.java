@@ -3,6 +3,7 @@ package Main;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
 import Service.SoundService;
+import Service.UIService;
 import Tile.TileManager;
 import entity.Player;
 import java.awt.Color;
@@ -36,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cCheck = new CollisionChecker(this);
 	public KeyHandler keyH = new KeyHandler();
-	SoundService sound = new SoundService();
+	public UIService ui = new UIService(this);
+	SoundService bgMusic = new SoundService();
 	public Player player = new Player(this,keyH);
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
@@ -48,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		sound.playBackgroundMusic(0);
+		bgMusic.playBackgroundMusic(0);
 		startGameThread();
 	}
 
@@ -98,13 +100,14 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 		player.draw(g2);
+		ui.draw(g2);
 		g2.dispose();
 	}
 
 	public void stopMusic(){
-		sound.stop();
+		bgMusic.stop();
 	}
 	public void playDisapearSE(String name){
-		sound.playSE(name);
+		bgMusic.playSE(name);
 	}
 }

@@ -1,16 +1,14 @@
 package entity;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.ArrayList;
-
-import InteractableObj.SuperObject;
+import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
 import Main.KeyHandler;
 import Util.Direction;
-import Util.TypesOfSuperObj;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Entity {
 	GamePanel gp;
@@ -19,7 +17,7 @@ public class Player extends Entity {
 	DirectionAnimator idleAnim;
 	Direction lastDir;
 	BufferedImage mainImage;
-	public List<SuperObject> backpack = new ArrayList();
+	public List<SuperObjectBaseModel> backpack = new ArrayList();
 
 	public final int screenY;
 	public final int screenX;
@@ -88,7 +86,7 @@ public class Player extends Entity {
 
 	}
 
-	public void itemIteract(SuperObject obj){
+	public void itemIteract(SuperObjectBaseModel obj){
 		switch (obj.type) {
 			case CHEST:
 				for(int i=0;i<backpack.size();i++){

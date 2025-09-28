@@ -23,15 +23,6 @@ public class Animator {
 	int[][] statusCount;
 
 
-	/*public Animator(GamePanel gp, BufferedImage[][] frames,double frameRate){
-		this.gp = gp;
-		this.frames = frames;
-		this.frameRate = frameRate;
-		
-		lastTime = System.nanoTime();
-		curFrame = 0;
-		timer = 0;
-	}*/
 	
 	public Animator(GamePanel gp, String path,double frameRate){
 		frameCount =100;

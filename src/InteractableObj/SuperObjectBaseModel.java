@@ -1,13 +1,12 @@
 package InteractableObj;
 
+import Main.GamePanel;
+import Util.Animator;
+import Util.TypesOfSuperObjEnum;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import Main.GamePanel;
-import Util.Animator;
-import Util.TypesOfSuperObj;
-
-public class SuperObject {
+public class SuperObjectBaseModel {
 	public Animator anim;
 	public String name,path;
 	public int worldX,worldY;
@@ -16,7 +15,7 @@ public class SuperObject {
 	public int id = -1;
 	public float frameRate = 0.16f;
 	public Rectangle solidArea;
-	public TypesOfSuperObj type;
+	public TypesOfSuperObjEnum type;
 
 	public void start(GamePanel gp, int xStartPos, int yStartPos){
 		this.gp = gp;

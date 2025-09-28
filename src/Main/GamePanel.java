@@ -1,16 +1,14 @@
 package Main;
 
+import InteractableObj.ObjPlasment;
+import InteractableObj.SuperObjectBaseModel;
+import Tile.TileManager;
+import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
-import InteractableObj.SuperObject;
-import InteractableObj.ObjPlasment;
-import Tile.TileManager;
-import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
@@ -37,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public CollisionChecker cCheck = new CollisionChecker(this);
 	public KeyHandler keyH = new KeyHandler();
 	public Player player = new Player(this,keyH);
-	public SuperObject obj[] = new SuperObject[10];
+	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
 
 

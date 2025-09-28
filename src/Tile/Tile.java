@@ -2,10 +2,7 @@ package Tile;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import Main.GamePanel;
 
 public class Tile {
 	public int id;
@@ -19,7 +16,7 @@ public class Tile {
 		getImage();
 	}
 
-	public void getImage(){
+	public final void getImage(){
 		try{
 			img = ImageIO.read(getClass().getResourceAsStream("/Assets/Tiles/"+name+".png"));
 		} catch(IOException e){

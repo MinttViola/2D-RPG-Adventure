@@ -1,13 +1,14 @@
-package Util;
+package Tile;
 
-public enum TypesOfSuperObj {
+public enum TileLayersEnum {
+
 	KEY("key",2),
 	CHEST("lootchest",2),
 	CRYSTAL("crystal",3);
 
 	private final String name;
 
-	TypesOfSuperObj(String name,int statusCount){
+	TileLayersEnum(String name,int statusCount){
 		this.name = name;
 	}
 

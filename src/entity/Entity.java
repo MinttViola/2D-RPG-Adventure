@@ -1,10 +1,10 @@
 package entity;
 
+import Util.Direction;
 import java.awt.Rectangle;
 
-import Util.Direction;
-
 public class Entity {
+	public String name;
 	public int worldX,worldY;
 	public int speed;
 	public Rectangle solidArea;

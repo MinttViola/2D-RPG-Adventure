@@ -1,11 +1,17 @@
-package Main;
+package Service;
 
+import Main.GamePanel;
+import Util.GameState;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyHandler implements KeyListener{
+public class KeyService implements KeyListener{
 
 	public int yChange, xChange = 0;
+	GamePanel gp;
+	public KeyService(GamePanel gp){
+		this.gp = gp;
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {		
 		int code = e.getKeyCode();
@@ -21,6 +27,12 @@ public class KeyHandler implements KeyListener{
 				break;
 			case KeyEvent.VK_D:
 				xChange=1;
+				break;
+			case KeyEvent.VK_ESCAPE:
+				if(gp.gameState == GameState.PlayState)
+					gp.gameState = GameState.PauseState;
+				else if(gp.gameState == GameState.PauseState)
+					gp.gameState = GameState.PlayState;
 				break;
 		
 			default:

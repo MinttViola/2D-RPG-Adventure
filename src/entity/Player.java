@@ -2,7 +2,7 @@ package entity;
 
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
-import Main.KeyHandler;
+import Service.KeyService;
 import Util.Direction;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Player extends Entity {
 	GamePanel gp;
-	KeyHandler keyH;
+	KeyService keyH;
 	DirectionAnimator walkAnim;
 	DirectionAnimator idleAnim;
 	Direction lastDir;
@@ -22,10 +22,11 @@ public class Player extends Entity {
 	public final int screenY;
 	public final int screenX;
 
-	public Player(GamePanel gp,KeyHandler keyH){
+	public Player(GamePanel gp,KeyService keyH){
 		this.keyH=keyH;
 		this.gp=gp;
 		isPlayer = true;
+		name = "Player";
 		screenX = gp.screenWidth/2- (gp.tileSize/2);
 		screenY = gp.screenHeight/2- (gp.tileSize/2);
 		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size

@@ -1,15 +1,16 @@
-package Main;
-
-import java.awt.Rectangle;
+package Service;
 
 import Util.Coordinate;
 import entity.Entity;
+import java.awt.Rectangle;
 
-public class CollisionChecker {
+import Main.GamePanel;
+
+public class CollisionService {
 	GamePanel gp;
 	Coordinate one,two,zero;
 
-	public CollisionChecker(GamePanel gp){
+	public CollisionService(GamePanel gp){
 		this.gp = gp;
 	}
 
@@ -72,6 +73,7 @@ public class CollisionChecker {
 
 	public void checkColTiles(Entity entity){
 		int tileOne = gp.tileM.map[(one.x/gp.tileSize)][(one.y/gp.tileSize)];
+		
 		int tileTwo = gp.tileM.map[(two.x/gp.tileSize)][(two.y/gp.tileSize)];
 		if(gp.tileM.tile[tileOne].collision == true ||gp.tileM.tile[tileTwo].collision == true){
 			entity.collisionOn = false;

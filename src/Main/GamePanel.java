@@ -2,9 +2,9 @@ package Main;
 
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
-import Service.SoundService;
-import Service.UIService;
-import Tile.TileManager;
+import Service.*;
+import Tile.TileService;
+import Util.GameState;
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,9 +22,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int screenWidth=tileSize*maxScreenCol;
 	public final int screenHeight=tileSize*maxScreenRow;
 
-
-	public final int maxWorldCol = 50;
-	public final int maxWorldRow = 100;
+  //word setting
+	public final int maxWorldCol = 30;
+	public final int maxWorldRow = 30;
 	public final int worldWidth=tileSize*maxWorldCol;
 	public final int worldHeight=tileSize*maxWorldRow;
 	
@@ -33,15 +33,16 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public int FPS = 60;
 
-	TileManager tileM = new TileManager(this, 4);
+	public TileService tileM = new TileService(this, 4);
 	Thread gameThread;
-	public CollisionChecker cCheck = new CollisionChecker(this);
-	public KeyHandler keyH = new KeyHandler();
+	public CollisionService cCheck = new CollisionService(this);
+	public KeyService keyH = new KeyService(this);
 	public UIService ui = new UIService(this);
 	SoundService bgMusic = new SoundService();
 	public Player player = new Player(this,keyH);
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
+	public GameState gameState = GameState.PlayState;
 
 
 	public GamePanel(){
@@ -87,7 +88,13 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void update(){
-		player.update();
+		switch(gameState){
+			case GameState.PlayState:
+			player.update();
+			break;
+			case GameState.PauseState:
+			break;
+		}
 	}
 
 	public void paintComponent(Graphics g){

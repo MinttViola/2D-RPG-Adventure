@@ -1,15 +1,13 @@
 package Util;
 
+import Main.GamePanel;
+import Service.ScaleAssetsService;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
-
-import Main.GamePanel;
 
 public class Animator {
 	GamePanel gp;
@@ -70,6 +68,7 @@ public class Animator {
 			BufferedImage sprite = originalSpriteSheet.getSubimage(j*size, i*size, size, size);
 			
 			if(!zeroSprite(sprite, size)){
+			sprite = ScaleAssetsService.ScaleImage(gp.tileSize, gp.tileSize, sprite);
 			sprites[i][j] = sprite;}
 			else{
 				frameCount =j;
@@ -117,7 +116,7 @@ public class Animator {
 		}
 		frameCount = statusCount[curStatus][0];
 		if(frameCount==1){
-			g2.drawImage(frames[0][curStatus],x,y,gp.tileSize,gp.tileSize,null);
+			g2.drawImage(frames[0][curStatus],x,y,null);
 		}
 		if (statusCount[curStatus][1]==1)
 			frameRate=0.3;
@@ -128,7 +127,7 @@ public class Animator {
 		timer += (curTime-lastTime)/1000000000;
 		lastTime=curTime;
 
-		g2.drawImage(frames[curStatus][curFrame],x,y,gp.tileSize,gp.tileSize,null);
+		g2.drawImage(frames[curStatus][curFrame],x,y,null);
 
 		if (timer > frameRate)
 		{

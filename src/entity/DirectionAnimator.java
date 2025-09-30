@@ -1,12 +1,11 @@
 package entity;
 
+import Main.GamePanel;
+import Service.ScaleAssetsService;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import Main.GamePanel;
 
 public class DirectionAnimator {
 	Entity character;
@@ -26,7 +25,7 @@ public class DirectionAnimator {
 		this.dirCountFrames = dirCountFrames;
 		size = gp.originalTitleSize;
 		sprites = new BufferedImage[dirCount][dirCountFrames];
-		path = "/Assets/Player/"+state+".png";
+		path = "/Assets/"+character.name+"/"+state+".png";
 		getMainImage();
 		getListFrames();
 	}
@@ -34,7 +33,8 @@ public class DirectionAnimator {
 	
 	public void getMainImage(){
 		try{
-			mainImage= ImageIO.read(getClass().getResourceAsStream(path));} catch(IOException e){
+			mainImage= ImageIO.read(getClass().getResourceAsStream(path));
+		} catch(IOException e){
 				e.printStackTrace();
 			}
 	}
@@ -44,27 +44,13 @@ public class DirectionAnimator {
 		for(int id = 0;id<=dirCount-1;id++){
 		for (int i = 0;i<=dirCountFrames-1;i++){
 			sprite = mainImage.getSubimage(i*size, id*size, size, size);
-			sprites[id][i] = sprite;
+			sprites[id][i] = ScaleAssetsService.ScaleImage(gp.tileSize, gp.tileSize, sprite);
 		}
 	}
 	}
 
 	public void draw(Graphics2D g2,int x, int y){
- 	switch (character.dir) {
-			case down:
 				Anim(g2,character.dir.ordinal(), x, y);
-				break;
-			case right:
-				Anim(g2,character.dir.ordinal(), x, y);
-				break;
-			case left:
-				Anim(g2,character.dir.ordinal(), x, y);
-				break;
-			case up:
-				Anim(g2,character.dir.ordinal(), x, y);
-				break;
-			default:
-				break;}
 	}
 	
 	public void Anim(Graphics2D g2, int id, int x, int y){
@@ -79,7 +65,7 @@ public class DirectionAnimator {
 			curFrame = (curFrame + 1) % dirCountFrames;
 			timer=0;
 			}
-			g2.drawImage(sprites[id][curFrame],x,y,gp.tileSize,gp.tileSize,null); 
+			g2.drawImage(sprites[id][curFrame],x,y,null); 
 	}
 
 }

@@ -3,9 +3,8 @@ package Util;
 import Main.GamePanel;
 import Service.ScaleAssetsService;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -46,15 +45,6 @@ public class Animator {
 		lastTime = System.nanoTime();
 		curFrame = 0;
 		timer = 0;
-	}
-	
-	public static BufferedImage HorizontalFlip(BufferedImage img){
-		//flip img y 
-		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-		tx.translate(-img.getHeight(null), 0);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-		img = op.filter(img, null);
-		return img;
 	}
 	
 	public BufferedImage[][] getListFrames(String path){
@@ -105,7 +95,9 @@ public class Animator {
 	
 	public void getMainImage(String path){
 		try{
-			originalSpriteSheet= ImageIO.read(getClass().getResourceAsStream(path));} catch(IOException e){
+			File file = new File(path);
+			originalSpriteSheet= ImageIO.read(file);
+		} catch(IOException e){
 				e.printStackTrace();
 			}
 	}
@@ -116,7 +108,7 @@ public class Animator {
 		}
 		frameCount = statusCount[curStatus][0];
 		if(frameCount==1){
-			g2.drawImage(frames[0][curStatus],x,y,null);
+			g2.drawImage(frames[0][curStatus],y,x,null);
 		}
 		if (statusCount[curStatus][1]==1)
 			frameRate=0.3;

@@ -1,4 +1,4 @@
-package entity;
+package Entity;
 
 import Util.Direction;
 import java.awt.Rectangle;

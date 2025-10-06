@@ -17,16 +17,16 @@ public class KeyService implements KeyListener{
 		int code = e.getKeyCode();
 		switch (code) {
 			case KeyEvent.VK_W:
-				yChange=-1;
+				xChange=1;
 				break;
 			case KeyEvent.VK_S:
-				yChange=1;
-				break;
-			case KeyEvent.VK_A:
 				xChange=-1;
 				break;
+			case KeyEvent.VK_A:
+				yChange=-1;
+				break;
 			case KeyEvent.VK_D:
-				xChange=1;
+				yChange=1;
 				break;
 			case KeyEvent.VK_ESCAPE:
 				if(gp.gameState == GameState.PlayState)
@@ -46,11 +46,11 @@ public class KeyService implements KeyListener{
 		switch (code) {
 			case KeyEvent.VK_W:
 			case KeyEvent.VK_S:
-				yChange=0;
+				xChange=0;
 				break;
 			case KeyEvent.VK_A:
 			case KeyEvent.VK_D:
-				xChange=0;
+				yChange=0;
 				break;
 			default:
 				break;

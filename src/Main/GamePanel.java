@@ -1,11 +1,12 @@
 package Main;
 
+import Entity.Player;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
 import Service.*;
-import Tile.TileService;
+import Tile.TileService.*;
 import Util.GameState;
-import entity.Player;
+import WorkWithJson.MapLayerEnum;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,13 +28,19 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int maxWorldRow = 30;
 	public final int worldWidth=tileSize*maxWorldCol;
 	public final int worldHeight=tileSize*maxWorldRow;
+	public final int layersCount = 4;
+
+	public final int  startPlayerPositionX=7*tileSize;
+	public final int  startPlayerPositionY=9*tileSize;
+	
+
 	
 	public final int colDivisiorforNPC = 6;
 	public final int colDivisiorforTiles = 6;
 
 	public int FPS = 60;
-
-	public TileService tileM = new TileService(this, 4);
+	public TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
+	public LayerService[] layersS = new LayerService[layersCount];
 	Thread gameThread;
 	public CollisionService cCheck = new CollisionService(this);
 	public KeyService keyH = new KeyService(this);
@@ -52,12 +59,19 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 		bgMusic.playBackgroundMusic(0);
+		LayersServicesSetup();
 		startGameThread();
 	}
 
 	public void startGameThread(){
 		gameThread = new Thread(this);
 		gameThread.start();
+	}
+
+	public void LayersServicesSetup(){
+		for(int i =0;i<layersCount;i++){
+			layersS[i] = new LayerService(this, 0, MapLayerEnum.getNameByOrder(i), overworldTilseS);
+		}
 	}
 
 	@Override
@@ -100,7 +114,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		tileM.draw(g2);
+		for(int i =0;i<layersCount;i++){
+			layersS[i].draw(g2);
+		}
 		for(int i = 0;i<=obj.length-1;i++){
 			if(obj[i]!=null){
 				obj[i].draw(g2);

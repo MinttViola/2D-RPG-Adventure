@@ -1,4 +1,4 @@
-package entity;
+package Entity;
 
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
@@ -27,8 +27,8 @@ public class Player extends Entity {
 		this.gp=gp;
 		isPlayer = true;
 		name = "Player";
-		screenX = gp.screenWidth/2- (gp.tileSize/2);
-		screenY = gp.screenHeight/2- (gp.tileSize/2);
+		screenX = gp.screenHeight/2-(gp.tileSize/2);
+		screenY = gp.screenWidth/2-(gp.tileSize/2);
 		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
 		solidArea = new Rectangle(gp.tileSize/gp.colDivisiorforNPC,gp.tileSize/gp.colDivisiorforNPC*2,saSize,saSize+7);
 		walkAnim = new DirectionAnimator(gp,this,"Walk",6);
@@ -39,22 +39,22 @@ public class Player extends Entity {
 	
 
 	public void setDefaultValues(){
-		worldX=(gp.maxScreenCol/2)*gp.tileSize;
-		worldY=(gp.maxScreenRow/2)*gp.tileSize;
+		worldX=gp.startPlayerPositionX;
+		worldY=gp.startPlayerPositionY;
 		speed = 4;
 	}
 
 	public void update(){
-		switch (keyH.yChange) {
-			case 1:
-				dir =Direction.down;
-				break;
+		switch (keyH.xChange) {
 			case -1:
 				dir =Direction.up;
 				break;
+			case 1:
+				dir =Direction.down;
+				break;
 			default:
 				break;
-		}		switch (keyH.xChange) {
+		}		switch (keyH.yChange) {
 			case 1:
 				dir =Direction.right;
 				break;
@@ -70,16 +70,16 @@ public class Player extends Entity {
 		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
 		switch (dir) {
 			case down:
-				worldY +=speed;
-				break;
-			case right:
-				worldX +=speed;
-				break;
-			case left:
 				worldX -=speed;
 				break;
-			case up:
+			case right:
+				worldY +=speed;
+				break;
+			case left:
 				worldY -=speed;
+				break;
+			case up:
+				worldX +=speed;
 				break;
 			default:
 				break;}}
@@ -116,9 +116,9 @@ public class Player extends Entity {
 	}
 	public void draw(Graphics2D g2){
 		if (keyH.xChange==0&&keyH.yChange ==0) {
-			idleAnim.draw(g2,screenX,screenY);
+			idleAnim.draw(g2,screenY,screenX);
 		}else{
-		walkAnim.draw(g2,screenX,screenY);}
+		walkAnim.draw(g2,screenY,screenX);}
 	}
 
 }

@@ -1,9 +1,10 @@
-package entity;
+package Entity;
 
 import Main.GamePanel;
 import Service.ScaleAssetsService;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -25,7 +26,7 @@ public class DirectionAnimator {
 		this.dirCountFrames = dirCountFrames;
 		size = gp.originalTitleSize;
 		sprites = new BufferedImage[dirCount][dirCountFrames];
-		path = "/Assets/"+character.name+"/"+state+".png";
+		path = "Assets/"+character.name+"/"+state+".png";
 		getMainImage();
 		getListFrames();
 	}
@@ -33,7 +34,8 @@ public class DirectionAnimator {
 	
 	public void getMainImage(){
 		try{
-			mainImage= ImageIO.read(getClass().getResourceAsStream(path));
+			File file = new File(path);
+			mainImage= ImageIO.read(file);
 		} catch(IOException e){
 				e.printStackTrace();
 			}
@@ -50,7 +52,7 @@ public class DirectionAnimator {
 	}
 
 	public void draw(Graphics2D g2,int x, int y){
-				Anim(g2,character.dir.ordinal(), x, y);
+				Anim(g2,character.dir.ordinal(), y, x);
 	}
 	
 	public void Anim(Graphics2D g2, int id, int x, int y){
@@ -65,7 +67,7 @@ public class DirectionAnimator {
 			curFrame = (curFrame + 1) % dirCountFrames;
 			timer=0;
 			}
-			g2.drawImage(sprites[id][curFrame],x,y,null); 
+			g2.drawImage(sprites[id][curFrame],y,x,null); 
 	}
 
 }

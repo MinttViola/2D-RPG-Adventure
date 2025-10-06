@@ -27,7 +27,7 @@ public class SuperObjectBaseModel {
 	}
 
 	public void findPath(){
-		path = "/Assets/Props_Items_(animated)/"+name+"_anim.png";
+		path = "Assets/Props_Items_(animated)/"+name+"_anim.png";
 	}
 
 	public void interaction(){
@@ -60,7 +60,7 @@ public class SuperObjectBaseModel {
 		worldX-2*gp.tileSize<gp.player.worldX+gp.player.screenX &&
 		worldY+2*gp.tileSize>gp.player.worldY - gp.player.screenY &&
 		worldY-2*gp.tileSize<gp.player.worldY+gp.player.screenY){	
-			anim.draw(g2, screenX, screenY);
+			anim.draw(g2, screenY, screenX);
 		}
 	}
 }

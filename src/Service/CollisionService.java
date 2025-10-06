@@ -1,10 +1,9 @@
 package Service;
 
-import Util.Coordinate;
-import entity.Entity;
-import java.awt.Rectangle;
-
+import Entity.Entity;
 import Main.GamePanel;
+import Util.Coordinate;
+import java.awt.Rectangle;
 
 public class CollisionService {
 	GamePanel gp;
@@ -72,11 +71,14 @@ public class CollisionService {
 	}
 
 	public void checkColTiles(Entity entity){
-		int tileOne = gp.tileM.map[(one.x/gp.tileSize)][(one.y/gp.tileSize)];
-		
-		int tileTwo = gp.tileM.map[(two.x/gp.tileSize)][(two.y/gp.tileSize)];
-		if(gp.tileM.tile[tileOne].collision == true ||gp.tileM.tile[tileTwo].collision == true){
-			entity.collisionOn = false;
+		for(int i =0;i<gp.layersCount;i++){
+			if(gp.layersS[i].collisionOn){
+			int tileOne = gp.layersS[i].map[(one.x/gp.tileSize)][(one.y/gp.tileSize)];		
+			int tileTwo = gp.layersS[i].map[(two.x/gp.tileSize)][(two.y/gp.tileSize)];
+			if(tileOne !=0||tileTwo!=0){
+				entity.collisionOn = false;
+			}
+			}
 		}
 	}
 
@@ -88,8 +90,8 @@ public class CollisionService {
 			Rectangle col = new Rectangle(zero.x, zero.y, gp.tileSize, gp.tileSize);
 			if(gp.obj[i]!=null){
 				if(col.intersects(gp.obj[i].solidArea)){
-					/*if(gp.obj[i].collision == true){
-					entity.collisionOn = false;}*/
+					if(gp.obj[i].collision == true){
+					entity.collisionOn = false;}
 				gp.player.itemIteract(gp.obj[i]);
 				}
 			}

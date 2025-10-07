@@ -1,6 +1,6 @@
 package Main;
 
-import Entity.Player;
+import Entity.*;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
 import Service.*;
@@ -49,6 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public Player player = new Player(this,keyH);
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
+	public NPC npc[] = new NPC[10];
+	NPCPlasment NPCPlase = new NPCPlasment(this);
 	public GameState gameState = GameState.PlayState;
 
 
@@ -117,13 +119,14 @@ public class GamePanel extends JPanel implements Runnable {
 		for(int i =0;i<layersCount;i++){
 			layersS[i].draw(g2);
 		}
-		for(int i = 0;i<=obj.length-1;i++){
-			if(obj[i]!=null){
-				obj[i].draw(g2);
-			}
-		}
-		player.draw(g2);
 		ui.draw(g2);
+		player.draw(g2);
+		for(int i = 0;i<=obj.length-1;i++){
+			if(obj[i]!=null)
+				obj[i].draw(g2);
+			if(npc[i]!=null)
+				npc[i].draw(g2);
+		}
 		g2.dispose();
 	}
 

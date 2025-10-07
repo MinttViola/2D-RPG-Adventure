@@ -12,17 +12,17 @@ public class DirectionAnimator {
 	Entity character;
 	GamePanel gp;
 	double frameRate =  0.16;
-	int dirCount = 4;
+	int dirCount = 1;
 	BufferedImage mainImage;
 	int size,dirCountFrames,curFrame;
 	double curTime,lastTime,timer;
 	BufferedImage sprites[][];
 	String path;
 
-	public DirectionAnimator(GamePanel gp, Entity character,String state,int dirCountFrames){
+	public DirectionAnimator(GamePanel gp, Entity character,String state,int dirCountFrames, int dirCount){
 		this.character = character;
+		this.dirCount = dirCount;
 		this.gp = gp;
-		this.mainImage = mainImage;
 		this.dirCountFrames = dirCountFrames;
 		size = gp.originalTitleSize;
 		sprites = new BufferedImage[dirCount][dirCountFrames];
@@ -35,7 +35,7 @@ public class DirectionAnimator {
 	public void getMainImage(){
 		try{
 			File file = new File(path);
-			mainImage= ImageIO.read(file);
+			mainImage = ImageIO.read(file);
 		} catch(IOException e){
 				e.printStackTrace();
 			}

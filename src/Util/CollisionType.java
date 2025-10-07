@@ -7,12 +7,12 @@ public enum CollisionType {
 
 	boolean[][] col;
 
-	public boolean[][]GiveATypeForCorner(CollisionType type1,CollisionType type2, Direction dir1, Direction dir2, GamePanel gp)
+	public boolean[][]GiveATypeForCorner(CollisionType type1,CollisionType type2, DirectionEnum dir1, DirectionEnum dir2, GamePanel gp)
 	{boolean[][] mass = new boolean[gp.colDivisiorforTiles][gp.colDivisiorforTiles];
 		return mass;
 	}
 
-	public boolean[][]GiveATypeForWall(CollisionType type,Direction dir, GamePanel gp){
+	public boolean[][]GiveATypeForWall(CollisionType type,DirectionEnum dir, GamePanel gp){
 		boolean[][] mass = new boolean[gp.colDivisiorforTiles][gp.colDivisiorforTiles];
 		int col = gp.colDivisiorforTiles;
 		int row = gp.colDivisiorforTiles;

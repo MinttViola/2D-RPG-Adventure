@@ -22,7 +22,7 @@ public class LayerService {
 		this.name = name;
 		this.level = level;
 		tileSet = tileService;
-		collisionOn =MapLayerEnum.getColByName(name);
+		collisionOn = MapLayerEnum.getColByName(name);
 		map = new int[gp.maxWorldRow][gp.maxWorldCol];
 		loadLevel();
 	}

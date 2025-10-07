@@ -1,6 +1,6 @@
 package Util;
 
-public enum Direction {
+public enum DirectionEnum {
 	up,
 	left,
 	right,

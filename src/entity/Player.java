@@ -3,37 +3,28 @@ package Entity;
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
 import Service.KeyService;
-import Util.Direction;
+import Util.AnimationStateEnum;
+import Util.DirectionEnum;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Entity {
-	GamePanel gp;
 	KeyService keyH;
-	DirectionAnimator walkAnim;
-	DirectionAnimator idleAnim;
-	Direction lastDir;
-	BufferedImage mainImage;
 	public List<SuperObjectBaseModel> backpack = new ArrayList();
 
 	public final int screenY;
 	public final int screenX;
 
 	public Player(GamePanel gp,KeyService keyH){
+		super(gp,2,6);
 		this.keyH=keyH;
-		this.gp=gp;
 		isPlayer = true;
 		name = "Player";
 		screenX = gp.screenHeight/2-(gp.tileSize/2);
 		screenY = gp.screenWidth/2-(gp.tileSize/2);
-		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
-		solidArea = new Rectangle(gp.tileSize/gp.colDivisiorforNPC,gp.tileSize/gp.colDivisiorforNPC*2,saSize,saSize+7);
-		walkAnim = new DirectionAnimator(gp,this,"Walk",6);
-		idleAnim = new DirectionAnimator(gp,this,"Idle",6);
 		setDefaultValues();
+		SetUpAnimators(4);
 	}
 
 	
@@ -47,19 +38,19 @@ public class Player extends Entity {
 	public void update(){
 		switch (keyH.xChange) {
 			case -1:
-				dir =Direction.up;
+				dir =DirectionEnum.up;
 				break;
 			case 1:
-				dir =Direction.down;
+				dir =DirectionEnum.down;
 				break;
 			default:
 				break;
 		}		switch (keyH.yChange) {
 			case 1:
-				dir =Direction.right;
+				dir =DirectionEnum.right;
 				break;
 			case -1:
-				dir =Direction.left;
+				dir =DirectionEnum.left;
 				break;			
 			default:
 				break;
@@ -116,9 +107,9 @@ public class Player extends Entity {
 	}
 	public void draw(Graphics2D g2){
 		if (keyH.xChange==0&&keyH.yChange ==0) {
-			idleAnim.draw(g2,screenY,screenX);
+			animators[AnimationStateEnum.getIdbyState("Idle")].draw(g2,screenY,screenX);
 		}else{
-		walkAnim.draw(g2,screenY,screenX);}
+			animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
 	}
-
+}
 }

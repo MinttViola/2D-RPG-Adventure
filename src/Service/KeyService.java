@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 public class KeyService implements KeyListener{
 
 	public int yChange, xChange = 0;
+	public boolean EPressed = false;
 	GamePanel gp;
 	public KeyService(GamePanel gp){
 		this.gp = gp;
@@ -15,28 +16,34 @@ public class KeyService implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {		
 		int code = e.getKeyCode();
-		switch (code) {
-			case KeyEvent.VK_W:
-				xChange=1;
-				break;
-			case KeyEvent.VK_S:
-				xChange=-1;
-				break;
-			case KeyEvent.VK_A:
-				yChange=-1;
-				break;
-			case KeyEvent.VK_D:
-				yChange=1;
-				break;
-			case KeyEvent.VK_ESCAPE:
-				if(gp.gameState == GameState.PlayState)
+		if(gp.gameState == GameState.PlayState){
+			switch (code) {
+				case KeyEvent.VK_W:
+					xChange=1;
+					break;
+				case KeyEvent.VK_S:
+					xChange=-1;
+					break;
+				case KeyEvent.VK_A:
+					yChange=-1;
+					break;
+				case KeyEvent.VK_D:
+					yChange=1;
+					break;
+					case KeyEvent.VK_E:
+					EPressed = true;
+					break;
+				case KeyEvent.VK_ESCAPE:
 					gp.gameState = GameState.PauseState;
-				else if(gp.gameState == GameState.PauseState)
-					gp.gameState = GameState.PlayState;
-				break;
-		
-			default:
-				break;
+					break;
+					}
+				}
+		if(gp.gameState == GameState.PauseState && code == KeyEvent.VK_ESCAPE){
+				gp.gameState = GameState.PlayState;
+
+		}
+		if(gp.gameState == GameState.DialogState && code == KeyEvent.VK_E){
+			gp.ui.dialogueCounter++;
 		}
 	}
 
@@ -52,6 +59,8 @@ public class KeyService implements KeyListener{
 			case KeyEvent.VK_D:
 				yChange=0;
 				break;
+				case KeyEvent.VK_E:
+				EPressed = false;
 			default:
 				break;
 		}

@@ -5,8 +5,8 @@ import Main.GamePanel;
 import Service.KeyService;
 import Util.AnimationStateEnum;
 import Util.DirectionEnum;
+import Util.GameState;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class Player extends Entity {
 
 	public final int screenY;
 	public final int screenX;
+	public NPC NPCForDialogue;
 
 	public Player(GamePanel gp,KeyService keyH){
 		super(gp,2,6);
@@ -80,15 +81,22 @@ public class Player extends Entity {
 
 	}
 
-	public void NPCIteract(Entity NPC){
-		switch(NPC.name){
+	public void NPCIteract(NPC NPC){
+		if(!gp.keyH.EPressed)
+			return;
+		if(NPC != null){
+			NPCForDialogue = NPC;
+			gp.gameState = GameState.DialogState;
+		}
+		/*switch(NPC.name){
 			case "KnightNPC":
 			System.out.println(NPC.name);
+			gp.gameState = GameState.DialogState;
 			break;
 			case "PhantomNPC":
 			System.out.println(NPC.name);
 			break;
-		}
+		}*/
 	}
 
 	public void itemIteract(SuperObjectBaseModel obj){

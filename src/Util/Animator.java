@@ -1,7 +1,7 @@
 package Util;
 
 import Main.GamePanel;
-import Service.ScaleAssetsService;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -58,7 +58,7 @@ public class Animator {
 			BufferedImage sprite = originalSpriteSheet.getSubimage(j*size, i*size, size, size);
 			
 			if(!zeroSprite(sprite, size)){
-			sprite = ScaleAssetsService.ScaleImage(gp.tileSize, gp.tileSize, sprite);
+			sprite = ScaleAssetsUtil.ScaleImage(gp.tileSize, gp.tileSize, sprite);
 			sprites[i][j] = sprite;}
 			else{
 				frameCount =j;

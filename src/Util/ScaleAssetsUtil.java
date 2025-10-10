@@ -1,9 +1,9 @@
-package Service;
+package Util;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class ScaleAssetsService {
+public class ScaleAssetsUtil {
 
 	public static  BufferedImage ScaleImage(int width, int height, BufferedImage originalImg){
 		BufferedImage scaledImg = new BufferedImage(width, height,originalImg.getType());

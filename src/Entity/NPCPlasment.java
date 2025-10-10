@@ -12,7 +12,7 @@ GamePanel gp;
 	}
 
 	public void setNPC(){
-		gp.npc[0] = new NPCKnight(gp,1, 6, 19, DirectionEnum.right,2);
-		gp.npc[1] = new NPCPhantom(gp,1, 6, 9, DirectionEnum.right,2);
+		gp.npc[0] = new NPCKnight(gp,1, 6, 9, DirectionEnum.right,2);
+		gp.npc[1] = new NPCPhantom(gp,1, 12, 9, DirectionEnum.right,2);
 	}
 }

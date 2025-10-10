@@ -1,7 +1,7 @@
 package Util;
 
 import Main.GamePanel;
-import Service.ScaleAssetsService;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -48,7 +48,7 @@ public class DirectionAnimator {
 		for(int id = 0;id<=dirCount-1;id++){
 		for (int i = 0;i<=dirCountFrames-1;i++){
 			sprite = mainImage.getSubimage(i*size, id*size, size, size);
-			sprites[id][i] = ScaleAssetsService.ScaleImage(gp.tileSize, gp.tileSize, sprite);
+			sprites[id][i] = ScaleAssetsUtil.ScaleImage(gp.tileSize, gp.tileSize, sprite);
 		}
 	}
 	}

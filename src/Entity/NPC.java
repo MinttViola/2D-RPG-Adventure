@@ -5,14 +5,16 @@ import Util.AnimationStateEnum;
 import Util.DirectionEnum;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Arrays;
 import java.util.Random;
 
 public class NPC extends Entity{
 
 	public int id;
+	public String[] dialoguesArray = {"This is dialogue"};
 	private int actionLockCounter = 0;
 	public int lastX,lastY;
-	public DirectionEnum[] AllDirectionsList = {DirectionEnum.left,DirectionEnum.right};
+	public DirectionEnum[] AllDirectionsArray = {DirectionEnum.left,DirectionEnum.right};
 	public NPC(GamePanel gp, int id,int animTypes, int countFrames,int xStartPos, int yStartPos, DirectionEnum StartDirection, int speed)
 	{
 		super(gp,animTypes,countFrames);
@@ -25,8 +27,10 @@ public class NPC extends Entity{
 	}
 	public void setAction(){}
 	public void playerInteract(){
-		System.err.println("interact " + name);
-	}
+		if(!gp.keyH.EPressed)
+			return;
+		turnToPlayer();}
+	public void setDialogue(){}
 	public void update(){
 		setAction();
 		collisionOn = true;
@@ -72,10 +76,41 @@ public class NPC extends Entity{
 		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
 		solidArea = new Rectangle(worldX,worldY,saSize,saSize+7);
 	}
+
+	public void turnToPlayer(){
+		DirectionEnum oppositeDirection = DirectionEnum.getOppositeSide(gp.player.direction);
+		if(Arrays.asList(AllDirectionsArray).contains(oppositeDirection)){
+		direction = oppositeDirection;
+		return;
+		}
+		if(Arrays.asList(AllDirectionsArray).contains(DirectionEnum.left)){
+			turnToPlayerAlongY();
+			return;}
+		else turnToPlayerAlongX();
+	}
+
+	private void turnToPlayerAlongY(){
+		if(worldY>gp.player.worldY){
+		direction = DirectionEnum.left;
+		return;
+		}if(worldY<gp.player.worldY){
+		direction = DirectionEnum.right;
+		return;
+		}
+	}
+	private void turnToPlayerAlongX(){
+		if(worldX<gp.player.worldX){
+		direction = DirectionEnum.up;
+		return;
+		}if(worldX>gp.player.worldX){
+		direction = DirectionEnum.down;
+		return;
+		}
+	}
 	public void randomDirectionForNPC(){
 		actionLockCounter++;
 		if(actionLockCounter == 120){
-			if(AllDirectionsList.length==2)
+			if(AllDirectionsArray.length==2)
 				randomDirectionTwo();
 			else
 				randomDirectionAllDir();
@@ -87,13 +122,13 @@ public class NPC extends Entity{
 		Random random = new Random();
 		int randomNumber = random.nextInt(100)+1;
 		if(randomNumber<=25)
-		direction = AllDirectionsList[0];
+		direction = AllDirectionsArray[0];
 		else if(randomNumber>25 && randomNumber<=50)
-		direction = AllDirectionsList[1];
+		direction = AllDirectionsArray[1];
 		else if(randomNumber>50&&randomNumber<=75)
-		direction = AllDirectionsList[0];
+		direction = AllDirectionsArray[0];
 		else 
-		direction = AllDirectionsList[1];
+		direction = AllDirectionsArray[1];
 
 	}
 	private void randomDirectionAllDir(){

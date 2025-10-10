@@ -24,7 +24,7 @@ public class CollisionService {
 		enityColPos[3] = new Coordinate(entity.solidArea.x+entity.solidArea.width+entity.worldX,entity.solidArea.y+entity.solidArea.width+entity.worldY);
 		zero = new Coordinate(0, 0);
 
-		switch (entity.dir) {
+		switch (entity.direction) {
 			case down:
 			nextMove(enityColPos[2], enityColPos[3], false, entity);
 			zero.y = two.y - gp.tileSize;
@@ -46,7 +46,7 @@ public class CollisionService {
 				break;}
 			checkColTiles(entity);
 			checkSuperObj(entity);
-
+			checkEntity(entity);
 	}
 
 	public void nextMove(Coordinate first, Coordinate second, boolean dir, Entity entity){
@@ -71,6 +71,7 @@ public class CollisionService {
 	}
 
 	public void checkColTiles(Entity entity){
+		if(entity.isPlayer)
 		for(int i =0;i<gp.layersCount;i++){
 			if(gp.layersS[i].collisionOn){
 			int tileOne = gp.layersS[i].map[(one.x/gp.tileSize)][(one.y/gp.tileSize)];		
@@ -83,9 +84,8 @@ public class CollisionService {
 	}
 
 	public void checkSuperObj(Entity entity){
-		if(!entity.isPlayer){
+		if(!entity.isPlayer)
 			return;
-		}
 		for(int i = 0; i<=gp.obj.length-1;i++){
 			Rectangle col = new Rectangle(zero.x, zero.y, gp.tileSize, gp.tileSize);
 			if(gp.obj[i]!=null){
@@ -98,5 +98,16 @@ public class CollisionService {
 		}
 	}
 
-
+	public void checkEntity(Entity entity){
+		if(entity.isPlayer)
+		for(int i = 0; i<=gp.npc.length-1;i++){
+			Rectangle col = new Rectangle(zero.x, zero.y, gp.tileSize, gp.tileSize);
+			if(gp.npc[i]!=null){
+				if(col.intersects(gp.npc[i].solidArea)){
+					gp.npc[i].playerInteract();
+					gp.player.NPCIteract(gp.npc[i]);
+				}
+			}
+		}
+	} 
 }

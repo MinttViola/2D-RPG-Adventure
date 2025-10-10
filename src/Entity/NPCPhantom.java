@@ -1,20 +1,19 @@
 package Entity;
 
-import java.util.Random;
-
 import Main.GamePanel;
 import Util.DirectionEnum;
 
-public class NPCKnight extends NPC{
+public class NPCPhantom extends NPC {
 
-	public NPCKnight(GamePanel gp,int id,int xStartPos, int yStartPos, DirectionEnum direction, int speed){
+	public NPCPhantom(GamePanel gp,int id,int xStartPos, int yStartPos, DirectionEnum direction, int speed){
 		super(gp,id,2,6, xStartPos, yStartPos,direction,speed);
-		name = "KnightNPC";
+		name = "PhantomNPC";
 		direction = DirectionEnum.left;
 		setUpAnimators(4);
 	}
-
+	
 	public void setAction(){
 		randomDirectionForNPC();
 	}
-} 
+
+}

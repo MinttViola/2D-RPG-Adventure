@@ -107,6 +107,10 @@ public class GamePanel extends JPanel implements Runnable {
 		switch(gameState){
 			case GameState.PlayState:
 			player.update();
+		for(int i = 0;i<=npc.length-1;i++){
+			if(npc[i]!=null)
+				npc[i].update();
+		}
 			break;
 			case GameState.PauseState:
 			break;
@@ -119,8 +123,8 @@ public class GamePanel extends JPanel implements Runnable {
 		for(int i =0;i<layersCount;i++){
 			layersS[i].draw(g2);
 		}
-		ui.draw(g2);
 		player.draw(g2);
+		ui.draw(g2);
 		for(int i = 0;i<=obj.length-1;i++){
 			if(obj[i]!=null)
 				obj[i].draw(g2);

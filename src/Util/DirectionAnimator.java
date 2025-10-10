@@ -1,4 +1,4 @@
-package Entity;
+package Util;
 
 import Main.GamePanel;
 import Service.ScaleAssetsService;
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import Entity.Entity;
 
 public class DirectionAnimator {
 	Entity character;
@@ -52,7 +54,7 @@ public class DirectionAnimator {
 	}
 
 	public void draw(Graphics2D g2,int x, int y){
-				Anim(g2,character.dir.ordinal(), y, x);
+				Anim(g2,character.direction.ordinal(), y, x);
 	}
 	
 	public void Anim(Graphics2D g2, int id, int x, int y){

@@ -6,6 +6,7 @@ import Service.KeyService;
 import Util.AnimationStateEnum;
 import Util.DirectionEnum;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,11 @@ public class Player extends Entity {
 		this.keyH=keyH;
 		isPlayer = true;
 		name = "Player";
+		
 		screenX = gp.screenHeight/2-(gp.tileSize/2);
 		screenY = gp.screenWidth/2-(gp.tileSize/2);
 		setDefaultValues();
-		SetUpAnimators(4);
+		setUpAnimators(4);
 	}
 
 	
@@ -38,19 +40,19 @@ public class Player extends Entity {
 	public void update(){
 		switch (keyH.xChange) {
 			case -1:
-				dir =DirectionEnum.up;
+				direction = DirectionEnum.up;
 				break;
 			case 1:
-				dir =DirectionEnum.down;
+				direction = DirectionEnum.down;
 				break;
 			default:
 				break;
 		}		switch (keyH.yChange) {
 			case 1:
-				dir =DirectionEnum.right;
+				direction = DirectionEnum.right;
 				break;
 			case -1:
-				dir =DirectionEnum.left;
+				direction = DirectionEnum.left;
 				break;			
 			default:
 				break;
@@ -59,7 +61,7 @@ public class Player extends Entity {
 		collisionOn = true;
 		gp.cCheck.checker(this);
 		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
-		switch (dir) {
+		switch (direction) {
 			case down:
 				worldX -=speed;
 				break;
@@ -76,6 +78,17 @@ public class Player extends Entity {
 				break;}}
 		
 
+	}
+
+	public void NPCIteract(Entity NPC){
+		switch(NPC.name){
+			case "KnightNPC":
+			System.out.println(NPC.name);
+			break;
+			case "PhantomNPC":
+			System.out.println(NPC.name);
+			break;
+		}
 	}
 
 	public void itemIteract(SuperObjectBaseModel obj){

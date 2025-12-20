@@ -3,7 +3,8 @@ package Util;
 public enum TypesOfSuperObjEnum {
 	KEY("key",2),
 	CHEST("lootchest",2),
-	CRYSTAL("crystal",3);
+	CRYSTAL("crystal",3),
+	HEART("heart",4);
 
 	private final String name;
 

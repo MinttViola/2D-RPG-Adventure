@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 	ObjPlasment objPlase = new ObjPlasment(this);
 	public NPC npc[] = new NPC[10];
 	NPCPlasment NPCPlase = new NPCPlasment(this);
-	private GameState gameState = GameState.TitleState;
+	private GameState gameState = GameState.PlayState;
 
 
 	public GamePanel(){

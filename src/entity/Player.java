@@ -23,6 +23,9 @@ public class Player extends Entity {
 		this.keyH=keyH;
 		isPlayer = true;
 		name = "Player";
+
+		maxHP = 100;
+		curHP = maxHP;
 		
 		screenX = gp.screenHeight/2-(gp.tileSize/2);
 		screenY = gp.screenWidth/2-(gp.tileSize/2);
@@ -122,6 +125,11 @@ public class Player extends Entity {
 				obj.interaction();
 				gp.ui.showMassage("Найден ключ "+obj.id);
 				break;
+			case HEART:
+				obj.interaction();
+				changeHP(20);
+				gp.ui.showMassage("Восстановленно здоровье");
+				break;
 			default:
 				break;
 		}
@@ -133,4 +141,12 @@ public class Player extends Entity {
 			animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
 	}
 }
+	public void changeHP(int HPchanged){
+		curHP += HPchanged;
+		if(curHP>maxHP)
+			curHP=maxHP;
+		else if(curHP<0)
+			curHP = 0;
+		gp.ui.changeHealthBar(curHP);
+	}
 }

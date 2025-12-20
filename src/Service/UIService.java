@@ -27,6 +27,9 @@ public class UIService {
 	private int commandNum = 1;
 	int maxNumCommand = 0;
 	GameState prevGameState;
+	String startPath = "Assets/UI/";
+	String imageFileFormat = ".png";
+	int healthBarSize,maxHealthBarSize;
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
@@ -36,6 +39,8 @@ public class UIService {
 			}catch(FontFormatException e){} catch (IOException e) {
 				e.printStackTrace();
 			}
+		healthBarSize = (int)((gp.tileSize*3-gp.tileSize/2));
+		maxHealthBarSize = healthBarSize;
 		baseStrokeColor = Color.white;
 		baseDialogWindowColor = new Color(0,0,0,255);
 	}
@@ -60,6 +65,7 @@ public class UIService {
 			drawTitleScreen();
 			break;
 			case GameState.PlayState:
+			drawPlayStateUI();
 			break;
 			case GameState.PauseState:
 			drawPauseScreen();
@@ -69,6 +75,11 @@ public class UIService {
 			break;
 		}
 	}
+
+	private void drawPlayStateUI(){
+		drawImage(((gp.tileSize/4)+gp.tileSize+gp.tileSize/16), gp.tileSize/4, healthBarSize, gp.tileSize,"health_hud");
+		drawImage(gp.tileSize/4, gp.tileSize/4, gp.tileSize*4, gp.tileSize,"health_bar_hud");
+	}
 	
 	private void drawTitleScreen(){
 
@@ -76,13 +87,13 @@ public class UIService {
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
 		int y = gp.tileSize*2;
-		drawImage(0, y+(gp.tileSize), gp.tileSize*2, gp.tileSize*2, "Assets/UI/CharForMenu.png");
+		drawImage(0, y+(gp.tileSize), gp.tileSize*2, gp.tileSize*2,"CharForMenu");
 		drawShadowTextByCenter("2D RPG Adventure", Color.gray, Color.white, y);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
 		drawTextByCenter("NEW GAME", Color.white, y+(gp.tileSize*5),0);
 		drawTextByCenter("LOAD GAME", Color.white, y+(gp.tileSize*6),0);
 		drawTextByCenter("QUIT", Color.white, y+(gp.tileSize*7), 0);
-		drawImage(6*gp.tileSize,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
+		drawImage(6*gp.tileSize,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "select_icon_ui");
 	}
 
 	private void drawDialogScreen(){
@@ -138,8 +149,9 @@ public class UIService {
 		return x;
 	}
 
-	private void drawImage(int x, int y, int width, int height, String path){
-		BufferedImage imageToDraw = ImageUtil.getMainImage(path);
+	private void drawImage(int x, int y, int width, int height, String fileName){
+		String fullPath = startPath+fileName+imageFileFormat;
+		BufferedImage imageToDraw = ImageUtil.getMainImage(fullPath);
 		if(x==0){
 			x = gp.screenWidth/2 - width/2;
 		}
@@ -151,19 +163,24 @@ public class UIService {
 		dialogueCounter++;
 	}
 
+	public void changeHealthBar(double curHP){
 
+		int newHealthBarSize = (int)(maxHealthBarSize*(curHP/100));
+		drawImage(((gp.tileSize/4)+gp.tileSize+gp.tileSize/16), gp.tileSize/4, newHealthBarSize, gp.tileSize,"health_hud");
+		healthBarSize = newHealthBarSize;
+	}
 
 	public void increaseNumCommand(){
 		if(commandNum+1<=maxNumCommand){
 			commandNum +=1;
-			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
+			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, startPath+"select_icon_ui.png");
 		}
 	}
 
 	public void decreaseNumCommand(){
 		if(commandNum-1>0){
 			commandNum -=1;
-			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
+			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, startPath+"select_icon_ui.png");
 		}
 	}
 

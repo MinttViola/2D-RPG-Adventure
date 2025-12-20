@@ -73,8 +73,18 @@ public class KeyService implements KeyListener{
 				case KeyEvent.VK_D:
 					yChange=1;
 					break;
-					case KeyEvent.VK_E:
+				case KeyEvent.VK_E:
 					EPressed = true;
+					break;
+				case KeyEvent.VK_I:
+					if(System.nanoTime()>=timerForEliminateDoubleClick)
+						gp.player.changeHP(10);
+					timerForEliminateDoubleClick = System.nanoTime() +10000;
+					break;
+				case KeyEvent.VK_K:
+					if(System.nanoTime()>=timerForEliminateDoubleClick)
+						gp.player.changeHP(-10);
+					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_P:
 					gp.setGameState(GameState.PauseState);

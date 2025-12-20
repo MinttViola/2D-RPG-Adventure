@@ -41,6 +41,9 @@ public class SuperObjectBaseModel {
 			case KEY:
 				disapear();
 				break;
+			case HEART:
+				disapear();
+				break;
 			default:
 				break;
 		}

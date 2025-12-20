@@ -14,6 +14,7 @@ public class ObjPlasment {
 		gp.obj[0] = new Key(gp, 0, 6,14);
 		gp.obj[1] = new Chest(gp, 0, 6,4);
 		gp.obj[2] = new Crystal(gp, 8,6);
+		gp.obj[3] = new Heart(gp, 9,5);
 
 	}
 

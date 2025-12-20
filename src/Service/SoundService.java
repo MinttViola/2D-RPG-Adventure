@@ -12,7 +12,6 @@ public class SoundService {
 	File soundURL[] = new File[30];
 	File test = new File("Sounds/MainTheme.wav");
 	public SoundService(){
-
 		soundURL[0] = new File("Sounds/MainTheme.wav");
 		soundURL[1] = new File("Sounds/SFX/chest.wav");
 		soundURL[2] = new File("Sounds/SFX/crystal.wav");

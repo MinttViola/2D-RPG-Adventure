@@ -18,6 +18,7 @@ public class Entity {
 	public boolean isPlayer = false;
 	DirectionAnimator[] animators;
 	int dirCountFrames;
+	int maxHP,curHP;
 
 	public Entity(GamePanel gp, int animTypes, int countFrames){
 		this.gp = gp;

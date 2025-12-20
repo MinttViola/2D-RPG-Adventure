@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class ImageUtil {
 
@@ -30,5 +34,18 @@ public class ImageUtil {
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 		img = op.filter(img, null);
 		return img;
+	}
+
+	
+	public static BufferedImage getMainImage(String path){
+		BufferedImage image;
+		try{
+			File file = new File(path);
+			image = ImageIO.read(file);
+			return image;
+		} catch(IOException e){
+				e.printStackTrace();
+				return null;
+			}
 	}
 }

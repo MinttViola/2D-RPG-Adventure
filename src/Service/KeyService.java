@@ -9,43 +9,29 @@ public class KeyService implements KeyListener{
 
 	public int yChange, xChange = 0;
 	public boolean EPressed = false;
-	GamePanel gp;
+	GamePanel gp;	
+	long timerForEliminateDoubleClick = 0;
 	public KeyService(GamePanel gp){
 		this.gp = gp;
 	}
 	@Override
-	public void keyPressed(KeyEvent e) {		
-		long timerForPause = 0;
+	public void keyPressed(KeyEvent e) {	
 		int code = e.getKeyCode();
-		if(gp.getGameState() == GameState.PlayState){
-			switch (code) {
-				case KeyEvent.VK_W:
-					xChange=1;
+		switch (gp.getGameState()) {
+				case GameState.PlayState:
+					playStateSwitch(code);
 					break;
-				case KeyEvent.VK_S:
-					xChange=-1;
+				case GameState.PauseState:
+					pauseStateSwitch(code);
 					break;
-				case KeyEvent.VK_A:
-					yChange=-1;
+				case GameState.DialogueState:
+					dialogueStateSwitch(code);
 					break;
-				case KeyEvent.VK_D:
-					yChange=1;
+				case GameState.TitleState:
+					titleStateSwitch(code);
 					break;
-					case KeyEvent.VK_E:
-					EPressed = true;
+				default:
 					break;
-				case KeyEvent.VK_P:
-					gp.setGameState(GameState.PauseState);
-					timerForPause = System.nanoTime() +10000;
-					break;
-					}
-				}
-		if(gp.getGameState() == GameState.PauseState && code == KeyEvent.VK_P && System.nanoTime()>=timerForPause){
-					gp.setGameState(GameState.PlayState);
-
-		}
-		if(gp.getGameState() == GameState.DialogState && code == KeyEvent.VK_E){
-			gp.ui.dialogueCounter++;
 		}
 	}
 
@@ -73,4 +59,76 @@ public class KeyService implements KeyListener{
 
 	}
 
+	private void playStateSwitch(int code){
+		switch (code) {
+				case KeyEvent.VK_W:
+					xChange=1;
+					break;
+				case KeyEvent.VK_S:
+					xChange=-1;
+					break;
+				case KeyEvent.VK_A:
+					yChange=-1;
+					break;
+				case KeyEvent.VK_D:
+					yChange=1;
+					break;
+					case KeyEvent.VK_E:
+					EPressed = true;
+					break;
+				case KeyEvent.VK_P:
+					gp.setGameState(GameState.PauseState);
+					timerForEliminateDoubleClick = System.nanoTime() +10000;
+					break;
+			}
+		}
+		
+		private void pauseStateSwitch(int code){
+			switch (code) {
+					case KeyEvent.VK_P:
+							if(System.nanoTime()>=timerForEliminateDoubleClick)
+								gp.setGameState(GameState.PlayState);
+							break;
+					default:
+							throw new AssertionError();
+			}
+		}
+
+		public void dialogueStateSwitch(int code){
+			switch (code) {
+					case KeyEvent.VK_E:
+							if(System.nanoTime()>=timerForEliminateDoubleClick){
+								gp.nextDialogue();
+								timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							}
+							break;
+					default:
+							throw new AssertionError();
+			}
+		}
+
+		private void titleStateSwitch(int code){
+			if(System.nanoTime()>=timerForEliminateDoubleClick){
+				switch (code) {
+						case KeyEvent.VK_W:
+							gp.ui.decreaseNumCommand();
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							break;
+						case KeyEvent.VK_S:
+							gp.ui.increaseNumCommand();
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							break;
+						case KeyEvent.VK_E:
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							gp.ui.enterCommand();
+							break;
+						case KeyEvent.VK_ENTER:
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							gp.ui.enterCommand();
+							break;
+						default:
+						break;
+				}
+			}
+		}
 }

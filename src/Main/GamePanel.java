@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 	ObjPlasment objPlase = new ObjPlasment(this);
 	public NPC npc[] = new NPC[10];
 	NPCPlasment NPCPlase = new NPCPlasment(this);
-	private GameState gameState = GameState.PauseState;
+	private GameState gameState = GameState.TitleState;
 
 
 	public GamePanel(){
@@ -148,11 +148,14 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setGameState(GameState newState){
-		System.out.println("Game State changed to: " + newState);
 		this.gameState = newState;
 	}
 	
 	public GameState getGameState(){
 		return gameState;
+	}
+
+	public void nextDialogue(){
+		ui.nextDialogue();
 	}
 }

@@ -10,6 +10,8 @@ import java.io.IOException;
 import Entity.NPC;
 import Main.GamePanel;
 import Util.GameState;
+import Util.ImageUtil;
+import java.awt.image.BufferedImage;
 
 public class UIService {
 	GamePanel gp;
@@ -17,10 +19,14 @@ public class UIService {
 	boolean massageVisible = false;
 	String massage = "";
 	int dialogueCounter = 0;
+	int maxDialogueNum = 0;
 	int indent = 10;
 	int massageCountdown = 0;
 	Graphics2D g2;
 	Color baseStrokeColor,baseDialogWindowColor;
+	private int commandNum = 1;
+	int maxNumCommand = 0;
+	GameState prevGameState;
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
@@ -46,6 +52,11 @@ public class UIService {
 		
 		switch(gp.getGameState()){
 			case GameState.TitleState:
+			if(prevGameState != gp.getGameState()){
+				maxNumCommand = 3;
+				commandNum = 1;
+			}
+			prevGameState = GameState.TitleState;
 			drawTitleScreen();
 			break;
 			case GameState.PlayState:
@@ -53,40 +64,43 @@ public class UIService {
 			case GameState.PauseState:
 			drawPauseScreen();
 			break;
-			case GameState.DialogState:
+			case GameState.DialogueState:
 			drawDialogScreen();
 			break;
 		}
 	}
 	
 	private void drawTitleScreen(){
-		//background
+
 		g2.setColor(new Color(0,0,0));
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-		int y = gp.tileSize*3;
+		int y = gp.tileSize*2;
+		drawImage(0, y+(gp.tileSize), gp.tileSize*2, gp.tileSize*2, "Assets/UI/CharForMenu.png");
 		drawShadowTextByCenter("2D RPG Adventure", Color.gray, Color.white, y);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-		drawTextByCenter("NEW GAME", Color.white, y+(gp.tileSize*4),0);
-		drawTextByCenter("LOAD GAME", Color.white, y+(gp.tileSize*5),0);
-		drawTextByCenter("QUIT", Color.white, y+(gp.tileSize*6), 0);
+		drawTextByCenter("NEW GAME", Color.white, y+(gp.tileSize*5),0);
+		drawTextByCenter("LOAD GAME", Color.white, y+(gp.tileSize*6),0);
+		drawTextByCenter("QUIT", Color.white, y+(gp.tileSize*7), 0);
+		drawImage(6*gp.tileSize,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
 	}
 
 	private void drawDialogScreen(){
 		NPC npc = gp.player.NPCForDialogue;
-			int x = gp.tileSize*2;
-			int y = gp.tileSize /2;
-			int width = gp.screenWidth - (gp.tileSize*4);
-			int height = gp.tileSize*2;
-			drawSubWindow(x, y, width, height,baseDialogWindowColor,baseStrokeColor);
-			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
-			x+=gp.tileSize;
-			y+=gp.tileSize;
-			if(dialogueCounter !=npc.dialoguesArray.length)
-				g2.drawString( npc.dialoguesArray[dialogueCounter], x, y);
-			else{
-				gp.setGameState(GameState.PlayState);
-				dialogueCounter = 0;
+		maxDialogueNum = npc.dialoguesArray.length;
+		int x = gp.tileSize*2;
+		int y = gp.tileSize /2;
+		int width = gp.screenWidth - (gp.tileSize*4);
+		int height = gp.tileSize*2;
+		drawSubWindow(x, y, width, height,baseDialogWindowColor,baseStrokeColor);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
+		x+=gp.tileSize;
+		y+=gp.tileSize;
+		if(dialogueCounter !=npc.dialoguesArray.length)
+			g2.drawString(npc.dialoguesArray[dialogueCounter], x, y);
+		else{
+			gp.setGameState(GameState.PlayState);
+			dialogueCounter = 0;
 		}
 	}
 
@@ -123,4 +137,56 @@ public class UIService {
 		int x = gp.screenWidth/2- length/2;
 		return x;
 	}
+
+	private void drawImage(int x, int y, int width, int height, String path){
+		BufferedImage imageToDraw = ImageUtil.getMainImage(path);
+		if(x==0){
+			x = gp.screenWidth/2 - width/2;
+		}
+		g2.drawImage(imageToDraw,x,y,width,height, null);
+	}
+
+	public void nextDialogue(){
+		if(dialogueCounter <maxDialogueNum)
+		dialogueCounter++;
+	}
+
+
+
+	public void increaseNumCommand(){
+		if(commandNum+1<=maxNumCommand){
+			commandNum +=1;
+			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
+		}
+	}
+
+	public void decreaseNumCommand(){
+		if(commandNum-1>0){
+			commandNum -=1;
+			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "Assets/UI/select_icon_ui.png");
+		}
+	}
+
+	public void enterCommand(){
+		switch(gp.getGameState()){
+			case GameState.TitleState:
+			titleStateSwitch();
+			break;
+		}
+	}
+
+	private void titleStateSwitch(){
+		switch(commandNum){
+			case 1:
+				gp.setGameState(GameState.PlayState);
+				break;
+			case 2:
+
+			break;
+			case 3:
+			System.exit(0);
+			break;
+		}
+	}
+	
 }

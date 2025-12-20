@@ -4,9 +4,6 @@ import Main.GamePanel;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Animator {
 	GamePanel gp;
@@ -48,7 +45,7 @@ public class Animator {
 	}
 	
 	public BufferedImage[][] getListFrames(String path){
-		getMainImage(path);
+		originalSpriteSheet = ImageUtil.getMainImage(path);
 		int size = gp.originalTitleSize;
 		statusCount = new int[originalSpriteSheet.getHeight()/size][2];
 		statusCount[0][0] = originalSpriteSheet.getWidth()/size;
@@ -91,15 +88,6 @@ public class Animator {
 				}	
 			}}
 		return true;
-	}
-	
-	public void getMainImage(String path){
-		try{
-			File file = new File(path);
-			originalSpriteSheet= ImageIO.read(file);
-		} catch(IOException e){
-				e.printStackTrace();
-			}
 	}
 	
 	public void draw(Graphics2D g2, int x, int y){

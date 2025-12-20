@@ -15,8 +15,9 @@ public class KeyService implements KeyListener{
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {		
+		long timerForPause = 0;
 		int code = e.getKeyCode();
-		if(gp.gameState == GameState.PlayState){
+		if(gp.getGameState() == GameState.PlayState){
 			switch (code) {
 				case KeyEvent.VK_W:
 					xChange=1;
@@ -33,16 +34,17 @@ public class KeyService implements KeyListener{
 					case KeyEvent.VK_E:
 					EPressed = true;
 					break;
-				case KeyEvent.VK_ESCAPE:
-					gp.gameState = GameState.PauseState;
+				case KeyEvent.VK_P:
+					gp.setGameState(GameState.PauseState);
+					timerForPause = System.nanoTime() +10000;
 					break;
 					}
 				}
-		if(gp.gameState == GameState.PauseState && code == KeyEvent.VK_ESCAPE){
-				gp.gameState = GameState.PlayState;
+		if(gp.getGameState() == GameState.PauseState && code == KeyEvent.VK_P && System.nanoTime()>=timerForPause){
+					gp.setGameState(GameState.PlayState);
 
 		}
-		if(gp.gameState == GameState.DialogState && code == KeyEvent.VK_E){
+		if(gp.getGameState() == GameState.DialogState && code == KeyEvent.VK_E){
 			gp.ui.dialogueCounter++;
 		}
 	}

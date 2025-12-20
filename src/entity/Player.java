@@ -86,7 +86,7 @@ public class Player extends Entity {
 			return;
 		if(NPC != null){
 			NPCForDialogue = NPC;
-			gp.gameState = GameState.DialogState;
+			gp.setGameState(GameState.DialogState);
 		}
 		/*switch(NPC.name){
 			case "KnightNPC":

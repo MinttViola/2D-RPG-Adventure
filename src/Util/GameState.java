@@ -3,5 +3,6 @@ package Util;
 public enum GameState {
 	PlayState,
 	PauseState,
-	DialogState
+	DialogState,
+	TitleState
 }

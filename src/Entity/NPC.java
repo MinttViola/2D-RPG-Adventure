@@ -14,8 +14,9 @@ public class NPC extends Entity{
 	public String[] dialoguesArray = {"This is dialogue"};
 	private int actionLockCounter = 0;
 	public int lastX,lastY;
+	int minX, maxX, minY, maxY;
 	public DirectionEnum[] AllDirectionsArray = {DirectionEnum.left,DirectionEnum.right};
-	public NPC(GamePanel gp, int id,int animTypes, int countFrames,int xStartPos, int yStartPos, DirectionEnum StartDirection, int speed)
+	public NPC(GamePanel gp, int id,int animTypes, int countFrames,int xStartPos, int yStartPos, DirectionEnum StartDirection, int speed, int minX, int maxX, int minY, int maxY)
 	{
 		super(gp,animTypes,countFrames);
 		collisionOn = true;
@@ -24,13 +25,20 @@ public class NPC extends Entity{
 		this.id = id;
 		worldX = xStartPos*gp.tileSize;
 		worldY = yStartPos* gp.tileSize;
+		this.minX = minX*gp.tileSize;
+		this.maxX = maxX*gp.tileSize;
+		this.minY = minY*gp.tileSize;
+		this.maxY = maxY*gp.tileSize;
 	}
 	public void setAction(){}
+
 	public void playerInteract(){
 		if(!gp.keyH.EPressed)
 			return;
 		turnToPlayer();}
+	
 	public void setDialogue(){}
+	
 	public void update(){
 		setAction();
 		collisionOn = true;
@@ -40,19 +48,23 @@ public class NPC extends Entity{
 			switch (direction) {
 				case down:
 					lastX = worldX;
-					worldX -=speed;
+					if(worldX -speed>=minX)
+						worldX -=speed;
 					break;
 				case right:
 					lastY = worldY;
-					worldY +=speed;
+					if(worldY + speed <= maxY)
+						worldY +=speed;
 					break;
 				case left:
 					lastY = worldY;
-					worldY -=speed;
+					if(worldY - speed >= minY)
+						worldY -=speed;
 					break;
 				case up:
 					lastX = worldX;
-					worldX +=speed;
+					if(worldX + speed <= maxX)
+						worldX +=speed;
 					break;
 				default:
 					break;}}
@@ -140,7 +152,7 @@ public class NPC extends Entity{
 		else if(randomNumber>25 && randomNumber<=50)
 		direction = DirectionEnum.up;
 		else if(randomNumber>50&&randomNumber<=75)
-		direction = DirectionEnum.left;
+		direction = DirectionEnum.right;
 		else 
 		direction = DirectionEnum.down;
 		

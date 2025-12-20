@@ -107,9 +107,6 @@ public class Animator {
 			return;
 		}
 		frameCount = statusCount[curStatus][0];
-		if(frameCount==1){
-			g2.drawImage(frames[0][curStatus],y,x,null);
-		}
 		if (statusCount[curStatus][1]==1)
 			frameRate=0.3;
 		if(timer>(frameRate*2)){

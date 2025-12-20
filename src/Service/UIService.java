@@ -7,7 +7,6 @@ import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import Entity.NPC;
 import Main.GamePanel;
 import Util.GameState;
@@ -21,16 +20,18 @@ public class UIService {
 	int indent = 10;
 	int massageCountdown = 0;
 	Graphics2D g2;
+	Color baseStrokeColor,baseDialogWindowColor;
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
-			File file = new File("Assets/Fonts/FontForGame.ttf");
+			File file = new File("Assets/Fonts/FontForGame2.ttf");
 			try{
 			myFont = Font.createFont(Font.TRUETYPE_FONT,file);
 			}catch(FontFormatException e){} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
+		baseStrokeColor = Color.white;
+		baseDialogWindowColor = new Color(0,0,0,255);
 	}
 
 	public void showMassage(String text){
@@ -43,7 +44,10 @@ public class UIService {
 		g2.setFont(myFont);
 		g2.setColor(Color.white);
 		
-		switch(gp.gameState){
+		switch(gp.getGameState()){
+			case GameState.TitleState:
+			drawTitleScreen();
+			break;
 			case GameState.PlayState:
 			break;
 			case GameState.PauseState:
@@ -54,6 +58,19 @@ public class UIService {
 			break;
 		}
 	}
+	
+	private void drawTitleScreen(){
+		//background
+		g2.setColor(new Color(0,0,0));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+		int y = gp.tileSize*3;
+		drawShadowTextByCenter("2D RPG Adventure", Color.gray, Color.white, y);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+		drawTextByCenter("NEW GAME", Color.white, y+(gp.tileSize*4),0);
+		drawTextByCenter("LOAD GAME", Color.white, y+(gp.tileSize*5),0);
+		drawTextByCenter("QUIT", Color.white, y+(gp.tileSize*6), 0);
+	}
 
 	private void drawDialogScreen(){
 		NPC npc = gp.player.NPCForDialogue;
@@ -61,35 +78,47 @@ public class UIService {
 			int y = gp.tileSize /2;
 			int width = gp.screenWidth - (gp.tileSize*4);
 			int height = gp.tileSize*2;
-			drawSubWindow(x, y, width, height);
+			drawSubWindow(x, y, width, height,baseDialogWindowColor,baseStrokeColor);
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
 			x+=gp.tileSize;
 			y+=gp.tileSize;
 			if(dialogueCounter !=npc.dialoguesArray.length)
 				g2.drawString( npc.dialoguesArray[dialogueCounter], x, y);
 			else{
-			gp.gameState = GameState.PlayState;
-			dialogueCounter = 0;
+				gp.setGameState(GameState.PlayState);
+				dialogueCounter = 0;
 		}
 	}
 
-	private void drawSubWindow(int x, int y, int width, int height){
-		g2.setColor(new Color(0,0,0,255));
+	private void drawPauseScreen(){
+		int y = gp.screenHeight/2;
+		Color color = new Color(0,0,0,120);
+		drawSubWindow(0, 0, gp.screenWidth, gp.screenHeight, color,color);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+		drawShadowTextByCenter("pause", Color.gray, Color.white, y);
+	}
+
+	private void drawSubWindow(int x, int y, int width, int height, Color windowColor, Color strokeColor){
+		g2.setColor(windowColor);
 		g2.fillRoundRect(x, y, width, height, 35, 35);
-		g2.setColor(Color.white);
+		g2.setColor(strokeColor);
 		g2.setStroke(new BasicStroke(5));
 		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
 	}
 
-	private void drawPauseScreen(){
-		String text ="pause";
-		int x = GetXForCenterText(text);
-		int y = gp.screenHeight/2;
-		g2.drawString(text, x, y);
 
+	private void drawShadowTextByCenter(String text, Color shadowColor, Color mainTextColor, int y){
+		drawTextByCenter(text, shadowColor, y+5, 5);
+		drawTextByCenter(text, mainTextColor, y,0);
 	}
 
-	public int GetXForCenterText(String text){
+	private void drawTextByCenter(String text, Color color, int y, int xChangeForShadow){
+		int x = getXForCenterText(text);
+		g2.setColor(color);
+		g2.drawString(text, x+xChangeForShadow, y);
+	}
+
+	private int getXForCenterText(String text){
 		int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
 		int x = gp.screenWidth/2- length/2;
 		return x;

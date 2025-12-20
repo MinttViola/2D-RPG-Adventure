@@ -5,8 +5,8 @@ import Util.DirectionEnum;
 
 public class NPCKnight extends NPC{
 
-	public NPCKnight(GamePanel gp,int id,int xStartPos, int yStartPos, DirectionEnum direction, int speed){
-		super(gp,id,2,6, xStartPos, yStartPos,direction,speed);
+	public NPCKnight(GamePanel gp,int id,int xStartPos, int yStartPos, DirectionEnum direction, int speed, int minX, int maxX, int minY, int maxY){
+		super(gp,id,2,6, xStartPos, yStartPos,direction,speed, minX, maxX, minY, maxY);
 		name = "KnightNPC";
 		setDialogue();
 		setUpAnimators(4);

@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 	ObjPlasment objPlase = new ObjPlasment(this);
 	public NPC npc[] = new NPC[10];
 	NPCPlasment NPCPlase = new NPCPlasment(this);
-	public GameState gameState = GameState.PlayState;
+	private GameState gameState = GameState.PauseState;
 
 
 	public GamePanel(){
@@ -120,18 +120,24 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		for(int i =0;i<layersCount;i++){
-			layersS[i].draw(g2);
+		if(gameState == GameState.TitleState){
+			ui.draw(g2);
+			g2.dispose();
 		}
-		player.draw(g2);
-		for(int i = 0;i<=obj.length-1;i++){
-			if(obj[i]!=null)
-				obj[i].draw(g2);
-			if(npc[i]!=null)
-				npc[i].draw(g2);
-		}
-		ui.draw(g2);
-		g2.dispose();
+		else{
+			for(int i =0;i<layersCount;i++){
+				layersS[i].draw(g2);
+			}
+			player.draw(g2);
+			for(int i = 0;i<=obj.length-1;i++){
+				if(obj[i]!=null)
+					obj[i].draw(g2);
+				if(npc[i]!=null)
+					npc[i].draw(g2);
+			}
+			ui.draw(g2);
+			g2.dispose();
+		}	
 	}
 
 	public void stopMusic(){
@@ -139,5 +145,14 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	public void playDisapearSE(String name){
 		bgMusic.playSE(name);
+	}
+
+	public void setGameState(GameState newState){
+		System.out.println("Game State changed to: " + newState);
+		this.gameState = newState;
+	}
+	
+	public GameState getGameState(){
+		return gameState;
 	}
 }

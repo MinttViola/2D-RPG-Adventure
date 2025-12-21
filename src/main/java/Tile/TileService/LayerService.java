@@ -1,14 +1,17 @@
 package Tile.TileService;
 
-import Main.GamePanel;
-import WorkWithJson.MapLayerEnum;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import Main.GamePanel;
+import Util.WorkWithFilesUtil;
+import WorkWithJson.MapLayerEnum;
 
 public class LayerService {
 	GamePanel gp;
+	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 	int tileSize;
 	String name;
 	TileService tileSet;
@@ -31,19 +34,26 @@ public class LayerService {
 
 	public void loadLevel(){
 		String path = "Assets/Levels/"+level+"/"+name+".txt";
-		try{
-			File is = new File(path);
-			BufferedReader br = new BufferedReader(new FileReader(is));
-			for(int i = 0; i<=gp.getMaxWorldCol()-1;i++){
-				String line = br.readLine();
-				String numbers[] = line.split(", ");
-				for(int j = 0; j<=gp.getMaxWorldRow()-1;j++){
-					int num = Integer.parseInt(numbers[j]);
-					map[i][j] = num;
+		try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
+
+				if (is == null) {
+						throw new RuntimeException("Level file not found: " + path);
 				}
-			}
-			br.close();
-		}catch(Exception e){}
+
+				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+						for (int i = 0; i < gp.getMaxWorldCol(); i++) {
+								String line = br.readLine();
+								String[] numbers = line.split(",\\s*"); // убираем пробелы
+								for (int j = 0; j < gp.getMaxWorldRow(); j++) {
+										int num = Integer.parseInt(numbers[j]);
+										map[i][j] = num;
+								}
+						}
+				}
+
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
 	}
 
 	public void TestMap(int[][] map){

@@ -1,19 +1,25 @@
 package Main;
 
-import Entity.*;
-import InteractableObj.ObjPlasment;
-import InteractableObj.SuperObjectBaseModel;
-import Service.*;
-import Tile.TileService.*;
-import Util.GameState;
-import WorkWithJson.MapLayerEnum;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.annotation.processing.Generated;
 import javax.swing.JPanel;
+
+import Entity.NPC;
+import Entity.NPCPlasment;
+import Entity.Player;
+import InteractableObj.ObjPlasment;
+import InteractableObj.SuperObjectBaseModel;
+import Service.CollisionService;
+import Service.KeyService;
+import Service.SoundService;
+import Service.UIService;
+import Tile.TileService.LayerService;
+import Tile.TileService.TileService;
+import Util.GameState;
+import WorkWithJson.MapLayerEnum;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
@@ -107,14 +113,14 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void update(){
 		switch(gameState){
-			case GameState.PlayState:
+			case PlayState:
 			player.update();
 		for(int i = 0;i<=npc.length-1;i++){
 			if(npc[i]!=null)
 				npc[i].update();
 		}
 			break;
-			case GameState.PauseState:
+			case PauseState:
 			break;
 		}
 	}

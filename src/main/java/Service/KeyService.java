@@ -1,9 +1,10 @@
 package Service;
 
-import Main.GamePanel;
-import Util.GameState;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import Main.GamePanel;
+import Util.GameState;
 
 public class KeyService implements KeyListener{
 
@@ -18,16 +19,16 @@ public class KeyService implements KeyListener{
 	public void keyPressed(KeyEvent e) {	
 		int code = e.getKeyCode();
 		switch (gp.getGameState()) {
-				case GameState.PlayState:
+				case PlayState:
 					playStateSwitch(code);
 					break;
-				case GameState.PauseState:
+				case PauseState:
 					pauseStateSwitch(code);
 					break;
-				case GameState.DialogueState:
+				case DialogueState:
 					dialogueStateSwitch(code);
 					break;
-				case GameState.TitleState:
+				case TitleState:
 					titleStateSwitch(code);
 					break;
 				default:

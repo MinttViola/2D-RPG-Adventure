@@ -1,26 +1,28 @@
 package Service;
 
-import java.io.File;
+import java.net.URL;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import Util.WorkWithFilesUtil;
+
 public class SoundService {
 	
+	private WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 	Clip clip;
 	String path = "Sounds/";
-	File soundURL[] = new File[30];
-	File test = new File("Sounds/MainTheme.wav");
-	public SoundService(){
-		soundURL[0] = new File("Sounds/MainTheme.wav");
-		soundURL[1] = new File("Sounds/SFX/chest.wav");
-		soundURL[2] = new File("Sounds/SFX/crystal.wav");
-		soundURL[3] = new File("Sounds/SFX/key.wav");
-	}
+	URL soundURL[] = new URL[30];
+	/*public SoundService(){
+		soundURL[1] = fileUtil.get("Sounds/SFX/chest.wav");
+		soundURL[2] = fileUtil.get("Sounds/SFX/crystal.wav");
+		soundURL[3] = fileUtil.get("Sounds/SFX/key.wav");
+	}*/
 
 	public void playBackgroundMusic(int level){
 		String thisPath = path+"Level "+level+" Theme.wav";
-		File backgroundSound =  new File(thisPath);
+		URL backgroundSound = fileUtil.get(thisPath);
 		SetFile(backgroundSound);
 		play();
 		loop();
@@ -28,12 +30,12 @@ public class SoundService {
 
 	public void playSE(String name){
 		String thisPath = path+"SFX/"+name+".wav";
-		File seSound = new File(thisPath);
+		URL seSound = fileUtil.get(thisPath);
 		SetFile(seSound);
 		play();
 	}
 
-	public void SetFile(File url)
+	public void SetFile(URL url)
 	{
 		try
 		{

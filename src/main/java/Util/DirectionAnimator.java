@@ -1,18 +1,19 @@
 package Util;
 
-import Main.GamePanel;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.imageio.ImageIO;
 
 import Entity.Entity;
+import Main.GamePanel;
 
 public class DirectionAnimator {
 	Entity character;
 	GamePanel gp;
+	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 	double frameRate =  0.16;
 	int dirCount = 1;
 	BufferedImage mainImage;
@@ -36,7 +37,7 @@ public class DirectionAnimator {
 	
 	public void getMainImage(){
 		try{
-			File file = new File(path);
+			URL file = fileUtil.get(path);
 			mainImage = ImageIO.read(file);
 		} catch(IOException e){
 				e.printStackTrace();

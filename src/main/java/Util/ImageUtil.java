@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -38,9 +38,10 @@ public class ImageUtil {
 
 	
 	public static BufferedImage getMainImage(String path){
+		WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 		BufferedImage image;
 		try{
-			File file = new File(path);
+			URL file = fileUtil.get(path);
 			image = ImageIO.read(file);
 			return image;
 		} catch(IOException e){

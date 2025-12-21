@@ -1,18 +1,21 @@
 package Tile.TileService;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 import Util.ImageUtil;
 import Util.ScaleAssetsUtil;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import Util.WorkWithFilesUtil;
 
 public class TileService {
 	public String name;
 	Tile[] tiles;
 	int OriginalTileSize;
 	int tileSizeForScale;
+	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 
 	public TileService(String name, int originalTileSize, int tileSizeForScale){
 		this.name = name;
@@ -24,8 +27,9 @@ public class TileService {
 
 
 	private final void setupTiles(){
+
 		try{
-			File file = new File("Assets/TileSheet/"+name+"_sheet.png");
+			URL file = fileUtil.get("Assets/TileSheet/"+name+"_sheet.png");
 			BufferedImage img = ImageIO.read(file);
 			int height = img.getHeight()/OriginalTileSize;
 			int width = (img.getWidth()%OriginalTileSize)+10;

@@ -1,20 +1,23 @@
 package Service;
 
-import Entity.NPC;
-import Main.GamePanel;
-import Util.GameState;
-import Util.ImageUtil;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import Entity.NPC;
+import Main.GamePanel;
+import Util.GameState;
+import Util.ImageUtil;
+import Util.WorkWithFilesUtil;
 
 public class UIService {
 	GamePanel gp;
+	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 	Font myFont;
 	boolean massageVisible = false;
 	String massage = "";
@@ -34,12 +37,19 @@ public class UIService {
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
-			File file = new File("Assets/Fonts/FontForGame2.ttf");
-			try{
-			myFont = Font.createFont(Font.TRUETYPE_FONT,file);
-			}catch(FontFormatException e){} catch (IOException e) {
+		try (InputStream is = getClass()
+						.getClassLoader()
+						.getResourceAsStream("Assets/Fonts/FontForGame2.ttf")) {
+
+				if (is == null) {
+						throw new RuntimeException("Font not found");
+				}
+
+				myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+
+		} catch (FontFormatException | IOException e) {
 				e.printStackTrace();
-			}
+		}
 		tileSize = gp.getTileSize();
 		healthBarSize = (int)((tileSize*3-tileSize/2));
 		maxHealthBarSize = healthBarSize;
@@ -58,7 +68,7 @@ public class UIService {
 		g2.setColor(Color.white);
 		
 		switch(gp.getGameState()){
-			case GameState.TitleState:
+			case TitleState:
 			if(prevGameState != gp.getGameState()){
 				maxNumCommand = 3;
 				commandNum = 1;
@@ -66,13 +76,13 @@ public class UIService {
 			prevGameState = GameState.TitleState;
 			drawTitleScreen();
 			break;
-			case GameState.PlayState:
+			case PlayState:
 			drawPlayStateUI();
 			break;
-			case GameState.PauseState:
+			case PauseState:
 			drawPauseScreen();
 			break;
-			case GameState.DialogueState:
+			case DialogueState:
 			drawDialogScreen();
 			break;
 		}
@@ -193,7 +203,7 @@ public class UIService {
 
 	public void enterCommand(){
 		switch(gp.getGameState()){
-			case GameState.TitleState:
+			case TitleState:
 			titleStateSwitch();
 			break;
 		}

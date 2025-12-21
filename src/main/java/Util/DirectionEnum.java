@@ -8,13 +8,13 @@ public enum DirectionEnum {
 
 	public static DirectionEnum getOppositeSide(DirectionEnum direction){
 		switch(direction){
-			case DirectionEnum.up:
+			case up:
 			return DirectionEnum.down;
-			case DirectionEnum.down:
+			case down:
 			return DirectionEnum.up;
-			case DirectionEnum.right:
+			case right:
 			return DirectionEnum.left;
-			case DirectionEnum.left:
+			case left:
 			return DirectionEnum.right;
 			}
 			return null;

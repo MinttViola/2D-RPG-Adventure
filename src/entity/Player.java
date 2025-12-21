@@ -27,8 +27,8 @@ public class Player extends Entity {
 		maxHP = 100;
 		curHP = maxHP;
 		
-		screenX = gp.screenHeight/2-(gp.getTileSize()/2);
-		screenY = gp.screenWidth/2-(gp.getTileSize()/2);
+		screenX = gp.getScreenHeight()/2-(gp.getTileSize()/2);
+		screenY = gp.getScreenWidth()/2-(gp.getTileSize()/2);
 		setDefaultValues();
 		setUpAnimators(4);
 	}
@@ -63,7 +63,7 @@ public class Player extends Entity {
 		}
 
 		collisionOn = true;
-		gp.cCheck.checker(this);
+		gp.getCollisionService().checker(this);
 		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
 		switch (direction) {
 			case down:
@@ -85,7 +85,7 @@ public class Player extends Entity {
 	}
 
 	public void NPCIteract(NPC NPC){
-		if(!gp.keyH.EPressed)
+		if(!gp.getKeyService().EPressed)
 			return;
 		if(NPC != null){
 			NPCForDialogue = NPC;
@@ -109,26 +109,26 @@ public class Player extends Entity {
 					if(obj.id==backpack.get(i).id){
 					obj.interaction();
 					backpack.remove(i);
-					gp.ui.showMassage("Открыт сундук "+obj.id);
+					gp.getUIService().showMassage("Открыт сундук "+obj.id);
 					break;
 					}
-				gp.ui.showMassage("Найди другой ключ "+obj.id);
+				gp.getUIService().showMassage("Найди другой ключ "+obj.id);
 				}
 				break;
 			case CRYSTAL:
 				speed += 2;
-				gp.ui.showMassage("Ускорение");
+				gp.getUIService().showMassage("Ускорение");
 				obj.interaction();
 				break;
 			case KEY:
 				backpack.add(obj);
 				obj.interaction();
-				gp.ui.showMassage("Найден ключ "+obj.id);
+				gp.getUIService().showMassage("Найден ключ "+obj.id);
 				break;
 			case HEART:
 				obj.interaction();
 				changeHP(20);
-				gp.ui.showMassage("Восстановленно здоровье");
+				gp.getUIService().showMassage("Восстановленно здоровье");
 				break;
 			default:
 				break;
@@ -147,7 +147,7 @@ public class Player extends Entity {
 			curHP=maxHP;
 		else if(curHP<0)
 			curHP = 0;
-		gp.ui.changeHealthBar(curHP);
+		gp.getUIService().changeHealthBar(curHP);
 	}
 
 	public boolean ifPlayerCanSeeThis(int thisWorldX, int thisWorldY){
@@ -170,7 +170,7 @@ public class Player extends Entity {
 		int thisScreenY = thisWorldY-worldY + screenY;
 		return thisScreenY;
 	}
-	
+
 	public NPC getDialogueNPC(){
 		return NPCForDialogue;
 	}

@@ -11,24 +11,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import javax.annotation.processing.Generated;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
-	final int originalTitleSize = 16; 
-	final int scale = 4;
-	final int tileSize = originalTitleSize*scale;
-	public final int maxScreenCol=20;//1680
-	public final int maxScreenRow=10;//640
-	public final int screenWidth=tileSize*maxScreenCol;
-	public final int screenHeight=tileSize*maxScreenRow;
+	private final int originalTitleSize = 16; 
+	private final int scale = 4;
+	private final int tileSize = originalTitleSize*scale;
+	private final int maxScreenCol=20;//1680
+	private final int maxScreenRow=10;//640
+	private final int screenWidth=tileSize*maxScreenCol;
+	private final int screenHeight=tileSize*maxScreenRow;
 
   //word setting
-	public final int maxWorldCol = 30;
-	public final int maxWorldRow = 30;
-	public final int worldWidth=tileSize*maxWorldCol;
-	public final int worldHeight=tileSize*maxWorldRow;
-	public final int layersCount = 4;
+	private final int maxWorldCol = 30;
+	private final int maxWorldRow = 30;
+	private final int worldWidth=tileSize*maxWorldCol;
+	private final int worldHeight=tileSize*maxWorldRow;
+	private final int layersCount = 4;
 
 	public final int  startPlayerPositionX=7*tileSize;
 	public final int  startPlayerPositionY=9*tileSize;
@@ -38,13 +40,13 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int colDivisiorforNPC = 6;
 	public final int colDivisiorforTiles = 6;
 
-	public int FPS = 60;
-	public TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
-	public LayerService[] layersS = new LayerService[layersCount];
+	private int FPS = 60;
+	private TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
+	private LayerService[] layersS = new LayerService[layersCount];
 	Thread gameThread;
-	public CollisionService cCheck = new CollisionService(this);
-	public KeyService keyH = new KeyService(this);
-	public UIService ui = new UIService(this);
+	private CollisionService cCheck = new CollisionService(this);	
+	private KeyService keyH = new KeyService(this);
+	private UIService ui = new UIService(this);
 	SoundService bgMusic = new SoundService();
 	public Player player = new Player(this,keyH);
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
@@ -168,4 +170,42 @@ public class GamePanel extends JPanel implements Runnable {
 		return originalTitleSize;
 	}
 
+	public int getScreenWidth(){
+		return screenWidth;
+	}
+
+	public int getScreenHeight(){
+		return screenHeight;
+	}
+
+	public int getMaxWorldCol(){
+		return maxWorldCol;
+	}
+
+	public int getMaxWorldRow(){
+		return maxWorldRow;
+	}
+	public int getLayersCount(){
+		return layersCount;
+	}	
+
+	public LayerService getLayerFromLayerService(int index){
+		return layersS[index];
+	}	
+
+	public CollisionService getCollisionService(){
+		return cCheck;
+	}
+
+	public KeyService getKeyService(){
+		return keyH;
+	}
+
+	public UIService getUIService(){
+		return ui;
+	}
+
+	public Player getPlayer(){
+		return player;
+	}
 }

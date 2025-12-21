@@ -33,7 +33,7 @@ public class NPC extends Entity{
 	public void setAction(){}
 
 	public void playerInteract(){
-		if(!gp.keyH.EPressed)
+		if(!gp.getKeyService().EPressed)
 			return;
 		turnToPlayer();}
 	
@@ -42,7 +42,7 @@ public class NPC extends Entity{
 	public void update(){
 		setAction();
 		collisionOn = true;
-		gp.cCheck.checker(this);
+		gp. getCollisionService().checker(this);
 		if(collisionOn){
 			solidAreaUpdate();
 			switch (direction) {

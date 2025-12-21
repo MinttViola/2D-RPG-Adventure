@@ -72,10 +72,10 @@ public class CollisionService {
 
 	public void checkColTiles(Entity entity){
 		if(entity.isPlayer)
-		for(int i =0;i<gp.layersCount;i++){
-			if(gp.layersS[i].collisionOn){
-			int tileOne = gp.layersS[i].map[(one.x/gp.getTileSize())][(one.y/gp.getTileSize())];		
-			int tileTwo = gp.layersS[i].map[(two.x/gp.getTileSize())][(two.y/gp.getTileSize())];
+		for(int i =0;i<gp.getLayersCount();i++){
+			if(gp.getLayerFromLayerService(i).collisionOn){
+			int tileOne = gp.getLayerFromLayerService(i).map[(one.x/gp.getTileSize())][(one.y/gp.getTileSize())];		
+			int tileTwo = gp.getLayerFromLayerService(i).map[(two.x/gp.getTileSize())][(two.y/gp.getTileSize())];
 			if(tileOne !=0||tileTwo!=0){
 				entity.collisionOn = false;
 			}

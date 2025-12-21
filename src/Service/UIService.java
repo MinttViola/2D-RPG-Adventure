@@ -85,7 +85,7 @@ public class UIService {
 	private void drawTitleScreen(){
 
 		g2.setColor(new Color(0,0,0));
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
 		int y = tileSize*2;
 		drawImage(0, y+(tileSize), tileSize*2, tileSize*2,"CharForMenu");
@@ -102,7 +102,7 @@ public class UIService {
 		maxDialogueNum = npc.dialoguesArray.length;
 		int x = tileSize*2;
 		int y = tileSize /2;
-		int width = gp.screenWidth - (tileSize*4);
+		int width = gp.getScreenWidth() - (tileSize*4);
 		int height = tileSize*2;
 		drawSubWindow(x, y, width, height,baseDialogWindowColor,baseStrokeColor);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
@@ -118,9 +118,9 @@ public class UIService {
 
 	private void drawPauseScreen(){
 		drawPlayerHealthBar();
-		int y = gp.screenHeight/2;
+		int y = gp.getScreenHeight()/2;
 		Color color = new Color(0,0,0,120);
-		drawSubWindow(0, 0, gp.screenWidth, gp.screenHeight, color,color);
+		drawSubWindow(0, 0, gp.getScreenWidth(), gp.getScreenHeight(), color,color);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
 		drawShadowTextByCenter("pause", Color.gray, Color.white, y);
 	}
@@ -152,7 +152,7 @@ public class UIService {
 
 	private int getXForCenterText(String text){
 		int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-		int x = gp.screenWidth/2- length/2;
+		int x = gp.getScreenWidth()/2- length/2;
 		return x;
 	}
 
@@ -160,7 +160,7 @@ public class UIService {
 		String fullPath = startPath+fileName+imageFileFormat;
 		BufferedImage imageToDraw = ImageUtil.getMainImage(fullPath);
 		if(x==0){
-			x = gp.screenWidth/2 - width/2;
+			x = gp.getScreenWidth()/2 - width/2;
 		}
 		g2.drawImage(imageToDraw,x,y,width,height, null);
 	}

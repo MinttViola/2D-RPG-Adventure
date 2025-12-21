@@ -23,7 +23,7 @@ public class LayerService {
 		this.level = level;
 		tileSet = tileService;
 		collisionOn = MapLayerEnum.getColByName(name);
-		map = new int[gp.maxWorldRow][gp.maxWorldCol];
+		map = new int[gp.getMaxWorldRow()][gp.getMaxWorldCol()];
 		loadLevel();
 	}
 	
@@ -34,10 +34,10 @@ public class LayerService {
 		try{
 			File is = new File(path);
 			BufferedReader br = new BufferedReader(new FileReader(is));
-			for(int i = 0; i<=gp.maxWorldCol-1;i++){
+			for(int i = 0; i<=gp.getMaxWorldCol()-1;i++){
 				String line = br.readLine();
 				String numbers[] = line.split(", ");
-				for(int j = 0; j<=gp.maxWorldRow-1;j++){
+				for(int j = 0; j<=gp.getMaxWorldRow()-1;j++){
 					int num = Integer.parseInt(numbers[j]);
 					map[i][j] = num;
 				}
@@ -47,8 +47,8 @@ public class LayerService {
 	}
 
 	public void TestMap(int[][] map){
-		for(int i = 0; i<=gp.maxWorldCol-1;i++){
-			for(int j = 0; j<=gp.maxWorldRow-1;j++){
+		for(int i = 0; i<=gp.getMaxWorldCol()-1;i++){
+			for(int j = 0; j<=gp.getMaxWorldRow()-1;j++){
 				System.out.print(map[i][j]);
 			}System.out.println();}
 	}
@@ -56,7 +56,7 @@ public class LayerService {
 	public void draw(Graphics2D g2){
 		int worldCol = 0;
 		int worldRow = 0;
-		while(worldCol<gp.maxWorldCol && worldRow<gp.maxWorldRow){
+		while(worldCol<gp.getMaxWorldCol() && worldRow<gp.getMaxWorldRow()){
 			int worldX = worldCol*gp.getTileSize();
 			int worldY = worldRow*gp.getTileSize();
 			int screenX = gp.player.xPlaceIfCanSee(worldX);
@@ -65,7 +65,7 @@ public class LayerService {
 			int tileID = map[worldCol][worldRow];
 			g2.drawImage(tileSet.tiles[tileID].img, screenY, screenX, null);
 			worldCol ++;
-			if(worldCol==gp.maxWorldCol){
+			if(worldCol==gp.getMaxWorldCol()){
 				worldCol = 0;
 				worldRow++;
 			}

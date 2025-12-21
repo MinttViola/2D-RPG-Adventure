@@ -121,20 +121,20 @@ public class KeyService implements KeyListener{
 			if(System.nanoTime()>=timerForEliminateDoubleClick){
 				switch (code) {
 						case KeyEvent.VK_W:
-							gp.ui.decreaseNumCommand();
+							gp.getUIService().decreaseNumCommand();
 							timerForEliminateDoubleClick = System.nanoTime() + 1000;
 							break;
 						case KeyEvent.VK_S:
-							gp.ui.increaseNumCommand();
+							gp.getUIService().increaseNumCommand();
 							timerForEliminateDoubleClick = System.nanoTime() + 1000;
 							break;
 						case KeyEvent.VK_E:
 							timerForEliminateDoubleClick = System.nanoTime() + 1000;
-							gp.ui.enterCommand();
+							gp.getUIService().enterCommand();
 							break;
 						case KeyEvent.VK_ENTER:
 							timerForEliminateDoubleClick = System.nanoTime() + 1000;
-							gp.ui.enterCommand();
+							gp.getUIService().enterCommand();
 							break;
 						default:
 						break;

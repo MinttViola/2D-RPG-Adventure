@@ -27,13 +27,13 @@ public class CollisionService {
 		switch (entity.direction) {
 			case down:
 			nextMove(enityColPos[2], enityColPos[3], false, entity);
-			zero.y = two.y - gp.tileSize;
-			zero.x = two.x - gp.tileSize;
+			zero.y = two.y - gp.getTileSize();
+			zero.x = two.x - gp.getTileSize();
 				break;
 			case right:
 			nextMove(enityColPos[1], enityColPos[3], true, entity);
-			zero.y = two.y - gp.tileSize;
-			zero.x = two.x - gp.tileSize;
+			zero.y = two.y - gp.getTileSize();
+			zero.x = two.x - gp.getTileSize();
 				break;
 			case left:
 			nextMove(enityColPos[0], enityColPos[2], false, entity);
@@ -74,8 +74,8 @@ public class CollisionService {
 		if(entity.isPlayer)
 		for(int i =0;i<gp.layersCount;i++){
 			if(gp.layersS[i].collisionOn){
-			int tileOne = gp.layersS[i].map[(one.x/gp.tileSize)][(one.y/gp.tileSize)];		
-			int tileTwo = gp.layersS[i].map[(two.x/gp.tileSize)][(two.y/gp.tileSize)];
+			int tileOne = gp.layersS[i].map[(one.x/gp.getTileSize())][(one.y/gp.getTileSize())];		
+			int tileTwo = gp.layersS[i].map[(two.x/gp.getTileSize())][(two.y/gp.getTileSize())];
 			if(tileOne !=0||tileTwo!=0){
 				entity.collisionOn = false;
 			}
@@ -87,7 +87,7 @@ public class CollisionService {
 		if(!entity.isPlayer)
 			return;
 		for(int i = 0; i<=gp.obj.length-1;i++){
-			Rectangle col = new Rectangle(zero.x, zero.y, gp.tileSize, gp.tileSize);
+			Rectangle col = new Rectangle(zero.x, zero.y, gp.getTileSize(), gp.getTileSize());
 			if(gp.obj[i]!=null){
 				if(col.intersects(gp.obj[i].solidArea)){
 					if(gp.obj[i].collision == true){
@@ -101,7 +101,7 @@ public class CollisionService {
 	public void checkEntity(Entity entity){
 		if(entity.isPlayer)
 		for(int i = 0; i<=gp.npc.length-1;i++){
-			Rectangle col = new Rectangle(zero.x, zero.y, gp.tileSize, gp.tileSize);
+			Rectangle col = new Rectangle(zero.x, zero.y, gp.getTileSize(), gp.getTileSize());
 			if(gp.npc[i]!=null){
 				if(col.intersects(gp.npc[i].solidArea)){
 					gp.npc[i].playerInteract();

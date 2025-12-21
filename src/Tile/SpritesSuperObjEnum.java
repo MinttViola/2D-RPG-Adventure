@@ -4,7 +4,8 @@ public enum SpritesSuperObjEnum {
 
 	KEY("key",2),
 	CHEST("lootchest",2),
-	CRYSTAL("crystal",3);
+	CRYSTAL("crystal",3),
+	HEART("heart",2);
 
 	private final String name;
 

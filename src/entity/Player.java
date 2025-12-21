@@ -14,9 +14,9 @@ public class Player extends Entity {
 	KeyService keyH;
 	public List<SuperObjectBaseModel> backpack = new ArrayList();
 
-	public final int screenY;
-	public final int screenX;
-	public NPC NPCForDialogue;
+	final int screenY;
+	final int screenX;
+	NPC NPCForDialogue;
 
 	public Player(GamePanel gp,KeyService keyH){
 		super(gp,2,6);
@@ -27,8 +27,8 @@ public class Player extends Entity {
 		maxHP = 100;
 		curHP = maxHP;
 		
-		screenX = gp.screenHeight/2-(gp.tileSize/2);
-		screenY = gp.screenWidth/2-(gp.tileSize/2);
+		screenX = gp.screenHeight/2-(gp.getTileSize()/2);
+		screenY = gp.screenWidth/2-(gp.getTileSize()/2);
 		setDefaultValues();
 		setUpAnimators(4);
 	}
@@ -148,5 +148,30 @@ public class Player extends Entity {
 		else if(curHP<0)
 			curHP = 0;
 		gp.ui.changeHealthBar(curHP);
+	}
+
+	public boolean ifPlayerCanSeeThis(int thisWorldX, int thisWorldY){
+		boolean playerCanSeeThis = false;
+		if(thisWorldX+2+gp.getTileSize()>worldX - screenX &&
+		thisWorldX-2*gp.getTileSize()<worldX + screenX &&
+		thisWorldY+2*gp.getTileSize()>worldY - screenY &&
+		thisWorldY-2*gp.getTileSize()<worldY+screenY)
+			playerCanSeeThis = true;
+		return playerCanSeeThis;
+	}
+
+	public int xPlaceIfCanSee(int thisWorldX){
+
+		int thisScreenX = thisWorldX-worldX + screenX;
+		return thisScreenX;
+	}
+	public int yPlaceIfCanSee(int thisWorldY){
+
+		int thisScreenY = thisWorldY-worldY + screenY;
+		return thisScreenY;
+	}
+	
+	public NPC getDialogueNPC(){
+		return NPCForDialogue;
 	}
 }

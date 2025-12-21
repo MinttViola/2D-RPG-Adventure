@@ -1,17 +1,17 @@
 package Service;
 
+import Entity.NPC;
+import Main.GamePanel;
+import Util.GameState;
+import Util.ImageUtil;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import Entity.NPC;
-import Main.GamePanel;
-import Util.GameState;
-import Util.ImageUtil;
-import java.awt.image.BufferedImage;
 
 public class UIService {
 	GamePanel gp;
@@ -30,6 +30,7 @@ public class UIService {
 	String startPath = "Assets/UI/";
 	String imageFileFormat = ".png";
 	int healthBarSize,maxHealthBarSize;
+	int tileSize;
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
@@ -39,7 +40,8 @@ public class UIService {
 			}catch(FontFormatException e){} catch (IOException e) {
 				e.printStackTrace();
 			}
-		healthBarSize = (int)((gp.tileSize*3-gp.tileSize/2));
+		tileSize = gp.getTileSize();
+		healthBarSize = (int)((tileSize*3-tileSize/2));
 		maxHealthBarSize = healthBarSize;
 		baseStrokeColor = Color.white;
 		baseDialogWindowColor = new Color(0,0,0,255);
@@ -77,8 +79,7 @@ public class UIService {
 	}
 
 	private void drawPlayStateUI(){
-		drawImage(((gp.tileSize/4)+gp.tileSize+gp.tileSize/16), gp.tileSize/4, healthBarSize, gp.tileSize,"health_hud");
-		drawImage(gp.tileSize/4, gp.tileSize/4, gp.tileSize*4, gp.tileSize,"health_bar_hud");
+		drawPlayerHealthBar();
 	}
 	
 	private void drawTitleScreen(){
@@ -86,27 +87,27 @@ public class UIService {
 		g2.setColor(new Color(0,0,0));
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-		int y = gp.tileSize*2;
-		drawImage(0, y+(gp.tileSize), gp.tileSize*2, gp.tileSize*2,"CharForMenu");
+		int y = tileSize*2;
+		drawImage(0, y+(tileSize), tileSize*2, tileSize*2,"CharForMenu");
 		drawShadowTextByCenter("2D RPG Adventure", Color.gray, Color.white, y);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-		drawTextByCenter("NEW GAME", Color.white, y+(gp.tileSize*5),0);
-		drawTextByCenter("LOAD GAME", Color.white, y+(gp.tileSize*6),0);
-		drawTextByCenter("QUIT", Color.white, y+(gp.tileSize*7), 0);
-		drawImage(6*gp.tileSize,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, "select_icon_ui");
+		drawTextByCenter("NEW GAME", Color.white, y+(tileSize*5),0);
+		drawTextByCenter("LOAD GAME", Color.white, y+(tileSize*6),0);
+		drawTextByCenter("QUIT", Color.white, y+(tileSize*7), 0);
+		drawImage(6*tileSize,tileSize*(5+commandNum)+10, tileSize, tileSize, "select_icon_ui");
 	}
 
 	private void drawDialogScreen(){
-		NPC npc = gp.player.NPCForDialogue;
+		NPC npc = gp.player.getDialogueNPC();
 		maxDialogueNum = npc.dialoguesArray.length;
-		int x = gp.tileSize*2;
-		int y = gp.tileSize /2;
-		int width = gp.screenWidth - (gp.tileSize*4);
-		int height = gp.tileSize*2;
+		int x = tileSize*2;
+		int y = tileSize /2;
+		int width = gp.screenWidth - (tileSize*4);
+		int height = tileSize*2;
 		drawSubWindow(x, y, width, height,baseDialogWindowColor,baseStrokeColor);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
-		x+=gp.tileSize;
-		y+=gp.tileSize;
+		x+=tileSize;
+		y+=tileSize;
 		if(dialogueCounter !=npc.dialoguesArray.length)
 			g2.drawString(npc.dialoguesArray[dialogueCounter], x, y);
 		else{
@@ -116,11 +117,17 @@ public class UIService {
 	}
 
 	private void drawPauseScreen(){
+		drawPlayerHealthBar();
 		int y = gp.screenHeight/2;
 		Color color = new Color(0,0,0,120);
 		drawSubWindow(0, 0, gp.screenWidth, gp.screenHeight, color,color);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
 		drawShadowTextByCenter("pause", Color.gray, Color.white, y);
+	}
+
+	private void drawPlayerHealthBar(){
+		drawImage(((tileSize/4)+tileSize+tileSize/16), tileSize/4, healthBarSize, tileSize,"health_hud");
+		drawImage(tileSize/4, tileSize/4, tileSize*4, tileSize,"health_bar_hud");
 	}
 
 	private void drawSubWindow(int x, int y, int width, int height, Color windowColor, Color strokeColor){
@@ -166,21 +173,21 @@ public class UIService {
 	public void changeHealthBar(double curHP){
 
 		int newHealthBarSize = (int)(maxHealthBarSize*(curHP/100));
-		drawImage(((gp.tileSize/4)+gp.tileSize+gp.tileSize/16), gp.tileSize/4, newHealthBarSize, gp.tileSize,"health_hud");
+		drawImage(((tileSize/4)+tileSize+tileSize/16), tileSize/4, newHealthBarSize, tileSize,"health_hud");
 		healthBarSize = newHealthBarSize;
 	}
 
 	public void increaseNumCommand(){
 		if(commandNum+1<=maxNumCommand){
 			commandNum +=1;
-			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, startPath+"select_icon_ui.png");
+			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize, startPath+"select_icon_ui.png");
 		}
 	}
 
 	public void decreaseNumCommand(){
 		if(commandNum-1>0){
 			commandNum -=1;
-			drawImage(0,gp.tileSize*(5+commandNum)+10, gp.tileSize, gp.tileSize, startPath+"select_icon_ui.png");
+			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize, startPath+"select_icon_ui.png");
 		}
 	}
 

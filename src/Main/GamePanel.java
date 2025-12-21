@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
-	public final int originalTitleSize = 16; 
+	final int originalTitleSize = 16; 
 	final int scale = 4;
-	public final int tileSize = originalTitleSize*scale;
+	final int tileSize = originalTitleSize*scale;
 	public final int maxScreenCol=20;//1680
 	public final int maxScreenRow=10;//640
 	public final int screenWidth=tileSize*maxScreenCol;
@@ -147,6 +147,11 @@ public class GamePanel extends JPanel implements Runnable {
 		bgMusic.playSE(name);
 	}
 
+	public void nextDialogue(){
+		ui.nextDialogue();
+	}
+
+
 	public void setGameState(GameState newState){
 		this.gameState = newState;
 	}
@@ -155,7 +160,12 @@ public class GamePanel extends JPanel implements Runnable {
 		return gameState;
 	}
 
-	public void nextDialogue(){
-		ui.nextDialogue();
+	public int getTileSize(){
+		return tileSize;
 	}
+
+	public int getOrignalTileSize(){
+		return originalTitleSize;
+	}
+
 }

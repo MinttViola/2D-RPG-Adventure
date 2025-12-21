@@ -26,7 +26,7 @@ public class DirectionAnimator {
 		this.dirCount = dirCount;
 		this.gp = gp;
 		this.dirCountFrames = dirCountFrames;
-		size = gp.originalTitleSize;
+		size = gp.getOrignalTileSize();
 		sprites = new BufferedImage[dirCount][dirCountFrames];
 		path = "Assets/"+character.name+"/"+state+".png";
 		getMainImage();
@@ -48,7 +48,7 @@ public class DirectionAnimator {
 		for(int id = 0;id<=dirCount-1;id++){
 		for (int i = 0;i<=dirCountFrames-1;i++){
 			sprite = mainImage.getSubimage(i*size, id*size, size, size);
-			sprites[id][i] = ScaleAssetsUtil.ScaleImage(gp.tileSize, gp.tileSize, sprite);
+			sprites[id][i] = ScaleAssetsUtil.ScaleImage(gp.getTileSize(), gp.getTileSize(), sprite);
 		}
 	}
 	}

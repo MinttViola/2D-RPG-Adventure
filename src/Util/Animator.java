@@ -46,7 +46,7 @@ public class Animator {
 	
 	public BufferedImage[][] getListFrames(String path){
 		originalSpriteSheet = ImageUtil.getMainImage(path);
-		int size = gp.originalTitleSize;
+		int size = gp.getOrignalTileSize();
 		statusCount = new int[originalSpriteSheet.getHeight()/size][2];
 		statusCount[0][0] = originalSpriteSheet.getWidth()/size;
 		BufferedImage[][] sprites = new BufferedImage[statusCount.length][statusCount[0][0]];
@@ -55,7 +55,7 @@ public class Animator {
 			BufferedImage sprite = originalSpriteSheet.getSubimage(j*size, i*size, size, size);
 			
 			if(!zeroSprite(sprite, size)){
-			sprite = ScaleAssetsUtil.ScaleImage(gp.tileSize, gp.tileSize, sprite);
+			sprite = ScaleAssetsUtil.ScaleImage(gp.getTileSize(), gp.getTileSize(), sprite);
 			sprites[i][j] = sprite;}
 			else{
 				frameCount =j;

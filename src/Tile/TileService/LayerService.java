@@ -18,7 +18,7 @@ public class LayerService {
 
 	public LayerService(GamePanel gp, int level, String name, TileService tileService){
 		this.gp = gp;
-		tileSize = gp.tileSize;
+		tileSize = gp.getTileSize();
 		this.name = name;
 		this.level = level;
 		tileSet = tileService;
@@ -57,10 +57,10 @@ public class LayerService {
 		int worldCol = 0;
 		int worldRow = 0;
 		while(worldCol<gp.maxWorldCol && worldRow<gp.maxWorldRow){
-			int worldX = worldCol*gp.tileSize;
-			int worldY = worldRow*gp.tileSize;
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;
+			int worldX = worldCol*gp.getTileSize();
+			int worldY = worldRow*gp.getTileSize();
+			int screenX = gp.player.xPlaceIfCanSee(worldX);
+			int screenY = gp.player.yPlaceIfCanSee(worldY);
 			
 			int tileID = map[worldCol][worldRow];
 			g2.drawImage(tileSet.tiles[tileID].img, screenY, screenX, null);

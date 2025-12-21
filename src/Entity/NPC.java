@@ -23,12 +23,12 @@ public class NPC extends Entity{
 		this.speed = speed;
 		this.direction = StartDirection;
 		this.id = id;
-		worldX = xStartPos*gp.tileSize;
-		worldY = yStartPos* gp.tileSize;
-		this.minX = minX*gp.tileSize;
-		this.maxX = maxX*gp.tileSize;
-		this.minY = minY*gp.tileSize;
-		this.maxY = maxY*gp.tileSize;
+		worldX = xStartPos*gp.getTileSize();
+		worldY = yStartPos* gp.getTileSize();
+		this.minX = minX*gp.getTileSize();
+		this.maxX = maxX*gp.getTileSize();
+		this.minY = minY*gp.getTileSize();
+		this.maxY = maxY*gp.getTileSize();
 	}
 	public void setAction(){}
 
@@ -74,10 +74,11 @@ public class NPC extends Entity{
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;
 		int screenY = worldY - gp.player.worldY + gp.player.screenY;
 		if(lastX !=worldX || lastY!=worldY)
-			if( worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-					worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-					worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-					worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){	
+			if( worldX + gp.getTileSize() > gp.player.worldX - gp.player.screenX &&
+					worldX - gp.getTileSize() < gp.player.worldX + gp.player.screenX &&
+					worldY + gp.getTileSize() > gp.player.worldY - gp.player.screenY &&
+					worldY - gp.getTileSize()
+					 < gp.player.worldY + gp.player.screenY){	
 					animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
 			}
 			else
@@ -85,7 +86,7 @@ public class NPC extends Entity{
 	}
 
 	public void solidAreaUpdate(){
-		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
+		int saSize = gp.getTileSize()/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
 		solidArea = new Rectangle(worldX,worldY,saSize,saSize+7);
 	}
 

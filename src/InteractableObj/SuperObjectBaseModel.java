@@ -21,9 +21,9 @@ public class SuperObjectBaseModel {
 
 	public void start(GamePanel gp, int xStartPos, int yStartPos){
 		this.gp = gp;
-		worldX = xStartPos*gp.tileSize;
-		worldY = yStartPos*gp.tileSize;
-		solidArea = new Rectangle(worldX,worldY,gp.tileSize,gp.tileSize);
+		worldX = xStartPos*gp.getTileSize();
+		worldY = yStartPos*gp.getTileSize();
+		solidArea = new Rectangle(worldX,worldY,gp.getTileSize(),gp.getTileSize());
 	}
 
 	public void findPath(){
@@ -57,12 +57,9 @@ public class SuperObjectBaseModel {
 	}
 
 	public void draw(Graphics2D g2){				
-		int screenX = worldX-gp.player.worldX+gp.player.screenX;
-		int screenY = worldY-gp.player.worldY+gp.player.screenY;
-		if(worldX+2+gp.tileSize>gp.player.worldX - gp.player.screenX &&
-		worldX-2*gp.tileSize<gp.player.worldX+gp.player.screenX &&
-		worldY+2*gp.tileSize>gp.player.worldY - gp.player.screenY &&
-		worldY-2*gp.tileSize<gp.player.worldY+gp.player.screenY){	
+		int screenX = gp.player.xPlaceIfCanSee(worldX);
+		int screenY = gp.player.yPlaceIfCanSee(worldY);
+		if(gp.player.ifPlayerCanSeeThis(worldX, worldY)){	
 			anim.draw(g2, screenY, screenX);
 		}
 	}

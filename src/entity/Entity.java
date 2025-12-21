@@ -22,8 +22,8 @@ public class Entity {
 
 	public Entity(GamePanel gp, int animTypes, int countFrames){
 		this.gp = gp;
-		int saSize = gp.tileSize/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
-		solidArea = new Rectangle(gp.tileSize/gp.colDivisiorforNPC,gp.tileSize/gp.colDivisiorforNPC*2,saSize,saSize+7);
+		int saSize = gp.getTileSize()/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
+		solidArea = new Rectangle(gp.getTileSize()/gp.colDivisiorforNPC,gp.getTileSize()/gp.colDivisiorforNPC*2,saSize,saSize+7);
 		animators = new DirectionAnimator[animTypes];
 		dirCountFrames = countFrames;
 	}

@@ -20,18 +20,21 @@ import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
 import Util.GameState;
 import WorkWithJson.MapLayerEnum;
+import lombok.Getter;
+import lombok.Setter;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
-	private final int originalTitleSize = 16; 
-	private final int scale = 4;
-	private final int tileSize = originalTitleSize*scale;
+	private int originalTitleSize = 16; 
+	private int scale = 4;
+	private int tileSize = originalTitleSize*scale;
 	private final int maxScreenCol=20;//1680
 	private final int maxScreenRow=10;//640
 	private final int screenWidth=tileSize*maxScreenCol;
 	private final int screenHeight=tileSize*maxScreenRow;
 
   //word setting
+	@Getter
 	private final int maxWorldCol = 30;
 	private final int maxWorldRow = 30;
 	private final int worldWidth=tileSize*maxWorldCol;
@@ -50,17 +53,21 @@ public class GamePanel extends JPanel implements Runnable {
 	private TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
 	private LayerService[] layersS = new LayerService[layersCount];
 	Thread gameThread;
+	
 	private CollisionService cCheck = new CollisionService(this);	
 	private KeyService keyH = new KeyService(this);
 	private UIService ui = new UIService(this);
 	SoundService bgMusic = new SoundService();
 	public Player player = new Player(this,keyH);
+	@Getter
 	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	ObjPlasment objPlase = new ObjPlasment(this);
 	public NPC npc[] = new NPC[10];
 	NPCPlasment NPCPlase = new NPCPlasment(this);
 	private GameState gameState = GameState.PlayState;
 
+	@Getter
+	private int testInt = 10;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -168,9 +175,6 @@ public class GamePanel extends JPanel implements Runnable {
 		return gameState;
 	}
 
-	public int getTileSize(){
-		return tileSize;
-	}
 
 	public int getOrignalTileSize(){
 		return originalTitleSize;
@@ -184,12 +188,11 @@ public class GamePanel extends JPanel implements Runnable {
 		return screenHeight;
 	}
 
-	public int getMaxWorldCol(){
-		return maxWorldCol;
-	}
-
 	public int getMaxWorldRow(){
 		return maxWorldRow;
+	}
+	public int getMaxWorldCol(){
+		return maxWorldCol;
 	}
 	public int getLayersCount(){
 		return layersCount;
@@ -213,5 +216,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public Player getPlayer(){
 		return player;
+	}
+
+	public int getTileSize() {
+		return tileSize;
 	}
 }

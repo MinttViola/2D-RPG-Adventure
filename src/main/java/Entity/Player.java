@@ -1,15 +1,18 @@
 package Entity;
 
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
+
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
 import Service.KeyService;
 import Util.AnimationStateEnum;
 import Util.DirectionEnum;
 import Util.GameState;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class Player extends Entity {
 	KeyService keyH;
 	public List<SuperObjectBaseModel> backpack = new ArrayList();

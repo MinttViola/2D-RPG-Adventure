@@ -12,6 +12,7 @@ public class Entity {
 	public int worldX,worldY;
 	public int speed;
 	public Rectangle solidArea;
+	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	public int solidAreaMultiplier = 4;
 	public DirectionEnum direction = DirectionEnum.down;
@@ -23,7 +24,9 @@ public class Entity {
 	public Entity(GamePanel gp, int animTypes, int countFrames){
 		this.gp = gp;
 		int saSize = gp.getTileSize()/gp.colDivisiorforNPC*solidAreaMultiplier;//solid area size
-		solidArea = new Rectangle(gp.getTileSize()/gp.colDivisiorforNPC,gp.getTileSize()/gp.colDivisiorforNPC*2,saSize,saSize+7);
+		solidAreaDefaultX = gp.getTileSize()/gp.colDivisiorforNPC;
+		solidAreaDefaultY = gp.getTileSize()/gp.colDivisiorforNPC*2;
+		solidArea = new Rectangle(solidAreaDefaultX,solidAreaDefaultY,saSize,saSize+7);
 		animators = new DirectionAnimator[animTypes];
 		dirCountFrames = countFrames;
 	}

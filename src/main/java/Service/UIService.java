@@ -108,7 +108,7 @@ public class UIService {
 	}
 
 	private void drawDialogScreen(){
-		NPC npc = gp.player.getDialogueNPC();
+		NPC npc = gp.getPlayer().getDialogueNPC();
 		maxDialogueNum = npc.dialoguesArray.length;
 		int x = tileSize*2;
 		int y = tileSize /2;

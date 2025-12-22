@@ -79,12 +79,12 @@ public class KeyService implements KeyListener{
 					break;
 				case KeyEvent.VK_I:
 					if(System.nanoTime()>=timerForEliminateDoubleClick)
-						gp.player.changeHP(10);
+						gp.getPlayer().changeHP(10);
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_K:
 					if(System.nanoTime()>=timerForEliminateDoubleClick)
-						gp.player.changeHP(-10);
+						gp.getPlayer().changeHP(-10);
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_P:

@@ -13,6 +13,7 @@ import Entity.Player;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
 import Service.CollisionService;
+import Service.EventService;
 import Service.KeyService;
 import Service.SoundService;
 import Service.UIService;
@@ -20,8 +21,6 @@ import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
 import Util.GameState;
 import WorkWithJson.MapLayerEnum;
-import lombok.Getter;
-import lombok.Setter;
 
 public class GamePanel extends JPanel implements Runnable {
 	//screen settings 
@@ -33,16 +32,15 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int screenWidth=tileSize*maxScreenCol;
 	private final int screenHeight=tileSize*maxScreenRow;
 
-  //word setting
-	@Getter
+  //word settings
 	private final int maxWorldCol = 30;
 	private final int maxWorldRow = 30;
 	private final int worldWidth=tileSize*maxWorldCol;
 	private final int worldHeight=tileSize*maxWorldRow;
 	private final int layersCount = 4;
 
-	public final int  startPlayerPositionX=7*tileSize;
-	public final int  startPlayerPositionY=9*tileSize;
+	public final int  startPlayerPositionX=0*tileSize;
+	public final int  startPlayerPositionY=6*tileSize;
 	
 
 	
@@ -58,16 +56,13 @@ public class GamePanel extends JPanel implements Runnable {
 	private KeyService keyH = new KeyService(this);
 	private UIService ui = new UIService(this);
 	SoundService bgMusic = new SoundService();
-	public Player player = new Player(this,keyH);
-	@Getter
-	public SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
-	ObjPlasment objPlase = new ObjPlasment(this);
-	public NPC npc[] = new NPC[10];
+	private EventService eventService = new EventService(this);
+	private Player player = new Player(this,keyH);
+	private SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
+	private ObjPlasment objPlase = new ObjPlasment(this);
+	private NPC npc[] = new NPC[10];
 	NPCPlasment NPCPlase = new NPCPlasment(this);
 	private GameState gameState = GameState.PlayState;
-
-	@Getter
-	private int testInt = 10;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -158,67 +153,31 @@ public class GamePanel extends JPanel implements Runnable {
 	public void stopMusic(){
 		bgMusic.stop();
 	}
-	public void playDisapearSE(String name){
-		bgMusic.playSE(name);
-	}
+	public void playDisapearSE(String name){bgMusic.playSE(name);}
 
-	public void nextDialogue(){
-		ui.nextDialogue();
-	}
+	public void nextDialogue(){ui.nextDialogue();}
 
-
-	public void setGameState(GameState newState){
-		this.gameState = newState;
-	}
-	
-	public GameState getGameState(){
-		return gameState;
-	}
-
-
-	public int getOrignalTileSize(){
-		return originalTitleSize;
-	}
-
-	public int getScreenWidth(){
-		return screenWidth;
-	}
-
-	public int getScreenHeight(){
-		return screenHeight;
-	}
-
-	public int getMaxWorldRow(){
-		return maxWorldRow;
-	}
-	public int getMaxWorldCol(){
-		return maxWorldCol;
-	}
-	public int getLayersCount(){
-		return layersCount;
-	}	
-
-	public LayerService getLayerFromLayerService(int index){
-		return layersS[index];
-	}	
-
-	public CollisionService getCollisionService(){
-		return cCheck;
-	}
-
-	public KeyService getKeyService(){
-		return keyH;
-	}
-
-	public UIService getUIService(){
-		return ui;
-	}
-
-	public Player getPlayer(){
-		return player;
-	}
-
-	public int getTileSize() {
-		return tileSize;
-	}
+	//Setters and Getters
+	public void setGameState(GameState newState){this.gameState = newState;}
+	public GameState getGameState(){return gameState;}
+	public int getOrignalTileSize(){return originalTitleSize;}
+	public int getScreenWidth(){return screenWidth;}
+	public int getScreenHeight(){return screenHeight;}
+	public int getMaxWorldRow(){return maxWorldRow;}
+	public int getMaxWorldCol(){return maxWorldCol;}
+	public int getLayersCount(){return layersCount;}
+	public LayerService getLayerFromLayerService(int index){return layersS[index];}	
+	public CollisionService getCollisionService(){return cCheck;}
+	public KeyService getKeyService(){return keyH;}
+	public UIService getUIService(){return ui;}
+	public Player getPlayer(){return player;}
+	public int getTileSize() {return tileSize;}
+	public Player getPlayerInstance() {return player;}
+	public SuperObjectBaseModel getSuperObj(int index) {return obj[index];}
+	public void setSuperObjInArray(SuperObjectBaseModel obj, int index) {this.obj[index] = obj;}
+	public int getSuperObjArrayLength() {return obj.length;}
+	public NPC getNPC(int index) {return npc[index];}
+	public int getNPCArrayLength() {return npc.length;}
+	public void setNPCInArray(NPC npc, int index) {this.npc[index] = npc;}
+	public EventService getEventService() {return eventService;}
 }

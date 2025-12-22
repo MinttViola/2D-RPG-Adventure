@@ -86,13 +86,13 @@ public class CollisionService {
 	public void checkSuperObj(Entity entity){
 		if(!entity.isPlayer)
 			return;
-		for(int i = 0; i<=gp.obj.length-1;i++){
+		for(int i = 0; i<=gp.getSuperObjArrayLength()-1;i++){
 			Rectangle col = new Rectangle(zero.x, zero.y, gp.getTileSize(), gp.getTileSize());
-			if(gp.obj[i]!=null){
-				if(col.intersects(gp.obj[i].solidArea)){
-					if(gp.obj[i].collision == true){
+			if(gp.getSuperObj(i)!=null){
+				if(col.intersects(gp.getSuperObj(i).solidArea)){
+					if(gp.getSuperObj(i).collision == true){
 					entity.collisionOn = false;}
-				gp.player.itemIteract(gp.obj[i]);
+				gp.getPlayer().itemIteract(gp.getSuperObj(i));
 				}
 			}
 		}
@@ -100,12 +100,12 @@ public class CollisionService {
 
 	public void checkEntity(Entity entity){
 		if(entity.isPlayer)
-		for(int i = 0; i<=gp.npc.length-1;i++){
+		for(int i = 0; i<=gp.getNPCArrayLength()-1;i++){
 			Rectangle col = new Rectangle(zero.x, zero.y, gp.getTileSize(), gp.getTileSize());
-			if(gp.npc[i]!=null){
-				if(col.intersects(gp.npc[i].solidArea)){
-					gp.npc[i].playerInteract();
-					gp.player.NPCIteract(gp.npc[i]);
+			if(gp.getNPC(i)!=null){
+				if(col.intersects(gp.getNPC(i).solidArea)){
+					gp.getNPC(i).playerInteract();
+					gp.getPlayer().NPCIteract(gp.getNPC(i));
 				}
 			}
 		}

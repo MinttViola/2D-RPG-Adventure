@@ -69,8 +69,8 @@ public class LayerService {
 		while(worldCol<gp.getMaxWorldCol() && worldRow<gp.getMaxWorldRow()){
 			int worldX = worldCol*gp.getTileSize();
 			int worldY = worldRow*gp.getTileSize();
-			int screenX = gp.player.xPlaceIfCanSee(worldX);
-			int screenY = gp.player.yPlaceIfCanSee(worldY);
+			int screenX = gp.getPlayer().xPlaceIfCanSee(worldX);
+			int screenY = gp.getPlayer().yPlaceIfCanSee(worldY);
 			
 			int tileID = map[worldCol][worldRow];
 			g2.drawImage(tileSet.tiles[tileID].img, screenY, screenX, null);

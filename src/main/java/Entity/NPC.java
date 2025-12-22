@@ -71,14 +71,10 @@ public class NPC extends Entity{
 	}
 
 	public void draw(Graphics2D g2){
-		int screenX = worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+		int screenX = gp.getPlayer().xPlaceIfCanSee(worldX);
+		int screenY = worldY - gp.getPlayer().worldY + gp.getPlayer().screenY;
 		if(lastX !=worldX || lastY!=worldY)
-			if( worldX + gp.getTileSize() > gp.player.worldX - gp.player.screenX &&
-					worldX - gp.getTileSize() < gp.player.worldX + gp.player.screenX &&
-					worldY + gp.getTileSize() > gp.player.worldY - gp.player.screenY &&
-					worldY - gp.getTileSize()
-					 < gp.player.worldY + gp.player.screenY){	
+			if( gp.getPlayer().ifPlayerCanSeeThis(worldX, worldY)){	
 					animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
 			}
 			else
@@ -91,7 +87,7 @@ public class NPC extends Entity{
 	}
 
 	public void turnToPlayer(){
-		DirectionEnum oppositeDirection = DirectionEnum.getOppositeSide(gp.player.direction);
+		DirectionEnum oppositeDirection = DirectionEnum.getOppositeSide(gp.getPlayer().direction);
 		if(Arrays.asList(AllDirectionsArray).contains(oppositeDirection)){
 		direction = oppositeDirection;
 		return;
@@ -103,19 +99,19 @@ public class NPC extends Entity{
 	}
 
 	private void turnToPlayerAlongY(){
-		if(worldY>gp.player.worldY){
+		if(worldY>gp.getPlayer().worldY){
 		direction = DirectionEnum.left;
 		return;
-		}if(worldY<gp.player.worldY){
+		}if(worldY<gp.getPlayer().worldY){
 		direction = DirectionEnum.right;
 		return;
 		}
 	}
 	private void turnToPlayerAlongX(){
-		if(worldX<gp.player.worldX){
+		if(worldX<gp.getPlayer().worldX){
 		direction = DirectionEnum.up;
 		return;
-		}if(worldX>gp.player.worldX){
+		}if(worldX>gp.getPlayer().worldX){
 		direction = DirectionEnum.down;
 		return;
 		}

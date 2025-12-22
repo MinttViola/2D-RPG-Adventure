@@ -1,6 +1,7 @@
 package Entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import Util.DirectionEnum;
 import Util.GameState;
 import lombok.Getter;
 
-@Getter
 public class Player extends Entity {
 	KeyService keyH;
 	public List<SuperObjectBaseModel> backpack = new ArrayList();
@@ -67,6 +67,7 @@ public class Player extends Entity {
 
 		collisionOn = true;
 		gp.getCollisionService().checker(this);
+		gp.getEventService().checkEvent();
 		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
 		switch (direction) {
 			case down:
@@ -94,15 +95,6 @@ public class Player extends Entity {
 			NPCForDialogue = NPC;
 			gp.setGameState(GameState.DialogueState);
 		}
-		/*switch(NPC.name){
-			case "KnightNPC":
-			System.out.println(NPC.name);
-			gp.gameState = GameState.DialogState;
-			break;
-			case "PhantomNPC":
-			System.out.println(NPC.name);
-			break;
-		}*/
 	}
 
 	public void itemIteract(SuperObjectBaseModel obj){
@@ -153,12 +145,14 @@ public class Player extends Entity {
 		gp.getUIService().changeHealthBar(curHP);
 	}
 
+
 	public boolean ifPlayerCanSeeThis(int thisWorldX, int thisWorldY){
 		boolean playerCanSeeThis = false;
-		if(thisWorldX+2+gp.getTileSize()>worldX - screenX &&
-		thisWorldX-2*gp.getTileSize()<worldX + screenX &&
-		thisWorldY+2*gp.getTileSize()>worldY - screenY &&
-		thisWorldY-2*gp.getTileSize()<worldY+screenY)
+		int tileSize = gp.getTileSize();
+		if(thisWorldX+2+tileSize>worldX - screenX &&
+		thisWorldX-2*tileSize<worldX + screenX &&
+		thisWorldY+2*tileSize>worldY - screenY &&
+		thisWorldY-2*tileSize<worldY + screenY)
 			playerCanSeeThis = true;
 		return playerCanSeeThis;
 	}
@@ -174,7 +168,19 @@ public class Player extends Entity {
 		return thisScreenY;
 	}
 
-	public NPC getDialogueNPC(){
-		return NPCForDialogue;
+	public boolean isPlayerIntersects(Rectangle rect){
+		if (solidArea.intersects(rect))
+			return true;
+		else
+			return false;
 	}
+
+	//Getters and setters
+	public void setPlayerSolidAreaWorldX(){solidArea.x = worldX + solidArea.x;}
+	public void setPlayerSolidAreaWorldY(){solidArea.y = worldY + solidArea.y;}
+	public void returnSolidAreaToDefault(){
+		solidArea.x = solidAreaDefaultX; 
+		solidArea.y = solidAreaDefaultY;}
+	public NPC getDialogueNPC(){return NPCForDialogue;}
+	public DirectionEnum getDirection(){return direction;}
 }

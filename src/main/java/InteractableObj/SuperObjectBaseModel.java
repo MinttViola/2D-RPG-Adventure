@@ -57,9 +57,9 @@ public class SuperObjectBaseModel {
 	}
 
 	public void draw(Graphics2D g2){				
-		int screenX = gp.player.xPlaceIfCanSee(worldX);
-		int screenY = gp.player.yPlaceIfCanSee(worldY);
-		if(gp.player.ifPlayerCanSeeThis(worldX, worldY)){	
+		int screenX = gp.getPlayer().xPlaceIfCanSee(worldX);
+		int screenY = gp.getPlayer().yPlaceIfCanSee(worldY);
+		if(gp.getPlayer().ifPlayerCanSeeThis(worldX, worldY)){	
 			anim.draw(g2, screenY, screenX);
 		}
 	}

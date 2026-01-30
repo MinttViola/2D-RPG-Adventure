@@ -5,6 +5,7 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 import Util.WorkWithFilesUtil;
 
@@ -14,16 +15,14 @@ public class SoundService {
 	Clip clip;
 	String path = "Sounds/";
 	URL soundURL[] = new URL[30];
-	/*public SoundService(){
-		soundURL[1] = fileUtil.get("Sounds/SFX/chest.wav");
-		soundURL[2] = fileUtil.get("Sounds/SFX/crystal.wav");
-		soundURL[3] = fileUtil.get("Sounds/SFX/key.wav");
-	}*/
+	FloatControl volume;
+	float minVolume,maxVolume;
 
 	public void playBackgroundMusic(int level){
 		String thisPath = path+"Level "+level+" Theme.wav";
 		URL backgroundSound = fileUtil.get(thisPath);
 		SetFile(backgroundSound);
+		SetVolume();
 		play();
 		loop();
 	}
@@ -32,10 +31,23 @@ public class SoundService {
 		String thisPath = path+"SFX/"+name+".wav";
 		URL seSound = fileUtil.get(thisPath);
 		SetFile(seSound);
+		SetVolume();
 		play();
 	}
 
-	public void SetFile(URL url)
+	public void play(){clip.start();}
+
+	public void loop(){clip.loop(Clip.LOOP_CONTINUOUSLY);}
+
+	public void stop(){clip.stop();}
+
+	public void muteAudio(){
+		if(volume.getValue() == minVolume)
+			volume.setValue(maxVolume);
+		else volume.setValue(minVolume);
+	}
+	
+	private void SetFile(URL url)
 	{
 		try
 		{
@@ -45,17 +57,11 @@ public class SoundService {
 		}catch(Exception e){}
 	}
 
-	public void play()
-	{
-		clip.start();
-	}
-	public void loop()
-	{
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-	}
-	public void stop()
-	{
-		clip.stop();
+	private void SetVolume(){
+		volume = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+		minVolume = volume.getMinimum();
+		maxVolume = volume.getMaximum();
+		volume.setValue(minVolume);
 	}
 
 }

@@ -2,7 +2,10 @@ package Service;
 
 import Main.GamePanel;
 import Util.DirectionEnum;
+
 import java.awt.Rectangle;
+
+import Util.GameState;
 
 public class EventService {
 	private GamePanel gp;
@@ -12,8 +15,6 @@ public class EventService {
 
 	public EventService(GamePanel gp){
 		this.gp = gp;
-
-
 		eventRec = new Rectangle();
 		eventRec.x = 10;
 		eventRec.y = 16;
@@ -31,7 +32,7 @@ public class EventService {
 			}
 	}
 
-	public boolean hit(int eventCol,int eventRow,DirectionEnum dir){
+	private boolean hit(int eventCol,int eventRow,DirectionEnum dir){
 		boolean hit = false;
 		gp.getPlayer().setPlayerSolidAreaWorldX();
 		gp.getPlayer().setPlayerSolidAreaWorldY();
@@ -46,5 +47,10 @@ public class EventService {
 		eventRec.x = eventRectDefaultX;
 		eventRec.y = eventRectDefaultY;
 		return hit;
+	}
+
+	private void damagePit(GameState gameState){
+		gp.setGameState(gameState);	
+		gp.getPlayer().changeHP(-10);
 	}
 }

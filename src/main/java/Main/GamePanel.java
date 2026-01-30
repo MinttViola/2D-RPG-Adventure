@@ -150,12 +150,13 @@ public class GamePanel extends JPanel implements Runnable {
 		}	
 	}
 
-	public void stopMusic(){
-		bgMusic.stop();
-	}
+	public void stopMusic(){bgMusic.stop();}
+	
 	public void playDisapearSE(String name){bgMusic.playSE(name);}
 
 	public void nextDialogue(){ui.nextDialogue();}
+
+	public void muteAudio(){bgMusic.muteAudio();}
 
 	//Setters and Getters
 	public void setGameState(GameState newState){this.gameState = newState;}

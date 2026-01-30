@@ -91,6 +91,10 @@ public class KeyService implements KeyListener{
 					gp.setGameState(GameState.PauseState);
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
+				case KeyEvent.VK_M:
+					gp.muteAudio();
+					timerForEliminateDoubleClick = System.nanoTime() +10000;
+				break;
 			}
 		}
 		

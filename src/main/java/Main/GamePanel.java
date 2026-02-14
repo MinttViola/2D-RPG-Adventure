@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -13,6 +14,7 @@ import Entity.Player;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
 import Service.CollisionService;
+import Service.DialogueService;
 import Service.EventService;
 import Service.KeyService;
 import Service.SoundService;
@@ -57,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private UIService ui = new UIService(this);
 	SoundService bgMusic = new SoundService();
 	private EventService eventService = new EventService(this);
+	private DialogueService dialogueService = new DialogueService(this);
 	private Player player = new Player(this,keyH);
 	private SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	private ObjPlasment objPlase = new ObjPlasment(this);
@@ -181,4 +184,6 @@ public class GamePanel extends JPanel implements Runnable {
 	public int getNPCArrayLength() {return npc.length;}
 	public void setNPCInArray(NPC npc, int index) {this.npc[index] = npc;}
 	public EventService getEventService() {return eventService;}
+	public int getMaxDialogueNumFromID(String id){return dialogueService.getMaxDialogueNumFromID(id);}
+	public List<String> getDialogueList(String id){return dialogueService. getDialogueList(id);}
 }

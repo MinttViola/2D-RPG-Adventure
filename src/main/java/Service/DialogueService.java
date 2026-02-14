@@ -1,0 +1,33 @@
+package Service;
+
+import java.util.List;
+
+import javax.xml.namespace.QName;
+
+import Main.GamePanel;
+import Repositoryes.DialogueRepositories;
+import Util.DialogueModel;
+
+public class DialogueService { 
+	
+	private DialogueRepositories repository;
+	private GamePanel gp;
+
+	public DialogueService(GamePanel gp) {
+		this.gp = gp;
+		repository = new DialogueRepositories();
+	}
+
+	public List<String> getDialogueList(String id){
+		DialogueModel dialogue = repository.getDialogue(id);
+    if (dialogue == null) {
+        return List.of(); 
+    }
+    return dialogue.getLines();
+	}
+	public int getMaxDialogueNumFromID(String id){
+		DialogueModel dialogue = repository.getDialogue(id);
+    if (dialogue == null) {return 0;}
+    return dialogue.getLines().size();
+	}
+}

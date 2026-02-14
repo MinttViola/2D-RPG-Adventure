@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import Entity.NPC;
 import Main.GamePanel;
@@ -109,7 +110,9 @@ public class UIService {
 
 	private void drawDialogScreen(){
 		NPC npc = gp.getPlayer().getDialogueNPC();
-		maxDialogueNum = npc.dialoguesArray.length;
+		String id = npc.name+"_"+npc.id;
+		maxDialogueNum = gp.getMaxDialogueNumFromID(id);
+		List<String> dialogueList = gp.getDialogueList(id);
 		int x = tileSize*2;
 		int y = tileSize /2;
 		int width = gp.getScreenWidth() - (tileSize*4);
@@ -118,8 +121,8 @@ public class UIService {
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
 		x+=tileSize;
 		y+=tileSize;
-		if(dialogueCounter !=npc.dialoguesArray.length)
-			g2.drawString(npc.dialoguesArray[dialogueCounter], x, y);
+		if(dialogueCounter !=maxDialogueNum)
+			g2.drawString(dialogueList.get(dialogueCounter), x, y);
 		else{
 			gp.setGameState(GameState.PlayState);
 			dialogueCounter = 0;

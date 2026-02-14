@@ -1,10 +1,9 @@
 package Service;
 
-import Main.GamePanel;
-import Util.DirectionEnum;
-
 import java.awt.Rectangle;
 
+import Main.GamePanel;
+import Util.DirectionEnum;
 import Util.GameState;
 
 public class EventService {
@@ -25,10 +24,11 @@ public class EventService {
 	}
 
 	public void checkEvent(){
-		if(timer<System.nanoTime())
+		if(timer<System.nanoTime()){
 			if(hit(2,7,DirectionEnum.right)){
-				System.out.println("Event triggered");
-				timer = System.nanoTime()+1000000000;
+				damagePit(GameState.DialogueState);
+			}
+			timer = System.nanoTime()+1000000000;
 			}
 	}
 

@@ -3,6 +3,7 @@ package Entity;
 import Main.GamePanel;
 import Util.AnimationStateEnum;
 import Util.DirectionEnum;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Arrays;
@@ -11,7 +12,6 @@ import java.util.Random;
 public class NPC extends Entity{
 
 	public int id;
-	public String[] dialoguesArray = {"This is dialogue"};
 	private int actionLockCounter = 0;
 	public int lastX,lastY;
 	int minX, maxX, minY, maxY;
@@ -36,8 +36,6 @@ public class NPC extends Entity{
 		if(!gp.getKeyService().EPressed)
 			return;
 		turnToPlayer();}
-	
-	public void setDialogue(){}
 	
 	public void update(){
 		setAction();

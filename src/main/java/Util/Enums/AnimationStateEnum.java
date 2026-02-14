@@ -1,4 +1,4 @@
-package Util;
+package Util.Enums;
 
 public enum AnimationStateEnum {
 	Idle("Idle", 0),

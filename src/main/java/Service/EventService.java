@@ -3,8 +3,8 @@ package Service;
 import java.awt.Rectangle;
 
 import Main.GamePanel;
-import Util.DirectionEnum;
 import Util.GameState;
+import Util.Enums.DirectionEnum;
 
 public class EventService {
 	private GamePanel gp;

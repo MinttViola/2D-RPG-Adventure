@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import Entity.NPC;
-import Entity.NPCPlasment;
 import Entity.Player;
 import InteractableObj.ObjPlasment;
 import InteractableObj.SuperObjectBaseModel;
@@ -17,11 +16,13 @@ import Service.CollisionService;
 import Service.DialogueService;
 import Service.EventService;
 import Service.KeyService;
+import Service.LevelService;
 import Service.SoundService;
 import Service.UIService;
 import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
 import Util.GameState;
+import Util.NPCPFactory;
 import WorkWithJson.MapLayerEnum;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -51,20 +52,20 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private int FPS = 60;
 	private TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
-	private LayerService[] layersS = new LayerService[layersCount];
+	/*private LayerService[] layersS = new LayerService[layersCount];*/
 	Thread gameThread;
 	
 	private CollisionService cCheck = new CollisionService(this);	
 	private KeyService keyH = new KeyService(this);
 	private UIService ui = new UIService(this);
-	SoundService bgMusic = new SoundService();
 	private EventService eventService = new EventService(this);
 	private DialogueService dialogueService = new DialogueService(this);
+	private LevelService levelService = new LevelService(this);
+
 	private Player player = new Player(this,keyH);
 	private SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	private ObjPlasment objPlase = new ObjPlasment(this);
-	private NPC npc[] = new NPC[10];
-	NPCPlasment NPCPlase = new NPCPlasment(this);
+	NPCPFactory NPCFactory = new NPCPFactory(this);
 	private GameState gameState = GameState.PlayState;
 
 	public GamePanel(){
@@ -73,8 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		bgMusic.playBackgroundMusic(0);
-		LayersServicesSetup();
+		levelService.setLevel(0);
 		startGameThread();
 	}
 
@@ -83,11 +83,6 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread.start();
 	}
 
-	public void LayersServicesSetup(){
-		for(int i =0;i<layersCount;i++){
-			layersS[i] = new LayerService(this, 0, MapLayerEnum.getNameByOrder(i), overworldTilseS);
-		}
-	}
 
 	@Override
 	public void run() {
@@ -120,10 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
 		switch(gameState){
 			case PlayState:
 			player.update();
-		for(int i = 0;i<=npc.length-1;i++){
-			if(npc[i]!=null)
-				npc[i].update();
-		}
+			levelService.updateNPCs();
 			break;
 			case PauseState:
 			break;
@@ -139,27 +131,19 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		else{
 			for(int i =0;i<layersCount;i++){
-				layersS[i].draw(g2);
+				levelService.getLayerById(i).draw(g2);
 			}
 			player.draw(g2);
+			levelService.drawNPCs(g2);
 			for(int i = 0;i<=obj.length-1;i++){
 				if(obj[i]!=null)
 					obj[i].draw(g2);
-				if(npc[i]!=null)
-					npc[i].draw(g2);
 			}
 			ui.draw(g2);
 			g2.dispose();
 		}	
 	}
-
-	public void stopMusic(){bgMusic.stop();}
-	
-	public void playDisapearSE(String name){bgMusic.playSE(name);}
-
 	public void nextDialogue(){ui.nextDialogue();}
-
-	public void muteAudio(){bgMusic.muteAudio();}
 
 	//Setters and Getters
 	public void setGameState(GameState newState){this.gameState = newState;}
@@ -170,20 +154,18 @@ public class GamePanel extends JPanel implements Runnable {
 	public int getMaxWorldRow(){return maxWorldRow;}
 	public int getMaxWorldCol(){return maxWorldCol;}
 	public int getLayersCount(){return layersCount;}
-	public LayerService getLayerFromLayerService(int index){return layersS[index];}	
+	//get services
 	public CollisionService getCollisionService(){return cCheck;}
+	public EventService getEventService() {return eventService;}
 	public KeyService getKeyService(){return keyH;}
 	public UIService getUIService(){return ui;}
+	public LevelService getlevelService(){return levelService;}
+
 	public Player getPlayer(){return player;}
 	public int getTileSize() {return tileSize;}
-	public Player getPlayerInstance() {return player;}
 	public SuperObjectBaseModel getSuperObj(int index) {return obj[index];}
 	public void setSuperObjInArray(SuperObjectBaseModel obj, int index) {this.obj[index] = obj;}
 	public int getSuperObjArrayLength() {return obj.length;}
-	public NPC getNPC(int index) {return npc[index];}
-	public int getNPCArrayLength() {return npc.length;}
-	public void setNPCInArray(NPC npc, int index) {this.npc[index] = npc;}
-	public EventService getEventService() {return eventService;}
 	public int getMaxDialogueNumFromID(String id){return dialogueService.getMaxDialogueNumFromID(id);}
 	public List<String> getDialogueList(String id){return dialogueService. getDialogueList(id);}
 }

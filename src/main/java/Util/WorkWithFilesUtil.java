@@ -12,7 +12,7 @@ public class WorkWithFilesUtil {
                 .getResource(path);
 
         if (url == null) {
-            throw new IllegalStateException("Sound not found: " + path);
+            throw new IllegalStateException("File not found: " + path);
         }
         return url;
     }

@@ -1,6 +1,7 @@
 package Util;
 
 import Main.GamePanel;
+import Util.Enums.DirectionEnum;
 
 public enum CollisionType {
 	noneCol,onePart,twoParts,ThreeParts,fullCol;

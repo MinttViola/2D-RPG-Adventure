@@ -1,9 +1,10 @@
 package Entity;
 
 import Main.GamePanel;
-import Util.AnimationStateEnum;
 import Util.DirectionAnimator;
-import Util.DirectionEnum;
+import Util.Enums.AnimationStateEnum;
+import Util.Enums.DirectionEnum;
+
 import java.awt.Rectangle;
 
 public class Entity {

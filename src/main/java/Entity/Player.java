@@ -8,9 +8,9 @@ import java.util.List;
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
 import Service.KeyService;
-import Util.AnimationStateEnum;
-import Util.DirectionEnum;
 import Util.GameState;
+import Util.Enums.AnimationStateEnum;
+import Util.Enums.DirectionEnum;
 import lombok.Getter;
 
 public class Player extends Entity {

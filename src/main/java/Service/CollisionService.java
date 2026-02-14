@@ -73,9 +73,9 @@ public class CollisionService {
 	public void checkColTiles(Entity entity){
 		if(entity.isPlayer)
 		for(int i =0;i<gp.getLayersCount();i++){
-			if(gp.getLayerFromLayerService(i).collisionOn){
-			int tileOne = gp.getLayerFromLayerService(i).map[(one.x/gp.getTileSize())][(one.y/gp.getTileSize())];		
-			int tileTwo = gp.getLayerFromLayerService(i).map[(two.x/gp.getTileSize())][(two.y/gp.getTileSize())];
+			if(gp.getlevelService().getLayerById(i).collisionOn){
+			int tileOne = gp.getlevelService().getLayerById(i).map[(one.x/gp.getTileSize())][(one.y/gp.getTileSize())];		
+			int tileTwo = gp.getlevelService().getLayerById(i).map[(two.x/gp.getTileSize())][(two.y/gp.getTileSize())];
 			if(tileOne !=0||tileTwo!=0){
 				entity.collisionOn = false;
 			}
@@ -100,14 +100,6 @@ public class CollisionService {
 
 	public void checkEntity(Entity entity){
 		if(entity.isPlayer)
-		for(int i = 0; i<=gp.getNPCArrayLength()-1;i++){
-			Rectangle col = new Rectangle(zero.x, zero.y, gp.getTileSize(), gp.getTileSize());
-			if(gp.getNPC(i)!=null){
-				if(col.intersects(gp.getNPC(i).solidArea)){
-					gp.getNPC(i).playerInteract();
-					gp.getPlayer().NPCIteract(gp.getNPC(i));
-				}
-			}
-		}
+		gp.getlevelService().collisionNPC(zero.x, zero.y);
 	} 
 }

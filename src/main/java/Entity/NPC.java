@@ -1,8 +1,8 @@
 package Entity;
 
 import Main.GamePanel;
-import Util.AnimationStateEnum;
-import Util.DirectionEnum;
+import Util.Enums.AnimationStateEnum;
+import Util.Enums.DirectionEnum;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -14,21 +14,36 @@ public class NPC extends Entity{
 	public int id;
 	private int actionLockCounter = 0;
 	public int lastX,lastY;
-	int minX, maxX, minY, maxY;
+	int minY, maxY, minX, maxX;
 	public DirectionEnum[] AllDirectionsArray = {DirectionEnum.left,DirectionEnum.right};
-	public NPC(GamePanel gp, int id,int animTypes, int countFrames,int xStartPos, int yStartPos, DirectionEnum StartDirection, int speed, int minX, int maxX, int minY, int maxY)
-	{
-		super(gp,animTypes,countFrames);
+
+	public NPC(GamePanel gp,int id,int xStartPos,int yStartPos,DirectionEnum StartDirection,int speed,int minX,int maxX,int minY,int maxY){
+		super(gp,1,1);
 		collisionOn = true;
 		this.speed = speed;
 		this.direction = StartDirection;
 		this.id = id;
-		worldX = xStartPos*gp.getTileSize();
-		worldY = yStartPos* gp.getTileSize();
-		this.minX = minX*gp.getTileSize();
-		this.maxX = maxX*gp.getTileSize();
-		this.minY = minY*gp.getTileSize();
-		this.maxY = maxY*gp.getTileSize();
+		worldX = yStartPos*gp.getTileSize();
+		worldY = xStartPos*gp.getTileSize();
+		this.minY = minX*gp.getTileSize();
+		this.maxY = maxX*gp.getTileSize();
+		this.minX = minY*gp.getTileSize();
+		this.maxX = maxY*gp.getTileSize();
+	}
+	public NPC(NPC npc, int animTypes, int countFrames
+	)
+	{
+		super(npc.gp,animTypes,countFrames);
+		collisionOn = true;
+		this.speed = npc.speed;
+		this.direction = npc.direction;
+		this.id = npc.id;
+		worldX = npc.worldX;
+		worldY = npc.worldY;
+		this.minY = npc.minY;
+		this.maxY = npc.maxY;
+		this.minX = npc.minX;
+		this.maxX = npc.maxX;
 	}
 	public void setAction(){}
 
@@ -46,22 +61,22 @@ public class NPC extends Entity{
 			switch (direction) {
 				case down:
 					lastX = worldX;
-					if(worldX -speed>=minX)
+					if(worldX -speed>=minY)
 						worldX -=speed;
 					break;
 				case right:
 					lastY = worldY;
-					if(worldY + speed <= maxY)
+					if(worldY + speed <= maxX)
 						worldY +=speed;
 					break;
 				case left:
 					lastY = worldY;
-					if(worldY - speed >= minY)
+					if(worldY - speed >= minX)
 						worldY -=speed;
 					break;
 				case up:
 					lastX = worldX;
-					if(worldX + speed <= maxX)
+					if(worldX + speed <= maxY)
 						worldX +=speed;
 					break;
 				default:

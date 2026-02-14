@@ -92,7 +92,7 @@ public class KeyService implements KeyListener{
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_M:
-					gp.muteAudio();
+					gp.getlevelService().muteAudio();
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 				break;
 			}

@@ -1,0 +1,38 @@
+[
+  {
+    "type": "knight",
+    "id": 1,
+    "xStartPosition": 6,
+    "yStartPosition": 6,
+    "direction": "right",
+		"speed": 1,
+		"minX": 5,
+		"maxX": 10,
+		"minY": 6,
+		"maxY": 6
+  },
+{
+    "type": "knight",
+    "id": 2,
+    "xStartPosition": 10,
+    "yStartPosition": 10,
+    "direction": "left",
+		"speed": 1,
+		"minX": 8,
+		"maxX": 12,
+		"minY": 10,
+		"maxY": 10
+  },
+  {
+    "type": "phantom",
+    "id": 1,
+    "xStartPosition": 15,
+    "yStartPosition": 13,
+    "direction": "left",
+		"speed": 2,
+		"minX": 7,
+		"maxX": 17,
+		"minY": 13,
+		"maxY": 13
+  }
+]

@@ -1,15 +1,15 @@
-package Repositoryes;
+package Repositories;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Util.DialogueModel;
+import Repositories.ModelsForRepositories.DialogueModel;
 
-public class DialogueRepositories {
+public class DialogueRepository {
 		private Map<String, DialogueModel> dialogueMap = new HashMap<>();
 
-    public DialogueRepositories() {
+    public DialogueRepository() {
         loadDialogues();
     }
 

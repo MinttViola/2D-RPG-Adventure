@@ -2,7 +2,7 @@ package InteractableObj;
 
 import Main.GamePanel;
 import Util.Animator;
-import Util.TypesOfSuperObjEnum;
+import Util.Enums.TypesOfSuperObjEnum;
 
 public class Heart extends SuperObjectBaseModel{
 

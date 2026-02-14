@@ -3,7 +3,8 @@ package InteractableObj;
 import Main.GamePanel;
 import Service.SoundService;
 import Util.Animator;
-import Util.TypesOfSuperObjEnum;
+import Util.Enums.TypesOfSuperObjEnum;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 

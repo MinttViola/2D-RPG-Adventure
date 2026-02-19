@@ -3,9 +3,12 @@
   "menu": {
     "NewGame": "НОВАЯ ИГРА",
     "LoadGame": "ЗАГРУЗИТЬ ИГРУ",
-    "Quit": "ВЫХОД"
+    "Quit": "ВЫХОД",
+    "Options": "НАСТРОЙКИ"
   },
   "options": {
-    "Langueage": "ЯЗЫК"
-  }
+    "Langueage": "ЯЗЫК",
+    "Back": "НАЗАД"
+  },
+  "pause": "ПАУЗА"
 }

@@ -3,9 +3,12 @@
   "menu": {
     "NewGame": "NEW GAME",
     "LoadGame": "LOAD GAME",
-    "Quit": "QUIT"
+    "Quit": "QUIT",
+    "Options": "OPTIONS"
   },
   "options": {
-    "Langueage": "LANGUAGE"
-  }
+    "Langueage": "LANGUAGE",
+    "Back": "BACK"
+  },
+  "pause": "PAUSE"
 }

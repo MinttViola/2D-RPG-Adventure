@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Main.GamePanel;
-import Util.GameState;
+import Util.Enums.GameStateEnum;
 
 public class KeyService implements KeyListener{
 
@@ -30,6 +30,9 @@ public class KeyService implements KeyListener{
 					break;
 				case TitleState:
 					titleStateSwitch(code);
+					break;
+				case OptionsState:
+					optionStateSwitch(code);
 					break;
 				default:
 					break;
@@ -88,7 +91,7 @@ public class KeyService implements KeyListener{
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_P:
-					gp.setGameState(GameState.PauseState);
+					gp.setGameState(GameStateEnum.PauseState);
 					timerForEliminateDoubleClick = System.nanoTime() +10000;
 					break;
 				case KeyEvent.VK_M:
@@ -102,7 +105,7 @@ public class KeyService implements KeyListener{
 			switch (code) {
 					case KeyEvent.VK_P:
 							if(System.nanoTime()>=timerForEliminateDoubleClick)
-								gp.setGameState(GameState.PlayState);
+								gp.setGameState(GameStateEnum.PlayState);
 							break;
 					default:
 							throw new AssertionError();
@@ -123,6 +126,30 @@ public class KeyService implements KeyListener{
 		}
 
 		private void titleStateSwitch(int code){
+			if(System.nanoTime()>=timerForEliminateDoubleClick){
+				switch (code) {
+						case KeyEvent.VK_W:
+							gp.getUIService().decreaseNumCommand();
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							break;
+						case KeyEvent.VK_S:
+							gp.getUIService().increaseNumCommand();
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							break;
+						case KeyEvent.VK_E:
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							gp.getUIService().enterCommand();
+							break;
+						case KeyEvent.VK_ENTER:
+							timerForEliminateDoubleClick = System.nanoTime() + 1000;
+							gp.getUIService().enterCommand();
+							break;
+						default:
+						break;
+				}
+			}
+		}
+		private void optionStateSwitch(int code){
 			if(System.nanoTime()>=timerForEliminateDoubleClick){
 				switch (code) {
 						case KeyEvent.VK_W:

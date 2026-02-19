@@ -8,9 +8,9 @@ import java.util.List;
 import InteractableObj.SuperObjectBaseModel;
 import Main.GamePanel;
 import Service.KeyService;
-import Util.GameState;
 import Util.Enums.AnimationStateEnum;
 import Util.Enums.DirectionEnum;
+import Util.Enums.GameStateEnum;
 import lombok.Getter;
 
 public class Player extends Entity {
@@ -93,7 +93,7 @@ public class Player extends Entity {
 			return;
 		if(NPC != null){
 			NPCForDialogue = NPC;
-			gp.setGameState(GameState.DialogueState);
+			gp.setGameState(GameStateEnum.DialogueState);
 		}
 	}
 

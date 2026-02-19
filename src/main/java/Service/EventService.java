@@ -3,8 +3,8 @@ package Service;
 import java.awt.Rectangle;
 
 import Main.GamePanel;
-import Util.GameState;
 import Util.Enums.DirectionEnum;
+import Util.Enums.GameStateEnum;
 
 public class EventService {
 	private GamePanel gp;
@@ -26,7 +26,7 @@ public class EventService {
 	public void checkEvent(){
 		if(timer<System.nanoTime()){
 			if(hit(2,7,DirectionEnum.right)){
-				damagePit(GameState.DialogueState);
+				damagePit(GameStateEnum.DialogueState);
 			}
 			timer = System.nanoTime()+1000000000;
 			}
@@ -49,7 +49,7 @@ public class EventService {
 		return hit;
 	}
 
-	private void damagePit(GameState gameState){
+	private void damagePit(GameStateEnum gameState){
 		gp.setGameState(gameState);	
 		gp.getPlayer().changeHP(-10);
 	}

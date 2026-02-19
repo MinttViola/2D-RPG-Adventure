@@ -12,13 +12,14 @@ import java.util.List;
 
 import Entity.NPC;
 import Main.GamePanel;
-import Util.GameState;
 import Util.ImageUtil;
 import Util.WorkWithFilesUtil;
+import Util.Enums.GameStateEnum;
 
 public class UIService {
 	GamePanel gp;
 	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
+	LanguageService lang = new LanguageService();
 	Font myFont;
 	boolean massageVisible = false;
 	String massage = "";
@@ -30,7 +31,7 @@ public class UIService {
 	Color baseStrokeColor,baseDialogWindowColor;
 	private int commandNum = 1;
 	int maxNumCommand = 0;
-	GameState prevGameState;
+	GameStateEnum prevGameState;
 	String startPath = "Assets/UI/";
 	String imageFileFormat = ".png";
 	int healthBarSize,maxHealthBarSize;
@@ -38,19 +39,8 @@ public class UIService {
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
-		try (InputStream is = getClass()
-						.getClassLoader()
-						.getResourceAsStream("Assets/Fonts/FontForGame2.ttf")) {
-
-				if (is == null) {
-						throw new RuntimeException("Font not found");
-				}
-
-				myFont = Font.createFont(Font.TRUETYPE_FONT, is);
-
-		} catch (FontFormatException | IOException e) {
-				e.printStackTrace();
-		}
+		LoadFont();
+		lang.loadLanguage("UI", gp.getStringLang());
 		tileSize = gp.getTileSize();
 		healthBarSize = (int)((tileSize*3-tileSize/2));
 		maxHealthBarSize = healthBarSize;
@@ -71,11 +61,19 @@ public class UIService {
 		switch(gp.getGameState()){
 			case TitleState:
 			if(prevGameState != gp.getGameState()){
-				maxNumCommand = 3;
+				maxNumCommand = 4;
 				commandNum = 1;
 			}
-			prevGameState = GameState.TitleState;
+			prevGameState = GameStateEnum.TitleState;
 			drawTitleScreen();
+			break;
+			case OptionsState:
+			if(prevGameState != gp.getGameState()){
+				maxNumCommand = 2;
+				commandNum = 1;
+			}
+			prevGameState = GameStateEnum.OptionsState;
+			drawOptionsScreen();
 			break;
 			case PlayState:
 			drawPlayStateUI();
@@ -89,23 +87,56 @@ public class UIService {
 		}
 	}
 
+	private void LoadFont(){
+	try (
+		InputStream is = getClass()
+			.getClassLoader()
+			.getResourceAsStream("Assets/Fonts/FontForGame2.ttf")) 
+		{
+			if (is == null) {
+					throw new RuntimeException("Font not found");
+			}
+			myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+		} 
+		catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void LoadLangue(){
+		lang.loadLanguage("UI", gp.getStringLang());
+	}
+
 	private void drawPlayStateUI(){
 		drawPlayerHealthBar();
 	}
 	
 	private void drawTitleScreen(){
-
 		g2.setColor(new Color(0,0,0));
 		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
 		int y = tileSize*2;
 		drawImage(0, y+(tileSize), tileSize*2, tileSize*2,"CharForMenu");
-		drawShadowTextByCenter("2D RPG Adventure", Color.gray, Color.white, y);
+		drawShadowTextByCenter(lang.get("name"), Color.gray, Color.white, y);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-		drawTextByCenter("NEW GAME", Color.white, y+(tileSize*5),0);
-		drawTextByCenter("LOAD GAME", Color.white, y+(tileSize*6),0);
-		drawTextByCenter("QUIT", Color.white, y+(tileSize*7), 0);
-		drawImage(6*tileSize,tileSize*(5+commandNum)+10, tileSize, tileSize, "select_icon_ui");
+		drawTextByCenter(lang.get("menu.NewGame"), Color.white, y+(tileSize*4),0);
+		drawTextByCenter(lang.get("menu.LoadGame"), Color.white, y+(tileSize*5),0);
+		drawTextByCenter(lang.get("menu.Options"), Color.white, y+(tileSize*6),0);
+		drawTextByCenter(lang.get("menu.Quit"), Color.white, y+(tileSize*7), 0);
+		drawImage(6*tileSize,tileSize*(4+commandNum)+10, tileSize, tileSize, "select_icon_ui");
+	}
+
+	private void drawOptionsScreen(){
+		g2.setColor(new Color(0,0,0));
+		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+		int y = tileSize*2;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+		drawTextByCenter(lang.get("menu.Options"), Color.white, y, 0);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+		drawImage(0, y+(tileSize), tileSize*2, tileSize*2,"CharForMenu");
+		drawTextByCenter(lang.get("options.Langueage") + ":   " + gp.getStringLang(), Color.white, y+(tileSize*4), 0);
+		drawTextByCenter(lang.get("options.Back"), Color.white, y+(tileSize*5), 0);
+		drawImage(6*tileSize,tileSize*(4+commandNum)+10, tileSize, tileSize, "select_icon_ui");
 	}
 
 	private void drawDialogScreen(){
@@ -124,7 +155,7 @@ public class UIService {
 		if(dialogueCounter !=maxDialogueNum)
 			g2.drawString(dialogueList.get(dialogueCounter), x, y);
 		else{
-			gp.setGameState(GameState.PlayState);
+			gp.setGameState(GameStateEnum.PlayState);
 			dialogueCounter = 0;
 		}
 	}
@@ -135,7 +166,7 @@ public class UIService {
 		Color color = new Color(0,0,0,120);
 		drawSubWindow(0, 0, gp.getScreenWidth(), gp.getScreenHeight(), color,color);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-		drawShadowTextByCenter("pause", Color.gray, Color.white, y);
+		drawShadowTextByCenter(lang.get("pause"), Color.gray, Color.white, y);
 	}
 
 	private void drawPlayerHealthBar(){
@@ -209,19 +240,38 @@ public class UIService {
 			case TitleState:
 			titleStateSwitch();
 			break;
+			case OptionsState:
+			optionStateSwitch();
+			break;
 		}
 	}
 
 	private void titleStateSwitch(){
 		switch(commandNum){
 			case 1:
-				gp.setGameState(GameState.PlayState);
+				gp.setGameState(GameStateEnum.PlayState);
 				break;
 			case 2:
-
+			//load
 			break;
 			case 3:
+				gp.setGameState(GameStateEnum.OptionsState);
+				break;
+			case 4:
 			System.exit(0);
+			break;
+		}
+	}
+
+	private void optionStateSwitch(){
+		switch(commandNum){
+			case 1:
+				gp.nextLang();
+				LoadLangue();
+				drawOptionsScreen();
+				break;
+			case 2:
+				gp.setGameState(GameStateEnum.TitleState);
 			break;
 		}
 	}

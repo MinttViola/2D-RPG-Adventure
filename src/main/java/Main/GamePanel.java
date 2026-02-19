@@ -21,9 +21,9 @@ import Service.SoundService;
 import Service.UIService;
 import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
+import Util.Enums.GameStateEnum;
 import Util.Enums.LanguagesEnum;
 import Util.Factories.NPCPFactory;
-import Util.GameState;
 import WorkWithJson.MapLayerEnum;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	private ObjPlasment objPlase = new ObjPlasment(this);
 	NPCPFactory NPCFactory = new NPCPFactory(this);
-	private GameState gameState = GameState.PlayState;
+	private GameStateEnum gameState = GameStateEnum.TitleState;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -125,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		if(gameState == GameState.TitleState){
+		if(gameState == GameStateEnum.TitleState){
 			ui.draw(g2);
 			g2.dispose();
 		}
@@ -146,8 +146,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public void nextDialogue(){ui.nextDialogue();}
 
 	//Setters and Getters
-	public void setGameState(GameState newState){this.gameState = newState;}
-	public GameState getGameState(){return gameState;}
+	public void setGameState(GameStateEnum newState){this.gameState = newState;}
+	public GameStateEnum getGameState(){return gameState;}
 	public int getOrignalTileSize(){return originalTitleSize;}
 	public int getScreenWidth(){return screenWidth;}
 	public int getScreenHeight(){return screenHeight;}
@@ -168,5 +168,6 @@ public class GamePanel extends JPanel implements Runnable {
 	public SuperObjectBaseModel getSuperObj(int index) {return obj[index];}
 	public void setSuperObjInArray(SuperObjectBaseModel obj, int index) {this.obj[index] = obj;}
 	public int getSuperObjArrayLength() {return obj.length;}
+	public void nextLang(){lang = lang.next();};
 
 }

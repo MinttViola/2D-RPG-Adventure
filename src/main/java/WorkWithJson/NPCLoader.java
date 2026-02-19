@@ -17,12 +17,12 @@ import Main.GamePanel;
 import Repositories.ModelsForRepositories.NPCModel;
 import Util.WorkWithFilesUtil;
 
-public class NPCRead {
+public class NPCLoader {
 	GamePanel gp;
 	private WorkWithFilesUtil filesUtil = new WorkWithFilesUtil();
 	String path = "Assets/Levels/";
 
-	public NPCRead(GamePanel gp){
+	public NPCLoader(GamePanel gp){
 		this.gp = gp;
 	}
 	public List<NPCModel> getNPCs(int lvl){
@@ -30,15 +30,11 @@ public class NPCRead {
 		List<NPCModel> result = new ArrayList<>();
 		try {
         URL url = new WorkWithFilesUtil().get(curPath);
-
         InputStream is = url.openStream();
         InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-
         Gson gson = new Gson();
         NPCModel[] array = gson.fromJson(reader, NPCModel[].class);
-
         result = Arrays.asList(array);
-
     } catch(Exception e){
         e.printStackTrace();
     }

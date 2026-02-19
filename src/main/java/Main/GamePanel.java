@@ -21,8 +21,9 @@ import Service.SoundService;
 import Service.UIService;
 import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
+import Util.Enums.LanguagesEnum;
+import Util.Factories.NPCPFactory;
 import Util.GameState;
-import Util.NPCPFactory;
 import WorkWithJson.MapLayerEnum;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -52,14 +53,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private int FPS = 60;
 	private TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
-	/*private LayerService[] layersS = new LayerService[layersCount];*/
 	Thread gameThread;
+	private LanguagesEnum lang = LanguagesEnum.en;
 	
 	private CollisionService cCheck = new CollisionService(this);	
 	private KeyService keyH = new KeyService(this);
 	private UIService ui = new UIService(this);
 	private EventService eventService = new EventService(this);
-	private DialogueService dialogueService = new DialogueService(this);
 	private LevelService levelService = new LevelService(this);
 
 	private Player player = new Player(this,keyH);
@@ -154,6 +154,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public int getMaxWorldRow(){return maxWorldRow;}
 	public int getMaxWorldCol(){return maxWorldCol;}
 	public int getLayersCount(){return layersCount;}
+	public int getTileSize() {return tileSize;}
+	public String getStringLang(){return lang.toString();}
+
 	//get services
 	public CollisionService getCollisionService(){return cCheck;}
 	public EventService getEventService() {return eventService;}
@@ -162,10 +165,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public LevelService getlevelService(){return levelService;}
 
 	public Player getPlayer(){return player;}
-	public int getTileSize() {return tileSize;}
 	public SuperObjectBaseModel getSuperObj(int index) {return obj[index];}
 	public void setSuperObjInArray(SuperObjectBaseModel obj, int index) {this.obj[index] = obj;}
 	public int getSuperObjArrayLength() {return obj.length;}
-	public int getMaxDialogueNumFromID(String id){return dialogueService.getMaxDialogueNumFromID(id);}
-	public List<String> getDialogueList(String id){return dialogueService. getDialogueList(id);}
+
 }

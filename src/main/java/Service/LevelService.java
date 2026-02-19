@@ -7,9 +7,10 @@ import java.util.List;
 
 import Entity.NPC;
 import Main.GamePanel;
+import Repositories.ModelsForRepositories.DialogueModel;
 import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
-import Util.NPCPFactory;
+import Util.Factories.NPCPFactory;
 import WorkWithJson.MapLayerEnum;
 
 public class LevelService {
@@ -19,11 +20,13 @@ public class LevelService {
 	private List<LayerService> layersS;
 	private TileService overworldTilseS;
 	private NPCPFactory npcFactory;
+	private DialogueService dialogueService;
 	private List<NPC>	npcList = new ArrayList<NPC>();
 
 	public LevelService(GamePanel gp){
 		this.gp = gp;
 		npcFactory = new NPCPFactory(gp);
+		dialogueService = new DialogueService(gp);
 		layersCount = gp.getLayersCount();
 		layersS = new ArrayList<LayerService>();
 		overworldTilseS = new TileService(	"overworld",gp.getOrignalTileSize(),gp.getTileSize());
@@ -34,6 +37,7 @@ public class LevelService {
 		setMap(lvl);
 		setNPC(lvl);
 		setSuperObjects(lvl);
+		setDialogue(lvl);
 	}
 
 
@@ -52,6 +56,10 @@ public class LevelService {
 	private void setNPC(int lvl){
 		if(npcList.size() != 0) npcList.clear();
 		npcList = npcFactory.setNPC(lvl);
+	}
+
+	private void setDialogue(int lvl){
+		dialogueService.setDialogue(lvl);
 	}
 
 	private void setSuperObjects(int lvl){}
@@ -90,5 +98,9 @@ public class LevelService {
 			}
 		}
 	}
+
+	//dialogue
+	public int getMaxDialogueNumFromID(List<String> dialogues){return dialogueService.getMaxDialogueNumFromID(dialogues);}
+	public List<String> getDialogueList(String id){return dialogueService. getDialogueList(id);}
 
 }

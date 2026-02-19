@@ -1,0 +1,18 @@
+[
+  {
+    "id": "KnightNPC_2",
+    "lines": [
+      "this is knight thing for second NPC",
+      "this is also knight thing for second NPC",
+      "this is more knight thing for second NPC"
+    ]
+  },
+  {
+    "id": "KnightNPC_1",
+    "lines": [
+			"this is knight thing",
+			"this is also knight thing",
+			"this is more knight thing"
+    ]
+  }
+]

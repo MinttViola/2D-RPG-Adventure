@@ -1,4 +1,4 @@
-package Util;
+package Util.Factories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import Entity.NPCKnight;
 import Entity.NPCPhantom;
 import Main.GamePanel;
 import Repositories.ModelsForRepositories.NPCModel;
-import WorkWithJson.NPCRead;
+import WorkWithJson.NPCLoader;
 
 public class NPCPFactory {
 GamePanel gp;
-NPCRead listNPCs;
+NPCLoader listNPCs;
 
 	public NPCPFactory(GamePanel gp){
 		this.gp = gp;
-		listNPCs = new NPCRead(gp);
+		listNPCs = new NPCLoader(gp);
 	}
 
 	public List<NPC> setNPC(int lvl){

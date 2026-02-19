@@ -1,0 +1,11 @@
+{
+  "name": "2D RPG ADVENTURE",
+  "menu": {
+    "NewGame": "NEW GAME",
+    "LoadGame": "LOAD GAME",
+    "Quit": "QUIT"
+  },
+  "options": {
+    "Langueage": "LANGUAGE"
+  }
+}

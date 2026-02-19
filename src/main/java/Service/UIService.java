@@ -111,8 +111,8 @@ public class UIService {
 	private void drawDialogScreen(){
 		NPC npc = gp.getPlayer().getDialogueNPC();
 		String id = npc.name+"_"+npc.id;
-		maxDialogueNum = gp.getMaxDialogueNumFromID(id);
-		List<String> dialogueList = gp.getDialogueList(id);
+		List<String> dialogueList = gp.getlevelService().getDialogueList(id);
+		maxDialogueNum = gp.getlevelService().getMaxDialogueNumFromID(dialogueList);
 		int x = tileSize*2;
 		int y = tileSize /2;
 		int width = gp.getScreenWidth() - (tileSize*4);
@@ -193,14 +193,14 @@ public class UIService {
 	public void increaseNumCommand(){
 		if(commandNum+1<=maxNumCommand){
 			commandNum +=1;
-			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize, startPath+"select_icon_ui.png");
+			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize, "select_icon_ui");
 		}
 	}
 
 	public void decreaseNumCommand(){
 		if(commandNum-1>0){
 			commandNum -=1;
-			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize, startPath+"select_icon_ui.png");
+			drawImage(0,tileSize*(5+commandNum)+10, tileSize, tileSize,"select_icon_ui");
 		}
 	}
 

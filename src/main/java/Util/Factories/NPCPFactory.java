@@ -7,8 +7,8 @@ import Entity.NPC;
 import Entity.NPCKnight;
 import Entity.NPCPhantom;
 import Main.GamePanel;
-import Repositories.ModelsForRepositories.NPCModel;
 import WorkWithJson.NPCLoader;
+import WorkWithJson.ModelsForJson.NPCModel;
 
 public class NPCPFactory {
 GamePanel gp;

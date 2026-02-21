@@ -11,10 +11,9 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import Main.GamePanel;
-import Repositories.ModelsForRepositories.DialogueModel;
-import Repositories.ModelsForRepositories.DialogueModelForJson;
-import Repositories.ModelsForRepositories.NPCModel;
 import Util.WorkWithFilesUtil;
+import WorkWithJson.ModelsForJson.DialogueModel;
+import WorkWithJson.ModelsForJson.DialogueModelForJson;
 
 public class DialogueLoader {
 	GamePanel gp;

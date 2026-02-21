@@ -92,8 +92,7 @@ public class Player extends Entity {
 		if(!gp.getKeyService().EPressed)
 			return;
 		if(NPC != null){
-			NPCForDialogue = NPC;
-			gp.setGameState(GameStateEnum.DialogueState);
+			gp.getlevelService().dialogueWithNPC(NPCForDialogue);
 		}
 	}
 

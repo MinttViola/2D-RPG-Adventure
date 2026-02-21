@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 
 import Entity.NPC;
 import Main.GamePanel;
-import Repositories.ModelsForRepositories.NPCModel;
 import Util.WorkWithFilesUtil;
+import WorkWithJson.ModelsForJson.NPCModel;
 
 public class NPCLoader {
 	GamePanel gp;

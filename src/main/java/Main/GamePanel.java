@@ -43,8 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int worldHeight=tileSize*maxWorldRow;
 	private final int layersCount = 4;
 
-	public final int  startPlayerPositionX=0*tileSize;
-	public final int  startPlayerPositionY=6*tileSize;
+	public final int  startPlayerPositionX=4*tileSize;
+	public final int  startPlayerPositionY=7*tileSize;
 	
 
 	
@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private SuperObjectBaseModel obj[] = new SuperObjectBaseModel[10];
 	private ObjPlasment objPlase = new ObjPlasment(this);
 	NPCPFactory NPCFactory = new NPCPFactory(this);
-	private GameStateEnum gameState = GameStateEnum.TitleState;
+	private GameStateEnum gameState = GameStateEnum.PlayState;
 
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -144,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}	
 	}
 	public void nextDialogue(){ui.nextDialogue();}
-
+	public void setDialogue(String id){ui.dialogue(id);}
 	//Setters and Getters
 	public void setGameState(GameStateEnum newState){this.gameState = newState;}
 	public GameStateEnum getGameState(){return gameState;}

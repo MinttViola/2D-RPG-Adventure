@@ -14,5 +14,11 @@
 			"this is also knight thing",
 			"this is more knight thing"
     ]
+  },
+  {
+    "id":"DamagePit",
+    "lines":[
+      "You fall into damage pit"
+    ]
   }
 ]

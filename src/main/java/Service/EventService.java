@@ -11,6 +11,7 @@ public class EventService {
 	private Rectangle eventRec;
 	private int eventRectDefaultX, eventRectDefaultY;
 	long timer = 0;
+	long damageTimer = 0;
 
 	public EventService(GamePanel gp){
 		this.gp = gp;
@@ -26,9 +27,9 @@ public class EventService {
 	public void checkEvent(){
 		if(timer<System.nanoTime()){
 			if(hit(2,7,DirectionEnum.right)){
-				damagePit(GameStateEnum.DialogueState);
+				damagePit();
 			}
-			timer = System.nanoTime()+1000000000;
+			timer = System.nanoTime()+100000000;
 			}
 	}
 
@@ -39,6 +40,7 @@ public class EventService {
 		eventRec.x = eventCol*gp.getTileSize() + eventRec.x;
 		eventRec.y = eventRow*gp.getTileSize() + eventRec.y;
 		if(gp.getPlayer().isPlayerIntersects(eventRec)){
+			System.err.println(gp.getPlayer().getDirection());
 			if(gp.getPlayer().getDirection() == dir){
 				hit = true;
 			}
@@ -49,8 +51,12 @@ public class EventService {
 		return hit;
 	}
 
-	private void damagePit(GameStateEnum gameState){
-		gp.setGameState(gameState);	
-		gp.getPlayer().changeHP(-10);
+	private void damagePit(){
+		if(damageTimer<System.nanoTime()){
+			System.err.println("damage pit");
+			gp.getPlayer().changeHP(-10);
+			gp.getlevelService().dialogueFromEvent("DamagePit");
+		}
+		damageTimer = System.nanoTime()+1000000000;
 	}
 }

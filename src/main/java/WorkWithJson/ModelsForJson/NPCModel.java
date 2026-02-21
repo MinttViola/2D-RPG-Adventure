@@ -1,4 +1,4 @@
-package Repositories.ModelsForRepositories;
+package WorkWithJson.ModelsForJson;
 
 import Util.Enums.DirectionEnum;
 import Util.Enums.NPCEnum;

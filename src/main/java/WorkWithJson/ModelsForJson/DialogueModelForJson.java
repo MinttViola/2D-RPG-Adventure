@@ -1,4 +1,4 @@
-package Repositories.ModelsForRepositories;
+package WorkWithJson.ModelsForJson;
 
 import java.util.List;
 

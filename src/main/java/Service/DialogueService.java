@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import Entity.NPC;
 import Main.GamePanel;
-import Repositories.DialogueRepository;
-import Repositories.ModelsForRepositories.DialogueModel;
 import WorkWithJson.DialogueLoader;
+import WorkWithJson.ModelsForJson.DialogueModel;
 
 public class DialogueService { 
 	
@@ -39,5 +39,14 @@ public class DialogueService {
 	public int getMaxDialogueNumFromID(List<String> dialogues){
     if (dialogues == null) {return 0;}
     return dialogues.size();
+	}
+
+	public void dialogueFromNPC(NPC npcForFialogue){
+		String id = npcForFialogue.name+"_"+npcForFialogue.id;
+		gp.setDialogue(id);
+	}
+
+	public void dialogueFromEvent(String EventType){
+		gp.setDialogue(EventType);
 	}
 }

@@ -7,11 +7,11 @@ import java.util.List;
 
 import Entity.NPC;
 import Main.GamePanel;
-import Repositories.ModelsForRepositories.DialogueModel;
 import Tile.TileService.LayerService;
 import Tile.TileService.TileService;
 import Util.Factories.NPCPFactory;
 import WorkWithJson.MapLayerEnum;
+import WorkWithJson.ModelsForJson.DialogueModel;
 
 public class LevelService {
 	GamePanel gp;
@@ -102,5 +102,7 @@ public class LevelService {
 	//dialogue
 	public int getMaxDialogueNumFromID(List<String> dialogues){return dialogueService.getMaxDialogueNumFromID(dialogues);}
 	public List<String> getDialogueList(String id){return dialogueService. getDialogueList(id);}
+	public void dialogueWithNPC(NPC npcForFialogue){dialogueService.dialogueFromNPC(npcForFialogue);}
+	public void dialogueFromEvent(String eventType){dialogueService.dialogueFromEvent(eventType);}
 
 }

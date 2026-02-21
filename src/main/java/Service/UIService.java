@@ -36,6 +36,7 @@ public class UIService {
 	String imageFileFormat = ".png";
 	int healthBarSize,maxHealthBarSize;
 	int tileSize;
+	String dialogueId = "";
 
 	public UIService(GamePanel gp){
 		this.gp = gp;
@@ -85,6 +86,12 @@ public class UIService {
 			drawDialogScreen();
 			break;
 		}
+	}
+
+	public void dialogue(String id){
+		if(dialogueId != "") dialogueId = "";
+		dialogueId = id;
+		gp.setGameState(GameStateEnum.DialogueState); 
 	}
 
 	private void LoadFont(){
@@ -140,9 +147,8 @@ public class UIService {
 	}
 
 	private void drawDialogScreen(){
-		NPC npc = gp.getPlayer().getDialogueNPC();
-		String id = npc.name+"_"+npc.id;
-		List<String> dialogueList = gp.getlevelService().getDialogueList(id);
+		if(dialogueId == "") return;
+		List<String> dialogueList = gp.getlevelService().getDialogueList(dialogueId);
 		maxDialogueNum = gp.getlevelService().getMaxDialogueNumFromID(dialogueList);
 		int x = tileSize*2;
 		int y = tileSize /2;
@@ -266,14 +272,18 @@ public class UIService {
 	private void optionStateSwitch(){
 		switch(commandNum){
 			case 1:
-				gp.nextLang();
-				LoadLangue();
-				drawOptionsScreen();
+			changeLangueInOptions();
 				break;
 			case 2:
 				gp.setGameState(GameStateEnum.TitleState);
 			break;
 		}
+	}
+
+	private void changeLangueInOptions(){
+		gp.nextLang();
+		LoadLangue();
+		drawOptionsScreen();
 	}
 	
 }

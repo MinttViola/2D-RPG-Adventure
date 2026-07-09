@@ -130,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
 			ui.draw(g2);
 			g2.dispose();
 			break;
-			case PlayState:
+			case PlayState,DialogueState,PauseState:
 			levelService.drawMap(g2);
 			levelService.drawNPCs(g2);
 			for(int i = 0;i<=obj.length-1;i++){

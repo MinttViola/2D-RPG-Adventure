@@ -26,10 +26,10 @@ public class EventService {
 
 	public void checkEvent(){
 		if(timer<System.nanoTime()){
-			if(hit(2,7,DirectionEnum.right)){
+			if(hit(7,2,DirectionEnum.right)){
 				damagePit();
 			}
-			timer = System.nanoTime()+150000000;
+			timer = System.nanoTime()+100000000;
 			}
 	}
 

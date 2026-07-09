@@ -10,8 +10,8 @@ public class EventService {
 	private GamePanel gp;
 	private Rectangle eventRec;
 	private int eventRectDefaultX, eventRectDefaultY;
-	long timer = 0;
-	long damageTimer = 0;
+	private long timer = 0;
+	private long damageTimer = 0;
 
 	public EventService(GamePanel gp){
 		this.gp = gp;
@@ -29,7 +29,7 @@ public class EventService {
 			if(hit(2,7,DirectionEnum.right)){
 				damagePit();
 			}
-			timer = System.nanoTime()+100000000;
+			timer = System.nanoTime()+150000000;
 			}
 	}
 

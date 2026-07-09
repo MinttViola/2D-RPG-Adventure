@@ -55,7 +55,7 @@ public class DirectionAnimator {
 	}
 
 	public void draw(Graphics2D g2,int x, int y){
-				Anim(g2,character.direction.ordinal(), y, x);
+				Anim(g2,character.direction.ordinal(), x, y);
 	}
 	
 	public void Anim(Graphics2D g2, int id, int x, int y){
@@ -70,7 +70,7 @@ public class DirectionAnimator {
 			curFrame = (curFrame + 1) % dirCountFrames;
 			timer=0;
 			}
-			g2.drawImage(sprites[id][curFrame],y,x,null); 
+			g2.drawImage(sprites[id][curFrame],x,y,null); 
 	}
 
 }

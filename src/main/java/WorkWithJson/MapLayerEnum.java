@@ -3,8 +3,10 @@ package WorkWithJson;
 public enum MapLayerEnum {
 	BASE(0, "Base", false),
 	HILL(1, "Hill", true),
-	DECORATION_WO_COL(2, "DecorationWOCol", false),
-	DECORATION_WITH_COL(3, "DecorationWithCol", true); 
+	FALL(2, "Fall", false),
+	WATER(3, "Water", true),
+	DECORATION_WO_COL(4, "DecorationWOCol", false),
+	DECORATION_WITH_COL(5, "DecorationWithCol", true); 
 
 	private final int order;
 	private final String name;

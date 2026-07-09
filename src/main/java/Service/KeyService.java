@@ -45,11 +45,11 @@ public class KeyService implements KeyListener{
 		switch (code) {
 			case KeyEvent.VK_W:
 			case KeyEvent.VK_S:
-				xChange=0;
+				yChange=0;
 				break;
 			case KeyEvent.VK_A:
 			case KeyEvent.VK_D:
-				yChange=0;
+				xChange=0;
 				break;
 				case KeyEvent.VK_E:
 				EPressed = false;
@@ -66,16 +66,16 @@ public class KeyService implements KeyListener{
 	private void playStateSwitch(int code){
 		switch (code) {
 				case KeyEvent.VK_W:
-					xChange=1;
-					break;
-				case KeyEvent.VK_S:
-					xChange=-1;
-					break;
-				case KeyEvent.VK_A:
 					yChange=-1;
 					break;
-				case KeyEvent.VK_D:
+				case KeyEvent.VK_S:
 					yChange=1;
+					break;
+				case KeyEvent.VK_A:
+					xChange=-1;
+					break;
+				case KeyEvent.VK_D:
+					xChange=+1;
 					break;
 				case KeyEvent.VK_E:
 					EPressed = true;

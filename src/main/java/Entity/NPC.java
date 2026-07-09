@@ -23,12 +23,12 @@ public class NPC extends Entity{
 		this.speed = speed;
 		this.direction = StartDirection;
 		this.id = id;
-		worldX = yStartPos*gp.getTileSize();
-		worldY = xStartPos*gp.getTileSize();
-		this.minY = minX*gp.getTileSize();
-		this.maxY = maxX*gp.getTileSize();
-		this.minX = minY*gp.getTileSize();
-		this.maxX = maxY*gp.getTileSize();
+		worldX = xStartPos*gp.getTileSize();
+		worldY = yStartPos*gp.getTileSize();
+		this.minY = minY*gp.getTileSize();
+		this.maxY = maxY*gp.getTileSize();
+		this.minX = minX*gp.getTileSize();
+		this.maxX = maxX*gp.getTileSize();
 	}
 	public NPC(NPC npc, int animTypes, int countFrames
 	)
@@ -45,7 +45,7 @@ public class NPC extends Entity{
 		this.minX = npc.minX;
 		this.maxX = npc.maxX;
 	}
-	public void setAction(){}
+	public void setAction(){ randomDirectionForNPC();}
 
 	public void playerInteract(){
 		if(!gp.getKeyService().EPressed)
@@ -55,29 +55,29 @@ public class NPC extends Entity{
 	public void update(){
 		setAction();
 		collisionOn = true;
-		gp. getCollisionService().checker(this);
+		gp.getCollisionService().checker(this);
 		if(collisionOn){
 			solidAreaUpdate();
 			switch (direction) {
 				case down:
-					lastX = worldX;
-					if(worldX -speed>=minY)
-						worldX -=speed;
-					break;
-				case right:
 					lastY = worldY;
-					if(worldY + speed <= maxX)
+					if(worldY + speed>=maxY)
 						worldY +=speed;
 					break;
+				case right:
+					lastX = worldX;
+					if(worldX + speed <= maxX)
+						worldX +=speed;
+					break;
 				case left:
-					lastY = worldY;
-					if(worldY - speed >= minX)
-						worldY -=speed;
+					lastX = worldX;
+					if(worldX - speed >= minX)
+						worldX -=speed;
 					break;
 				case up:
-					lastX = worldX;
-					if(worldX + speed <= maxY)
-						worldX +=speed;
+					lastY = worldY;
+					if(worldY - speed <= minY)
+						worldY -=speed;
 					break;
 				default:
 					break;}}
@@ -88,10 +88,10 @@ public class NPC extends Entity{
 		int screenY = worldY - gp.getPlayer().worldY + gp.getPlayer().screenY;
 		if(lastX !=worldX || lastY!=worldY)
 			if( gp.getPlayer().ifPlayerCanSeeThis(worldX, worldY)){	
-					animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
+					animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenX,screenY);
 			}
 			else
-			animators[AnimationStateEnum.getIdbyState("Idle")].draw(g2,screenY,screenX);
+			animators[AnimationStateEnum.getIdbyState("Idle")].draw(g2,screenX,screenY);
 	}
 
 	public void solidAreaUpdate(){

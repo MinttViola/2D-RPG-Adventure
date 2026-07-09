@@ -1,15 +1,55 @@
 package Tile.TileService;
 
 import java.awt.Graphics2D;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import WorkWithJson.ModelsForJson.LayerModel;
 
 import Main.GamePanel;
-import Util.WorkWithFilesUtil;
-import WorkWithJson.MapLayerEnum;
-
 public class LayerService {
+GamePanel gp;
+int tileSize;
+String name;
+TileService tileSet;
+public int[][] map;
+public boolean collisionOn;
+
+public LayerService(GamePanel gp, LayerModel layerModel, TileService tileService) {
+		this.gp = gp;
+		this.tileSize = gp.getTileSize();
+		this.name = layerModel.getName();
+		this.tileSet = tileService;
+		this.collisionOn = layerModel.isVisible();
+		this.map = new int[gp.getMaxWorldCol()][gp.getMaxWorldRow()];
+		convert1DTo2D(layerModel.getData(), layerModel.getWidth(), layerModel.getHeight());
+}
+
+private void convert1DTo2D(int[] data, int width, int height) {
+	for (int row = 0; row < height; row++) {
+		for (int col = 0; col < width; col++) {
+			int index = row * width + col;
+			if (index < data.length && col < gp.getMaxWorldCol() && row < gp.getMaxWorldRow()) {
+					map[col][row] = data[index];
+			}
+		}
+	}
+}
+
+public void draw(Graphics2D g2) {
+	for (int worldRow = 0; worldRow < gp.getMaxWorldRow(); worldRow++) {
+		for (int worldCol = 0; worldCol < gp.getMaxWorldCol(); worldCol++) {
+			int tileID = map[worldCol][worldRow];
+			int worldX = worldCol * gp.getTileSize();
+			int worldY = worldRow * gp.getTileSize();
+			int screenX = gp.getPlayer().xPlaceIfCanSee(worldX);
+			int screenY = gp.getPlayer().yPlaceIfCanSee(worldY);
+			g2.drawImage(tileSet.tiles[tileID].img, screenX, screenY, null);
+		}
+	}
+}
+
+
+
+
+	/*
 	GamePanel gp;
 	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
 	int tileSize;
@@ -34,16 +74,15 @@ public class LayerService {
 
 	public void loadLevel(){
 		String path = "Assets/Levels/"+level+"/"+name+".txt";
-		try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
-
+		try (
+			InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
 				if (is == null) {
 						throw new RuntimeException("Level file not found: " + path);
 				}
-
 				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 						for (int i = 0; i < gp.getMaxWorldCol(); i++) {
 								String line = br.readLine();
-								String[] numbers = line.split(",\\s*"); // убираем пробелы
+								String[] numbers = line.split(",\\s*");
 								for (int j = 0; j < gp.getMaxWorldRow(); j++) {
 										int num = Integer.parseInt(numbers[j]);
 										map[i][j] = num;
@@ -81,5 +120,5 @@ public class LayerService {
 			}
 		}
 	}
-
+*/
 }

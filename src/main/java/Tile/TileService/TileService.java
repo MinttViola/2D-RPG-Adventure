@@ -12,7 +12,7 @@ import Util.WorkWithFilesUtil;
 
 public class TileService {
 	public String name;
-	Tile[] tiles;
+	public Tile[] tiles;
 	int OriginalTileSize;
 	int tileSizeForScale;
 	WorkWithFilesUtil fileUtil = new WorkWithFilesUtil();
@@ -43,8 +43,8 @@ public class TileService {
 
 	private void getId(int height,int width){
 		int idCount = height*width;
-		tiles = new Tile[idCount+1];
-		for(int i = 1; i<idCount;i++){
+		tiles = new Tile[idCount+2];
+		for(int i = 1; i<idCount+1;i++){
 			tiles[i] = new Tile();
 			tiles[i].id = i; 
 		}
@@ -53,7 +53,7 @@ public class TileService {
 	}
 
 	private void getImages(BufferedImage originalImg){
-		for(int i = 1; i<tiles.length-1;i++){
+		for(int i = 1; i<tiles.length-2;i++){
 			int x = ((tiles[i].id-1)%10)*16;
 			int y = ((tiles[i].id-1)/10)*16;
 			BufferedImage img = originalImg.getSubimage(x, y, OriginalTileSize, OriginalTileSize);

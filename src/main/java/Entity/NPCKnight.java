@@ -1,8 +1,5 @@
 package Entity;
 
-import Main.GamePanel;
-import Util.Enums.DirectionEnum;
-
 public class NPCKnight extends NPC{
 
 

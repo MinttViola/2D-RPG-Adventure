@@ -61,7 +61,7 @@ public class SuperObjectBaseModel {
 		int screenX = gp.getPlayer().xPlaceIfCanSee(worldX);
 		int screenY = gp.getPlayer().yPlaceIfCanSee(worldY);
 		if(gp.getPlayer().ifPlayerCanSeeThis(worldX, worldY)){	
-			anim.draw(g2, screenY, screenX);
+			anim.draw(g2, screenX, screenY);
 		}
 	}
 }

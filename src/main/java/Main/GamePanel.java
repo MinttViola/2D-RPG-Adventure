@@ -41,15 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int maxWorldRow = 30;
 	private final int worldWidth=tileSize*maxWorldCol;
 	private final int worldHeight=tileSize*maxWorldRow;
-	private final int layersCount = 4;
+	private final int layersCount = 6;
 
-	public final int  startPlayerPositionX=4*tileSize;
+	public final int  startPlayerPositionX=5*tileSize;
 	public final int  startPlayerPositionY=7*tileSize;
 	
 
 	
 	public final int colDivisiorforNPC = 6;
-	public final int colDivisiorforTiles = 6;
+	public final int colDivisiorforTiles = 8;
 
 	private int FPS = 60;
 	private TileService overworldTilseS = new TileService(	"overworld",originalTitleSize,tileSize);
@@ -130,9 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.dispose();
 		}
 		else{
-			for(int i =0;i<layersCount;i++){
-				levelService.getLayerById(i).draw(g2);
-			}
+			levelService.drawMap(g2);
 			player.draw(g2);
 			levelService.drawNPCs(g2);
 			for(int i = 0;i<=obj.length-1;i++){

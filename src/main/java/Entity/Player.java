@@ -10,8 +10,6 @@ import Main.GamePanel;
 import Service.KeyService;
 import Util.Enums.AnimationStateEnum;
 import Util.Enums.DirectionEnum;
-import Util.Enums.GameStateEnum;
-import lombok.Getter;
 
 public class Player extends Entity {
 	KeyService keyH;
@@ -30,8 +28,8 @@ public class Player extends Entity {
 		maxHP = 100;
 		curHP = maxHP;
 		
-		screenX = gp.getScreenHeight()/2-(gp.getTileSize()/2);
-		screenY = gp.getScreenWidth()/2-(gp.getTileSize()/2);
+		screenX = gp.getScreenWidth()/2-(gp.getTileSize()/2);
+		screenY = gp.getScreenHeight()/2-(gp.getTileSize()/2);
 		setDefaultValues();
 		setUpAnimators(4);
 	}
@@ -47,19 +45,19 @@ public class Player extends Entity {
 	public void update(){
 		switch (keyH.xChange) {
 			case -1:
-				direction = DirectionEnum.up;
+				direction = DirectionEnum.left;
 				break;
 			case 1:
-				direction = DirectionEnum.down;
+				direction = DirectionEnum.right;
 				break;
 			default:
 				break;
 		}		switch (keyH.yChange) {
 			case 1:
-				direction = DirectionEnum.right;
+				direction = DirectionEnum.up;
 				break;
 			case -1:
-				direction = DirectionEnum.left;
+				direction = DirectionEnum.down;
 				break;			
 			default:
 				break;
@@ -71,16 +69,16 @@ public class Player extends Entity {
 		if((collisionOn&&keyH.xChange!=0)||(collisionOn&&keyH.yChange!=0)){
 		switch (direction) {
 			case down:
-				worldX -=speed;
-				break;
-			case right:
-				worldY +=speed;
-				break;
-			case left:
 				worldY -=speed;
 				break;
-			case up:
+			case right:
 				worldX +=speed;
+				break;
+			case left:
+				worldX -=speed;
+				break;
+			case up:
+				worldY +=speed;
 				break;
 			default:
 				break;}}
@@ -130,9 +128,9 @@ public class Player extends Entity {
 	}
 	public void draw(Graphics2D g2){
 		if (keyH.xChange==0&&keyH.yChange ==0) {
-			animators[AnimationStateEnum.getIdbyState("Idle")].draw(g2,screenY,screenX);
+			animators[AnimationStateEnum.getIdbyState("Idle")].draw(g2,screenX,screenY);
 		}else{
-			animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenY,screenX);
+			animators[AnimationStateEnum.getIdbyState("Walk")].draw(g2,screenX,screenY);
 	}
 }
 	public void changeHP(int HPchanged){

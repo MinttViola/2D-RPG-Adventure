@@ -41,8 +41,8 @@ public class DialogueService {
     return dialogues.size();
 	}
 
-	public void dialogueFromNPC(NPC npcForFialogue){
-		String id = npcForFialogue.name+"_"+npcForFialogue.id;
+	public void dialogueFromNPC(NPC npcForDialogue){
+		String id = npcForDialogue.name+"_"+npcForDialogue.id;
 		gp.setDialogue(id);
 	}
 

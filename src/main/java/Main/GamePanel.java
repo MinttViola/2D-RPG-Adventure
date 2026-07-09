@@ -125,21 +125,23 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		if(gameState == GameStateEnum.TitleState){
+		switch(gameState){
+			case TitleState:
 			ui.draw(g2);
 			g2.dispose();
-		}
-		else{
+			break;
+			case PlayState:
 			levelService.drawMap(g2);
-			player.draw(g2);
 			levelService.drawNPCs(g2);
 			for(int i = 0;i<=obj.length-1;i++){
 				if(obj[i]!=null)
 					obj[i].draw(g2);
 			}
+			player.draw(g2);
 			ui.draw(g2);
 			g2.dispose();
-		}	
+			break;
+			}
 	}
 	public void nextDialogue(){ui.nextDialogue();}
 	public void setDialogue(String id){ui.dialogue(id);}

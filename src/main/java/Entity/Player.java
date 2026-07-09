@@ -17,7 +17,6 @@ public class Player extends Entity {
 
 	final int screenY;
 	final int screenX;
-	NPC NPCForDialogue;
 
 	public Player(GamePanel gp,KeyService keyH){
 		super(gp,2,6);
@@ -90,7 +89,8 @@ public class Player extends Entity {
 		if(!gp.getKeyService().EPressed)
 			return;
 		if(NPC != null){
-			gp.getlevelService().dialogueWithNPC(NPCForDialogue);
+			System.out.println("Player interact with NPC: "+NPC.name+" id: "+NPC.id);
+			gp.getlevelService().dialogueWithNPC(NPC);
 		}
 	}
 
@@ -178,6 +178,5 @@ public class Player extends Entity {
 	public void returnSolidAreaToDefault(){
 		solidArea.x = solidAreaDefaultX; 
 		solidArea.y = solidAreaDefaultY;}
-	public NPC getDialogueNPC(){return NPCForDialogue;}
 	public DirectionEnum getDirection(){return direction;}
 }
